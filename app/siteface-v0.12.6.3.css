@@ -1,0 +1,194 @@
+/* SiteFace v0.12.6.3 - Add Property page polish */
+
+/*
+  The installer adds sf1263-add-property-page to the existing root element
+  on app/properties/new/page.tsx. The selectors below are therefore isolated
+  to the Add Property screen.
+*/
+
+.sf1263-add-property-page {
+  width: 100% !important;
+  max-width: none !important;
+  padding-bottom: 32px !important;
+}
+
+.sf1263-add-property-page > h1,
+.sf1263-add-property-page h1 {
+  margin: 0 0 8px !important;
+  color: #f7fbff !important;
+  font-size: clamp(30px, 3vw, 42px) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.03em !important;
+}
+
+.sf1263-add-property-page > p,
+.sf1263-add-property-page h1 + p {
+  margin: 0 0 24px !important;
+  color: #8da8b4 !important;
+  font-size: 15px !important;
+  line-height: 1.55 !important;
+}
+
+.sf1263-add-property-page form,
+.sf1263-add-property-page .card,
+.sf1263-add-property-page [class*="form-card"] {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+  border: 1px solid rgba(82, 146, 160, 0.34) !important;
+  border-radius: 16px !important;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(38, 177, 141, 0.07), transparent 30%),
+    linear-gradient(135deg, rgba(16, 47, 59, 0.98), rgba(12, 37, 49, 0.98)) !important;
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.2) !important;
+}
+
+.sf1263-add-property-page form {
+  padding: 28px !important;
+}
+
+.sf1263-add-property-page .sf1263-form-intro {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  margin-bottom: 26px !important;
+}
+
+.sf1263-add-property-page .sf1263-form-icon {
+  flex: 0 0 56px !important;
+  width: 56px !important;
+  height: 56px !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, #baf9e8, #75e8cc) !important;
+  color: #07333a !important;
+  font-size: 28px !important;
+  font-weight: 900 !important;
+  box-shadow: 0 10px 24px rgba(41, 210, 162, 0.14) !important;
+}
+
+.sf1263-add-property-page .sf1263-form-intro h2 {
+  margin: 0 0 3px !important;
+  color: #f6fbff !important;
+  font-size: 20px !important;
+  line-height: 1.2 !important;
+}
+
+.sf1263-add-property-page .sf1263-form-intro p {
+  margin: 0 !important;
+  color: #91aebb !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+}
+
+.sf1263-add-property-page form > div:not(.sf1263-form-intro):not(.sf1263-actions),
+.sf1263-add-property-page .form-grid-2 {
+  gap: 20px 24px !important;
+}
+
+.sf1263-add-property-page label {
+  display: block !important;
+  margin-bottom: 7px !important;
+  color: #eaf6fb !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+}
+
+.sf1263-add-property-page input,
+.sf1263-add-property-page select,
+.sf1263-add-property-page textarea {
+  width: 100% !important;
+  min-height: 46px !important;
+  box-sizing: border-box !important;
+  border: 1px solid rgba(91, 152, 166, 0.45) !important;
+  border-radius: 10px !important;
+  background: #0b2732 !important;
+  color: #f5fbff !important;
+  padding: 0 14px !important;
+  font-size: 14px !important;
+  outline: none !important;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease !important;
+}
+
+.sf1263-add-property-page input::placeholder,
+.sf1263-add-property-page textarea::placeholder {
+  color: #6f8c98 !important;
+  opacity: 1 !important;
+}
+
+.sf1263-add-property-page input:focus,
+.sf1263-add-property-page select:focus,
+.sf1263-add-property-page textarea:focus {
+  border-color: #35cfa2 !important;
+  background: #0d2c37 !important;
+  box-shadow: 0 0 0 3px rgba(53, 207, 162, 0.11) !important;
+}
+
+.sf1263-add-property-page .sf1263-field-help {
+  display: block !important;
+  margin-top: 6px !important;
+  color: #7896a2 !important;
+  font-size: 11px !important;
+  line-height: 1.4 !important;
+}
+
+.sf1263-add-property-page .sf1263-required {
+  color: #ff6b7f !important;
+  margin-left: 2px !important;
+}
+
+.sf1263-add-property-page .sf1263-actions {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-top: 26px !important;
+  padding-top: 18px !important;
+  border-top: 1px solid rgba(95, 145, 158, 0.25) !important;
+}
+
+.sf1263-add-property-page .sf1263-actions .btn,
+.sf1263-add-property-page .sf1263-actions button,
+.sf1263-add-property-page .sf1263-actions a {
+  min-height: 44px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 0 18px !important;
+  border-radius: 10px !important;
+  font-weight: 850 !important;
+  text-decoration: none !important;
+}
+
+.sf1263-add-property-page .sf1263-actions button[type="submit"],
+.sf1263-add-property-page .sf1263-actions .btn:not(.secondary) {
+  min-width: 150px !important;
+  border-color: #29d3a2 !important;
+  background: linear-gradient(135deg, #29dfa9, #16bd8e) !important;
+  color: #062c31 !important;
+  box-shadow: 0 10px 26px rgba(32, 206, 154, 0.18) !important;
+}
+
+.sf1263-add-property-page .sf1263-actions .secondary,
+.sf1263-add-property-page .sf1263-actions a {
+  border: 1px solid rgba(91, 152, 166, 0.45) !important;
+  background: rgba(9, 35, 46, 0.72) !important;
+  color: #d7e8ef !important;
+}
+
+@media (max-width: 760px) {
+  .sf1263-add-property-page form {
+    padding: 20px !important;
+  }
+
+  .sf1263-add-property-page .sf1263-actions {
+    flex-direction: column-reverse !important;
+    align-items: stretch !important;
+  }
+
+  .sf1263-add-property-page .sf1263-actions > * {
+    width: 100% !important;
+  }
+}

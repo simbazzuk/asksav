@@ -1,0 +1,172 @@
+import { bigquery, dataset, location, projectId } from "./google";
+
+type AnyObject = Record<string, any>;
+
+function stripCodeFence(value: string) {
+  return value
+    .replace(/^\s*```(?:json)?\s*/i, "")
+    .replace(/\s*```\s*$/i, "")
+    .trim();
+}
+
+function clampConfidence(value: unknown) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return 0;
+  return Math.max(0, Math.min(1, n));
+}
+
+function cleanString(value: unknown) {
+  if (value === null || value === undefined) return null;
+  const s = String(value).trim();
+  return s || null;
+}
+
+function cleanList(value: unknown) {
+  if (!Array.isArray(value)) return [];
+  return value.map(cleanString).filter(Boolean).slice(0, 8);
+}
+
+export async function analyseItemPhoto(image: File, hint = "") {
+  const bytes = Buffer.from(await image.arrayBuffer());
+  const dataUrl = `data:${image.type};base64,${bytes.toString("base64")}`;
+
+  const prompt = `
+You are the visual intelligence engine for SiteFace.
+
+Analyse ONE photograph of a physical item.
+
+Your job has two independent tasks:
+1. IDENTIFY the item as specifically as the visible evidence supports.
+2. Assess VISIBLE CONDITION only.
+
+Important rules:
+- Never invent a brand, model, variant, age, specification or defect.
+- If a brand/model cannot be established, use a generic item name and lower confidence.
+- Do not infer hidden/internal condition from appearance.
+- Cosmetic wear is different from functional or structural damage.
+- Mention important limitations caused by framing, blur, lighting or obscured areas.
+- Condition grade must be one of: EXCELLENT, GOOD, FAIR, POOR, UNKNOWN.
+- Confidence values must be numbers from 0 to 1.
+- Do NOT provide a monetary valuation. Market evidence will be handled separately.
+- Produce a concise search query suitable for finding comparable used items.
+${hint ? `The user supplied this optional hint: ${JSON.stringify(hint)}` : ""}
+
+Return JSON only in this exact shape:
+{
+  "identification": {
+    "category": "string",
+    "item_name": "string",
+    "brand": "string or null",
+    "model": "string or null",
+    "variant": "string or null",
+    "confidence": 0.0,
+    "identifying_features": ["string"]
+  },
+  "condition": {
+    "grade": "GOOD",
+    "confidence": 0.0,
+    "summary": "string",
+    "visible_wear": ["string"],
+    "visible_damage": ["string"],
+    "limitations": ["string"]
+  },
+  "valuation_context": {
+    "search_query": "string",
+    "attributes_to_confirm": ["string"]
+  }
+}
+`.trim();
+
+  const query = `
+    SELECT ml_generate_text_llm_result AS response
+    FROM ML.GENERATE_TEXT(
+      MODEL \`${projectId}.${dataset}.gemini_model\`,
+      (
+        SELECT
+          @prompt AS prompt,
+          OBJ.MAKE_REF(
+            'gs://${process.env.SITEFACE_BUCKET || "siteface-images-dev"}/v0.15-placeholder'
+          ) AS image
+      ),
+      STRUCT(
+        0.2 AS temperature,
+        2048 AS max_output_tokens
+      )
+    )
+  `;
+
+  // Prefer the working SiteFace remote-model path. The image is temporarily uploaded
+  // to GCS because BigQuery object refs require a GCS-backed object.
+  const bucketName = process.env.SITEFACE_BUCKET || "siteface-images-dev";
+  const { storage } = await import("./google");
+  const objectName = `item-analysis/${crypto.randomUUID()}/${image.name || "item.jpg"}`;
+  const object = storage.bucket(bucketName).file(objectName);
+
+  await object.save(bytes, {
+    contentType: image.type,
+    resumable: false,
+    metadata: { cacheControl: "private, max-age=0" },
+  });
+
+  const uri = `gs://${bucketName}/${objectName}`;
+
+  try {
+    const actualQuery = `
+      SELECT ml_generate_text_llm_result AS response
+      FROM ML.GENERATE_TEXT(
+        MODEL \`${projectId}.${dataset}.gemini_model\`,
+        (
+          SELECT
+            @prompt AS prompt,
+            OBJ.MAKE_REF(@uri) AS image
+        ),
+        STRUCT(
+          0.2 AS temperature,
+          2048 AS max_output_tokens
+        )
+      )
+    `;
+
+    const [rows] = await bigquery.query({
+      query: actualQuery,
+      location,
+      params: { prompt, uri },
+    });
+
+    const raw = String((rows[0] as AnyObject)?.response || "");
+    if (!raw) throw new Error("The visual model returned no analysis.");
+
+    const parsed = JSON.parse(stripCodeFence(raw)) as AnyObject;
+
+    return {
+      identification: {
+        category: cleanString(parsed?.identification?.category) || "Item",
+        item_name: cleanString(parsed?.identification?.item_name) || "Unidentified item",
+        brand: cleanString(parsed?.identification?.brand),
+        model: cleanString(parsed?.identification?.model),
+        variant: cleanString(parsed?.identification?.variant),
+        confidence: clampConfidence(parsed?.identification?.confidence),
+        identifying_features: cleanList(parsed?.identification?.identifying_features),
+      },
+      condition: {
+        grade: cleanString(parsed?.condition?.grade) || "UNKNOWN",
+        confidence: clampConfidence(parsed?.condition?.confidence),
+        summary: cleanString(parsed?.condition?.summary) || "No condition summary returned.",
+        visible_wear: cleanList(parsed?.condition?.visible_wear),
+        visible_damage: cleanList(parsed?.condition?.visible_damage),
+        limitations: cleanList(parsed?.condition?.limitations),
+      },
+      valuation_context: {
+        search_query:
+          cleanString(parsed?.valuation_context?.search_query) ||
+          cleanString(parsed?.identification?.item_name) ||
+          "used item",
+        attributes_to_confirm: cleanList(parsed?.valuation_context?.attributes_to_confirm),
+      },
+      evidence_uri: uri,
+    };
+  } catch (error) {
+    // Keep the uploaded evidence for debugging and future item history.
+    throw error;
+  }
+}

@@ -1,0 +1,7 @@
+// Merge this users rule into your existing Firestore rules.
+// Do NOT replace unrelated existing rules with this file.
+
+match /users/{userId} {
+  allow read, create, update: if request.auth != null && request.auth.uid == userId;
+  allow delete: if false;
+}

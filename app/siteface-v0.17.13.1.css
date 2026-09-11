@@ -1,0 +1,40 @@
+/* SiteFace v0.17.13.1 - Discover marketplace icons */
+
+.sf178-market-links .sf-market-icon{
+  width:38px!important;
+  height:38px!important;
+  min-width:38px!important;
+  border-radius:10px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#fff!important;
+  border:1px solid #dce7e3!important;
+  box-shadow:0 2px 8px rgba(23,42,50,.06)!important;
+  overflow:hidden!important;
+}
+
+.sf178-market-links .sf-market-icon svg{
+  width:26px!important;
+  height:26px!important;
+  display:block!important;
+}
+
+.sf178-market-links .sf-market-icon.ebay svg{
+  width:30px!important;
+}
+
+.sf178-market-links .sf-market-icon.google svg{
+  width:25px!important;
+  height:25px!important;
+}
+
+.sf178-market-links .sf-market-icon.gumtree svg{
+  width:24px!important;
+  height:24px!important;
+}
+
+.sf178-market-links a{
+  gap:12px!important;
+  align-items:center!important;
+}

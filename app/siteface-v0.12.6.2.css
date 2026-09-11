@@ -1,0 +1,55 @@
+/* SiteFace v0.12.6.2 - Property card action alignment */
+
+.property-summary-card .property-actions,
+.property-summary-card .actions,
+.property-summary-card [class*="action"] {
+  align-items: center;
+}
+
+.property-summary-card .property-actions,
+.property-summary-card .actions {
+  display: flex !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+  margin-top: 12px !important;
+}
+
+.property-summary-card .property-actions .btn,
+.property-summary-card .actions .btn,
+.property-summary-card a.btn,
+.property-summary-card button.btn {
+  min-height: 42px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 16px !important;
+  line-height: 1 !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+}
+
+.property-summary-card .property-actions .btn.secondary,
+.property-summary-card .actions .btn.secondary,
+.property-summary-card a.btn.secondary {
+  min-width: 128px !important;
+}
+
+.property-summary-card .property-actions .btn:not(.secondary),
+.property-summary-card .actions .btn:not(.secondary),
+.property-summary-card a.btn:not(.secondary) {
+  min-width: 148px !important;
+}
+
+@media (max-width: 760px) {
+  .property-summary-card .property-actions,
+  .property-summary-card .actions {
+    gap: 8px !important;
+  }
+
+  .property-summary-card .property-actions .btn,
+  .property-summary-card .actions .btn,
+  .property-summary-card a.btn,
+  .property-summary-card button.btn {
+    min-height: 44px !important;
+  }
+}

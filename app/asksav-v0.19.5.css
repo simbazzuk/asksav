@@ -1,0 +1,47 @@
+/* AskSAV v0.19.5 - text-free brand icon */
+
+.sf-logo,
+.sf179-logo,
+.sf178-logo,
+.sf1710-logo,
+.sf19-auth-orb,
+.sf19-avatar{
+  background-image:url("/asksav-icon.png")!important;
+  background-size:cover!important;
+  background-position:center!important;
+  background-repeat:no-repeat!important;
+  background-color:transparent!important;
+  color:transparent!important;
+  font-size:0!important;
+  text-indent:-9999px!important;
+  overflow:hidden!important;
+  border:none!important;
+  box-shadow:0 7px 16px rgba(52,71,126,.16)!important;
+}
+
+.sf-logo,
+.sf179-logo,
+.sf178-logo,
+.sf1710-logo{
+  width:50px!important;
+  min-width:50px!important;
+  height:50px!important;
+  min-height:50px!important;
+  border-radius:14px!important;
+}
+
+.sf19-auth-orb,
+.sf19-avatar{
+  width:58px!important;
+  min-width:58px!important;
+  height:58px!important;
+  min-height:58px!important;
+  border-radius:17px!important;
+}
+
+/* Any actual img inserted by the earlier icon patch should use the new asset too. */
+img.asksav-brand-icon{
+  content:url("/asksav-icon.png")!important;
+  object-fit:cover!important;
+  border-radius:14px!important;
+}

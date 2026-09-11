@@ -1,0 +1,40 @@
+/* AskSAV v0.19.3 - customer-facing brand layer
+   Technical siteface-* identifiers intentionally remain unchanged. */
+
+:root{
+  --asksav-mint:#35cba5;
+  --asksav-blue:#369fd2;
+  --asksav-violet:#7053e6;
+  --asksav-ink:#172b3a;
+}
+
+/* Existing SF/VI logo marks become visually suitable for the wider SAV label. */
+.sf-logo,
+.sf179-logo,
+.sf178-logo,
+.sf1710-logo,
+.sf19-auth-orb,
+.sf19-avatar{
+  min-width:54px!important;
+  width:54px!important;
+  letter-spacing:-.04em!important;
+}
+
+/* Account/login marks need enough room for three letters. */
+.sf19-auth-orb,
+.sf19-avatar{
+  min-width:58px!important;
+  width:58px!important;
+}
+
+/* Keep the brand treatment consistent with Smart AI Vision. */
+.sf-logo,
+.sf179-logo,
+.sf178-logo,
+.sf1710-logo,
+.sf19-auth-orb,
+.sf19-avatar{
+  background:linear-gradient(145deg,var(--asksav-mint) 0%,var(--asksav-blue) 48%,var(--asksav-violet) 100%)!important;
+  color:#fff!important;
+  font-weight:900!important;
+}

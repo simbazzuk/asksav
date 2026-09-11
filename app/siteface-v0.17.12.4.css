@@ -1,0 +1,124 @@
+/* SiteFace v0.17.12.4 - Analyse Page Readability */
+
+/* Workflow cards */
+.sf178-flow-card strong{
+  font-size:14px!important;
+}
+.sf178-flow-card small{
+  font-size:10.5px!important;
+  line-height:1.35!important;
+}
+
+/* Upload panel supporting text */
+.sf178-card-title p{
+  font-size:12px!important;
+  line-height:1.5!important;
+}
+.sf178-drop-inner strong{
+  font-size:16px!important;
+}
+.sf178-drop-inner small{
+  font-size:10px!important;
+}
+.sf178-file-buttons label{
+  font-size:11.5px!important;
+}
+.sf178-hint input{
+  font-size:11px!important;
+}
+.sf178-tips span{
+  font-size:9.5px!important;
+}
+.sf178-analyse-button{
+  font-size:14px!important;
+}
+
+/* Report title */
+.sf178-report-title strong{
+  font-size:22px!important;
+}
+.sf178-report-title small{
+  font-size:11px!important;
+  line-height:1.4!important;
+}
+
+/* Identified / condition result cards */
+.sf178-result-card h2{
+  font-size:28px!important;
+}
+.sf178-result-card p{
+  font-size:12px!important;
+  line-height:1.55!important;
+}
+.sf178-result-label{
+  font-size:9px!important;
+}
+.sf178-result-score{
+  font-size:28px!important;
+}
+
+/* Verification banner */
+.sf178-verify strong{
+  font-size:10.5px!important;
+}
+.sf178-verify p{
+  font-size:10.5px!important;
+  line-height:1.45!important;
+}
+
+/* Condition details */
+.sf178-condition-grid strong{
+  font-size:10.5px!important;
+}
+.sf178-condition-grid span{
+  font-size:9.5px!important;
+  line-height:1.45!important;
+}
+
+/* Value panel */
+.sf178-result-card.value h2{
+  font-size:30px!important;
+}
+.sf178-result-card.value p{
+  font-size:11.5px!important;
+  line-height:1.55!important;
+}
+
+/* Discover panel */
+.sf178-market-links strong{
+  font-size:11px!important;
+}
+.sf178-market-links small{
+  font-size:9px!important;
+  line-height:1.4!important;
+}
+
+/* Slightly improve sidebar readability on Analyse page too */
+.sf178-side-nav a{
+  font-size:13.5px!important;
+}
+.sf178-side-card strong{
+  font-size:12.5px!important;
+}
+.sf178-side-card p{
+  font-size:9.5px!important;
+}
+
+/* Prevent overgrowth on narrow screens */
+@media(max-width:700px){
+  .sf178-flow-card strong{
+    font-size:13px!important;
+  }
+  .sf178-flow-card small{
+    font-size:9.5px!important;
+  }
+  .sf178-result-card h2{
+    font-size:25px!important;
+  }
+  .sf178-result-card p{
+    font-size:11px!important;
+  }
+  .sf178-report-title strong{
+    font-size:19px!important;
+  }
+}

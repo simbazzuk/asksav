@@ -1,0 +1,371 @@
+/* SiteFace v0.17.2 - Analyse layout scale and formatting fix */
+
+.sf171-page{
+  margin-left:220px!important;
+  padding:28px 36px 56px!important;
+}
+
+.sf171-hero{
+  max-width:1320px!important;
+  margin:0 auto 22px!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:16px!important;
+  align-items:start!important;
+}
+
+.sf171-hero h1{
+  font-size:52px!important;
+  line-height:.98!important;
+  max-width:780px!important;
+}
+
+.sf171-hero p{
+  max-width:760px!important;
+  font-size:15px!important;
+}
+
+.sf171-kicker{
+  font-size:11px!important;
+}
+
+.sf171-journey{
+  justify-content:flex-start!important;
+  gap:9px!important;
+}
+
+.sf171-journey>div{
+  padding:10px 14px!important;
+  min-width:124px!important;
+}
+
+.sf171-journey span{
+  width:30px!important;
+  height:30px!important;
+  font-size:9px!important;
+}
+
+.sf171-journey strong{
+  font-size:10px!important;
+}
+
+.sf171-grid{
+  max-width:1320px!important;
+  grid-template-columns:minmax(420px,500px) minmax(0,1fr)!important;
+  gap:20px!important;
+}
+
+.sf171-capture{
+  padding:22px!important;
+}
+
+.sf171-section-label{
+  font-size:9px!important;
+}
+
+.sf171-capture>h2{
+  font-size:28px!important;
+  margin-top:7px!important;
+}
+
+.sf171-subcopy{
+  font-size:11px!important;
+  line-height:1.55!important;
+}
+
+.sf171-photo{
+  min-height:430px!important;
+}
+
+.sf171-photo img{
+  height:430px!important;
+}
+
+.sf171-camera{
+  width:72px!important;
+  height:72px!important;
+  font-size:31px!important;
+}
+
+.sf171-photo-empty strong{
+  font-size:15px!important;
+}
+
+.sf171-photo-empty span{
+  font-size:9px!important;
+}
+
+.sf171-replace{
+  font-size:10px!important;
+  padding:11px!important;
+}
+
+.sf171-hint>span{
+  font-size:10px!important;
+}
+
+.sf171-hint input{
+  padding:13px 14px!important;
+  font-size:11px!important;
+}
+
+.sf171-tips{
+  gap:8px!important;
+}
+
+.sf171-tips span{
+  font-size:8.5px!important;
+  padding:8px 10px!important;
+}
+
+.sf171-button{
+  padding:14px 16px!important;
+  font-size:12px!important;
+}
+
+.sf171-placeholder{
+  min-height:700px!important;
+  padding:40px 34px!important;
+}
+
+.sf171-placeholder-art{
+  width:240px!important;
+  height:160px!important;
+}
+
+.sf171-shape.one{
+  width:180px!important;
+  height:118px!important;
+}
+
+.sf171-shape.two{
+  width:146px!important;
+  height:100px!important;
+}
+
+.sf171-lens{
+  width:86px!important;
+  height:86px!important;
+  left:77px!important;
+  top:35px!important;
+  font-size:34px!important;
+}
+
+.sf171-placeholder h2{
+  font-size:34px!important;
+  max-width:560px!important;
+}
+
+.sf171-placeholder>p{
+  max-width:620px!important;
+  font-size:12px!important;
+}
+
+.sf171-placeholder-grid{
+  max-width:680px!important;
+  grid-template-columns:repeat(4,1fr)!important;
+  gap:10px!important;
+}
+
+.sf171-placeholder-grid>div{
+  padding:16px!important;
+}
+
+.sf171-placeholder-grid b{
+  font-size:9px!important;
+}
+
+.sf171-placeholder-grid strong{
+  font-size:11px!important;
+}
+
+.sf171-placeholder-grid span{
+  font-size:8.5px!important;
+  line-height:1.35!important;
+}
+
+.sf171-card{
+  padding:22px!important;
+}
+
+.sf171-chip{
+  font-size:8px!important;
+  padding:6px 9px!important;
+}
+
+.sf171-card h2{
+  font-size:28px!important;
+}
+
+.sf171-card p{
+  font-size:10px!important;
+}
+
+.sf171-score strong{
+  font-size:24px!important;
+}
+
+.sf171-score span{
+  font-size:8px!important;
+}
+
+.sf171-verification{
+  padding:11px 12px!important;
+}
+
+.sf171-verification strong{
+  font-size:9px!important;
+}
+
+.sf171-verification span{
+  font-size:9px!important;
+}
+
+.sf171-tags span{
+  font-size:8px!important;
+  padding:7px 9px!important;
+}
+
+.sf171-condition-grid{
+  grid-template-columns:1fr 1fr!important;
+}
+
+.sf171-condition-grid .limited{
+  grid-column:1/-1!important;
+}
+
+.sf171-condition-grid strong{
+  font-size:9.5px!important;
+}
+
+.sf171-condition-grid span{
+  font-size:8.8px!important;
+}
+
+.sf171-lower{
+  grid-template-columns:1fr 1fr!important;
+}
+
+.sf171-value>h2{
+  font-size:31px!important;
+}
+
+.sf171-price-stats span{
+  font-size:8px!important;
+}
+
+.sf171-price-stats strong{
+  font-size:15px!important;
+}
+
+.sf171-discover h3{
+  font-size:20px!important;
+}
+
+.sf171-marketplaces strong{
+  font-size:9.5px!important;
+}
+
+.sf171-marketplaces small{
+  font-size:8px!important;
+}
+
+.sf171-nav{
+  width:220px!important;
+  padding:22px 16px!important;
+}
+
+.sf171-brand strong{
+  font-size:20px!important;
+}
+
+.sf171-brand span{
+  font-size:8.5px!important;
+}
+
+.sf171-nav nav a{
+  padding:12px!important;
+}
+
+.sf171-nav nav strong{
+  font-size:11.5px!important;
+}
+
+.sf171-new{
+  font-size:11.5px!important;
+  padding:13px!important;
+}
+
+.sf171-nav-note{
+  padding:14px!important;
+}
+
+.sf171-nav-note strong{
+  font-size:10.5px!important;
+}
+
+.sf171-nav-note p{
+  font-size:8.5px!important;
+}
+
+@media(max-width:1300px){
+  .sf171-page{
+    padding:24px 24px 48px!important;
+  }
+  .sf171-grid{
+    grid-template-columns:minmax(380px,460px) minmax(0,1fr)!important;
+  }
+  .sf171-hero h1{
+    font-size:46px!important;
+  }
+}
+
+@media(max-width:1080px){
+  .sf171-page{
+    margin-left:0!important;
+  }
+  .sf171-nav{
+    display:none!important;
+  }
+  .sf171-grid{
+    grid-template-columns:1fr!important;
+  }
+  .sf171-capture{
+    position:relative!important;
+    top:auto!important;
+  }
+  .sf171-photo{
+    min-height:360px!important;
+  }
+  .sf171-photo img{
+    height:360px!important;
+  }
+}
+
+@media(max-width:720px){
+  .sf171-page{
+    padding:22px 16px 42px!important;
+  }
+  .sf171-hero h1{
+    font-size:38px!important;
+  }
+  .sf171-hero p{
+    font-size:13px!important;
+  }
+  .sf171-journey{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+  }
+  .sf171-journey>div{
+    min-width:0!important;
+  }
+  .sf171-placeholder-grid{
+    grid-template-columns:1fr 1fr!important;
+  }
+  .sf171-condition-grid,
+  .sf171-lower{
+    grid-template-columns:1fr!important;
+  }
+  .sf171-condition-grid .limited{
+    grid-column:auto!important;
+  }
+}

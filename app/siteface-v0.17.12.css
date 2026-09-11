@@ -1,0 +1,101 @@
+/* SiteFace v0.17.12 - coloured workflow cards */
+
+/* Analyse workflow cards */
+.sf178-flow-card.blue{
+  background:linear-gradient(135deg,#eef6ff 0%,#e3f0ff 100%)!important;
+  border-color:#cfe3fb!important;
+}
+.sf178-flow-card.green{
+  background:linear-gradient(135deg,#eefbf6 0%,#ddf6eb 100%)!important;
+  border-color:#c8eadc!important;
+}
+.sf178-flow-card.amber{
+  background:linear-gradient(135deg,#fff8eb 0%,#ffecd0 100%)!important;
+  border-color:#f3ddb9!important;
+}
+.sf178-flow-card.violet{
+  background:linear-gradient(135deg,#f7f2ff 0%,#ece3ff 100%)!important;
+  border-color:#ded0fb!important;
+}
+.sf178-flow-card.purple{
+  background:linear-gradient(135deg,#fff2fb 0%,#f8ddf5 100%)!important;
+  border-color:#efcaea!important;
+}
+
+.sf178-flow-card.blue .sf178-flow-icon{
+  background:#cfe6ff!important;
+  color:#126fd3!important;
+}
+.sf178-flow-card.green .sf178-flow-icon{
+  background:#c9f0df!important;
+  color:#0a8c60!important;
+}
+.sf178-flow-card.amber .sf178-flow-icon{
+  background:#ffe1ac!important;
+  color:#d77b00!important;
+}
+.sf178-flow-card.violet .sf178-flow-icon{
+  background:#dfd1ff!important;
+  color:#6435d6!important;
+}
+.sf178-flow-card.purple .sf178-flow-icon{
+  background:#f4c9ef!important;
+  color:#b126c9!important;
+}
+
+.sf178-flow-card strong{
+  color:#1f333c!important;
+}
+
+.sf178-flow-card small{
+  color:#536871!important;
+}
+
+.sf178-flow-card{
+  box-shadow:0 9px 22px rgba(29,64,51,.055)!important;
+  transition:transform .15s ease, box-shadow .15s ease!important;
+}
+.sf178-flow-card:hover{
+  transform:translateY(-2px)!important;
+  box-shadow:0 13px 28px rgba(29,64,51,.08)!important;
+}
+
+/* Keep arrows visible between stronger card backgrounds */
+.sf178-flow-card>b{
+  color:#5a6f77!important;
+  font-weight:900!important;
+}
+
+/* Home 'How SiteFace Works' cards - use the same colour language */
+.sf179-step.blue{
+  background:linear-gradient(135deg,#eef6ff 0%,#e3f0ff 100%)!important;
+  border-color:#cfe3fb!important;
+}
+.sf179-step.green{
+  background:linear-gradient(135deg,#eefbf6 0%,#ddf6eb 100%)!important;
+  border-color:#c8eadc!important;
+}
+.sf179-step.amber{
+  background:linear-gradient(135deg,#fff8eb 0%,#ffecd0 100%)!important;
+  border-color:#f3ddb9!important;
+}
+.sf179-step.violet{
+  background:linear-gradient(135deg,#f7f2ff 0%,#ece3ff 100%)!important;
+  border-color:#ded0fb!important;
+}
+.sf179-step.purple{
+  background:linear-gradient(135deg,#fff2fb 0%,#f8ddf5 100%)!important;
+  border-color:#efcaea!important;
+}
+
+.sf179-step{
+  box-shadow:0 10px 24px rgba(29,64,51,.05)!important;
+}
+
+.sf179-step h3{
+  color:#1f333c!important;
+}
+
+.sf179-step p{
+  color:#536871!important;
+}

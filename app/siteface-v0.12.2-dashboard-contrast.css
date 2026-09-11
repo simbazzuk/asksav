@@ -1,0 +1,185 @@
+/* SiteFace v0.12.2 — Dashboard Contrast Patch */
+
+/* Hero text on the pale dashboard panel */
+.sf1032-inspection-hero,
+.sf103-purpose,
+[class*="dashboard-hero"],
+[class*="home-hero"]{
+  color:#12232a!important;
+}
+
+.sf1032-inspection-copy h1,
+.sf1032-inspection-copy h2,
+.sf103-purpose h1,
+.sf103-purpose h2,
+[class*="dashboard-hero"] h1,
+[class*="dashboard-hero"] h2,
+[class*="home-hero"] h1,
+[class*="home-hero"] h2{
+  color:#16282f!important;
+  text-shadow:none!important;
+}
+
+.sf1032-inspection-copy p,
+.sf103-purpose p,
+[class*="dashboard-hero"] p,
+[class*="home-hero"] p{
+  color:#36515a!important;
+  font-weight:500!important;
+}
+
+/* Eyebrow remains green but darker for light background */
+.sf1032-eyebrow,
+.sf103-purpose [class*="eyebrow"],
+[class*="dashboard-hero"] [class*="eyebrow"],
+[class*="home-hero"] [class*="eyebrow"]{
+  color:#13966d!important;
+}
+
+/* Trust indicators */
+.sf1032-inspection-hero [class*="trust"],
+.sf103-purpose [class*="trust"],
+.sf1032-inspection-hero [class*="feature"],
+.sf103-purpose [class*="feature"]{
+  color:#48636b!important;
+}
+
+.sf1032-inspection-hero [class*="trust"] *,
+.sf103-purpose [class*="trust"] *,
+.sf1032-inspection-hero [class*="feature"] *,
+.sf103-purpose [class*="feature"] *{
+  color:inherit!important;
+}
+
+/* Hero buttons */
+.sf1032-inspection-hero .btn:not(.secondary),
+.sf103-purpose .btn:not(.secondary),
+[class*="dashboard-hero"] .btn:not(.secondary){
+  color:#06241a!important;
+  background:linear-gradient(135deg,#31d4a0,#18aa7a)!important;
+  font-weight:900!important;
+}
+
+.sf1032-inspection-hero .btn.secondary,
+.sf103-purpose .btn.secondary,
+[class*="dashboard-hero"] .btn.secondary{
+  background:#0f3038!important;
+  color:#fff!important;
+  border-color:#1c5963!important;
+  font-weight:800!important;
+}
+
+/* Example comparison card */
+.sf1032-inspection-hero [class*="comparison"],
+.sf103-purpose [class*="comparison"],
+[class*="dashboard-hero"] [class*="comparison"]{
+  color:#172a31!important;
+}
+
+.sf1032-inspection-hero [class*="comparison"] h1,
+.sf1032-inspection-hero [class*="comparison"] h2,
+.sf1032-inspection-hero [class*="comparison"] h3,
+.sf1032-inspection-hero [class*="comparison"] strong,
+.sf103-purpose [class*="comparison"] h1,
+.sf103-purpose [class*="comparison"] h2,
+.sf103-purpose [class*="comparison"] h3,
+.sf103-purpose [class*="comparison"] strong{
+  color:#172a31!important;
+}
+
+.sf1032-inspection-hero [class*="comparison"] p,
+.sf1032-inspection-hero [class*="comparison"] small,
+.sf103-purpose [class*="comparison"] p,
+.sf103-purpose [class*="comparison"] small{
+  color:#516870!important;
+}
+
+/* Confidence */
+.sf1032-inspection-hero [class*="confidence"],
+.sf103-purpose [class*="confidence"]{
+  color:#13815f!important;
+  font-weight:800!important;
+}
+
+/* Review evidence link */
+.sf1032-inspection-hero a,
+.sf103-purpose a{
+  text-decoration-thickness:1px;
+}
+
+.sf1032-inspection-hero [class*="review"] a,
+.sf103-purpose [class*="review"] a,
+.sf1032-inspection-hero a[href*="evidence"],
+.sf103-purpose a[href*="evidence"]{
+  color:#0b7456!important;
+  font-weight:900!important;
+}
+
+/* Bottom "How SiteFace works" strip */
+.sf1032-inspection-explainer,
+.sf103-purpose + *,
+[class*="how-siteface-works"],
+[class*="learn-strip"],
+[class*="explainer-strip"]{
+  color:#244149!important;
+}
+
+.sf1032-inspection-explainer{
+  background:#f4fbfa!important;
+  border:1px solid #cbdedb!important;
+  box-shadow:0 6px 16px rgba(0,0,0,.06)!important;
+}
+
+.sf1032-inspection-explainer strong,
+.sf1032-inspection-explainer b{
+  color:#142c33!important;
+}
+
+.sf1032-inspection-explainer span,
+.sf1032-inspection-explainer p{
+  color:#4a626a!important;
+}
+
+.sf1032-inspection-explainer a{
+  color:#087551!important;
+  font-weight:900!important;
+}
+
+.sf1032-inspection-explainer a:hover{
+  color:#075f43!important;
+}
+
+/* If the strip is a generic card or row */
+[class*="how-siteface-works"],
+[class*="learn-strip"],
+[class*="explainer-strip"]{
+  background:#f4fbfa!important;
+  border-color:#cbdedb!important;
+}
+
+[class*="how-siteface-works"] strong,
+[class*="learn-strip"] strong,
+[class*="explainer-strip"] strong{
+  color:#142c33!important;
+}
+
+[class*="how-siteface-works"] a,
+[class*="learn-strip"] a,
+[class*="explainer-strip"] a{
+  color:#087551!important;
+  font-weight:900!important;
+}
+
+/* Mobile: preserve contrast */
+@media(max-width:760px){
+  .sf1032-inspection-copy p,
+  .sf103-purpose p,
+  [class*="dashboard-hero"] p,
+  [class*="home-hero"] p{
+    color:#314b53!important;
+  }
+
+  .sf1032-inspection-explainer{
+    padding:12px 14px!important;
+  }
+}

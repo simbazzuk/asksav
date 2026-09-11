@@ -1,0 +1,144 @@
+/* SiteFace v0.12.2.1 — Exact Dashboard Contrast Fix
+   Targets the actual sf103-* classes used by SiteFacePurpose.tsx. */
+
+/* Main light hero: use deliberate dark typography */
+.sf103-hero-copy{
+  color:#132a32!important;
+}
+
+.sf103-eyebrow{
+  color:#0a8e67!important;
+  font-weight:900!important;
+  letter-spacing:.13em!important;
+}
+
+.sf103-hero-copy h2{
+  color:#142a32!important;
+  font-weight:850!important;
+  text-shadow:none!important;
+}
+
+.sf103-hero-lead{
+  color:#304d57!important;
+  font-weight:550!important;
+  line-height:1.72!important;
+}
+
+/* Actions */
+.sf103-actions .btn{
+  color:#05251b!important;
+  font-weight:900!important;
+}
+
+.sf103-actions .btn.secondary{
+  background:#0d3039!important;
+  border:1px solid #164d58!important;
+  color:#ffffff!important;
+  box-shadow:0 6px 15px rgba(8,36,43,.18)!important;
+}
+
+/* Trust row was too faint */
+.sf103-trust{
+  color:#3d5b64!important;
+  font-weight:750!important;
+}
+
+.sf103-trust span{
+  color:#3d5b64!important;
+}
+
+.sf103-trust i{
+  background:#1ba77b!important;
+  opacity:.65!important;
+}
+
+/* Comparison panel */
+.sf103-comparison{
+  color:#172d35!important;
+}
+
+.sf103-comparison-top > span:first-child{
+  color:#263d45!important;
+  font-weight:900!important;
+}
+
+.sf103-status-pill{
+  background:#0d2932!important;
+  color:#ffffff!important;
+}
+
+.sf103-image-card{
+  color:#243b43!important;
+}
+
+.sf103-image-card small{
+  color:#344f58!important;
+  font-weight:700!important;
+}
+
+.sf103-result strong{
+  color:#223940!important;
+}
+
+.sf103-result p{
+  color:#526970!important;
+  font-weight:500!important;
+}
+
+.sf103-confidence strong{
+  color:#087b58!important;
+  font-weight:900!important;
+}
+
+.sf103-confidence span{
+  color:#657a80!important;
+  font-weight:600!important;
+}
+
+.sf103-review-link{
+  color:#087653!important;
+  font-weight:900!important;
+}
+
+/* Bottom explanation strip: this is the most visibly low-contrast area */
+.sf103-explainer{
+  background:#edf8f5!important;
+  border:1px solid #bcd8d1!important;
+  color:#28454e!important;
+  box-shadow:0 6px 18px rgba(0,0,0,.08)!important;
+}
+
+.sf103-explainer strong{
+  color:#132f37!important;
+  font-weight:900!important;
+}
+
+.sf103-explainer span{
+  color:#425f68!important;
+  font-weight:550!important;
+}
+
+.sf103-explainer a{
+  color:#06754f!important;
+  font-weight:900!important;
+}
+
+.sf103-explainer a:hover{
+  color:#045c3e!important;
+}
+
+/* Keep contrast strong on smaller screens */
+@media(max-width:760px){
+  .sf103-hero-lead{
+    color:#294751!important;
+  }
+
+  .sf103-trust,
+  .sf103-trust span{
+    color:#34535c!important;
+  }
+
+  .sf103-explainer span{
+    color:#385861!important;
+  }
+}

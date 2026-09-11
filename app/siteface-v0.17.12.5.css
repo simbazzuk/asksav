@@ -1,0 +1,174 @@
+/* SiteFace v0.17.12.5 - High Contrast Result Cards */
+
+/* IDENTIFY */
+.sf178-result-card.identify{
+  background:linear-gradient(180deg,#ffffff 0%,#f7fbff 100%)!important;
+  border-color:#cfe3fb!important;
+}
+.sf178-result-card.identify h2{
+  font-size:32px!important;
+  line-height:1.15!important;
+  color:#10263a!important;
+}
+.sf178-result-card.identify p{
+  font-size:13px!important;
+  line-height:1.6!important;
+  color:#2f4a5a!important;
+}
+.sf178-result-card.identify .sf178-result-score{
+  font-size:31px!important;
+  color:#126fd3!important;
+}
+.sf178-result-label{
+  font-size:10px!important;
+  padding:6px 9px!important;
+  background:#dceeff!important;
+  color:#0f6dc5!important;
+}
+
+/* VERIFY */
+.sf178-verify{
+  margin-top:14px!important;
+  padding:14px!important;
+  background:linear-gradient(90deg,#eaf8f3,#e1f5ee)!important;
+  border:1px solid #ccebdd!important;
+}
+.sf178-verify strong{
+  font-size:12px!important;
+  color:#0d805b!important;
+}
+.sf178-verify p{
+  font-size:12px!important;
+  line-height:1.55!important;
+  color:#2f5b4d!important;
+}
+
+/* CONDITION */
+.sf178-result-card.condition{
+  background:linear-gradient(180deg,#ffffff 0%,#f5fbf8 100%)!important;
+  border-color:#cceadd!important;
+}
+.sf178-result-card.condition h2{
+  font-size:32px!important;
+  line-height:1.15!important;
+  color:#10263a!important;
+}
+.sf178-result-card.condition p{
+  font-size:13px!important;
+  line-height:1.6!important;
+  color:#2f4a5a!important;
+}
+.sf178-result-card.condition .sf178-result-score{
+  font-size:31px!important;
+  color:#0d8c62!important;
+}
+.sf178-result-label.green{
+  font-size:10px!important;
+  padding:6px 9px!important;
+  background:#d9f4e8!important;
+  color:#0a8159!important;
+}
+
+/* CONDITION DETAIL BLOCKS */
+.sf178-condition-grid strong{
+  font-size:11.5px!important;
+  color:#245b49!important;
+}
+.sf178-condition-grid span{
+  font-size:10.5px!important;
+  line-height:1.5!important;
+  color:#405861!important;
+}
+
+/* VALUE */
+.sf178-result-card.value{
+  background:linear-gradient(180deg,#ffffff 0%,#faf7ff 100%)!important;
+  border-color:#decdfb!important;
+}
+.sf178-result-card.value h2{
+  font-size:34px!important;
+  line-height:1.12!important;
+  color:#4f27bf!important;
+}
+.sf178-result-card.value p{
+  font-size:13px!important;
+  line-height:1.65!important;
+  color:#34475a!important;
+}
+.sf178-result-label.violet{
+  font-size:10px!important;
+  padding:6px 9px!important;
+  background:#e9ddff!important;
+  color:#5d2bc8!important;
+}
+
+/* DISCOVER */
+.sf178-result-card.discover{
+  background:linear-gradient(180deg,#ffffff 0%,#fff8ff 100%)!important;
+  border-color:#edcff0!important;
+}
+.sf178-market-links a{
+  padding:12px!important;
+  min-height:54px!important;
+  background:#ffffff!important;
+  border-color:#dce5e1!important;
+}
+.sf178-market-links a>span{
+  width:34px!important;
+  height:34px!important;
+  flex:0 0 34px!important;
+  font-size:12px!important;
+  background:#f1f5f3!important;
+  color:#31484f!important;
+}
+.sf178-market-links strong{
+  font-size:12px!important;
+  color:#22353d!important;
+}
+.sf178-market-links small{
+  font-size:10px!important;
+  color:#5a7079!important;
+}
+
+/* REPORT HEADER */
+.sf178-report-title strong{
+  font-size:22px!important;
+  color:#172a32!important;
+}
+.sf178-report-title small{
+  font-size:11px!important;
+  color:#536a73!important;
+}
+
+/* Make all result copy high contrast */
+.sf178-results{
+  color:#17272f!important;
+}
+.sf178-results p,
+.sf178-results small,
+.sf178-results span{
+  opacity:1!important;
+  text-shadow:none!important;
+}
+
+/* Avoid excessive scale on mobile */
+@media(max-width:700px){
+  .sf178-result-card.identify h2,
+  .sf178-result-card.condition h2{
+    font-size:27px!important;
+  }
+
+  .sf178-result-card.value h2{
+    font-size:29px!important;
+  }
+
+  .sf178-result-card.identify p,
+  .sf178-result-card.condition p,
+  .sf178-result-card.value p{
+    font-size:12px!important;
+  }
+
+  .sf178-market-links strong{
+    font-size:11px!important;
+  }
+}

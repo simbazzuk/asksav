@@ -1,0 +1,184 @@
+/* SiteFace v0.19.1 - Login page visual polish */
+
+.sf19-auth-page{
+  min-height:calc(100vh - 68px)!important;
+  padding:54px 24px 72px!important;
+  place-items:start center!important;
+  background:
+    radial-gradient(circle at 24% 18%,rgba(61,210,178,.10),transparent 28%),
+    radial-gradient(circle at 78% 15%,rgba(114,82,228,.10),transparent 30%),
+    linear-gradient(135deg,#f7fbfb 0%,#faf9ff 100%)!important;
+}
+
+.sf19-auth-card{
+  width:min(100%,560px)!important;
+  padding:34px 36px 30px!important;
+  border:1px solid #dfe4eb!important;
+  border-radius:26px!important;
+  background:#fff!important;
+  box-shadow:0 22px 55px rgba(45,55,85,.10)!important;
+}
+
+.sf19-auth-brand{
+  align-items:flex-start!important;
+  gap:16px!important;
+}
+
+.sf19-auth-orb{
+  width:52px!important;
+  height:52px!important;
+  border-radius:16px!important;
+  background:linear-gradient(145deg,#5ed9bd 0%,#5fa9dc 48%,#7352e7 100%)!important;
+  font-size:13px!important;
+}
+
+.sf19-auth-card .sf19-eyebrow{
+  margin-top:1px!important;
+  color:#24b98e!important;
+  font-size:11px!important;
+  letter-spacing:.09em!important;
+}
+
+.sf19-auth-card h1{
+  margin-top:2px!important;
+  color:#172b3a!important;
+  font-size:32px!important;
+  line-height:1.08!important;
+  font-weight:900!important;
+  letter-spacing:-.035em!important;
+  text-shadow:none!important;
+  -webkit-text-fill-color:#172b3a!important;
+}
+
+.sf19-auth-intro{
+  margin:22px 0 24px!important;
+  color:#536b7b!important;
+  font-size:15px!important;
+  line-height:1.65!important;
+}
+
+.sf19-google-button{
+  min-height:50px!important;
+  border:1px solid #d8dee6!important;
+  border-radius:14px!important;
+  background:#fff!important;
+  color:#182b39!important;
+  font-size:14px!important;
+  font-weight:850!important;
+  box-shadow:0 4px 12px rgba(45,55,80,.03)!important;
+}
+
+.sf19-google-button:hover:not(:disabled){
+  border-color:#bfc9d4!important;
+  background:#fafcff!important;
+  transform:translateY(-1px)!important;
+}
+
+.sf19-google-mark{
+  width:26px!important;
+  height:26px!important;
+  background:#f4f6fb!important;
+  color:#4285f4!important;
+  font-size:13px!important;
+}
+
+.sf19-divider{
+  margin:22px 0!important;
+  color:#81919d!important;
+}
+
+.sf19-auth-form{
+  gap:16px!important;
+}
+
+.sf19-auth-form label{
+  gap:8px!important;
+  color:#263d4d!important;
+  font-size:12px!important;
+  font-weight:850!important;
+}
+
+.sf19-auth-form input{
+  min-height:50px!important;
+  padding:0 15px!important;
+  border:1px solid #d8e0e6!important;
+  border-radius:13px!important;
+  background:#f8fafc!important;
+  color:#172b3a!important;
+  font-size:14px!important;
+  font-weight:650!important;
+  caret-color:#5d49d8!important;
+}
+
+.sf19-auth-form input::placeholder{
+  color:#8b9aa5!important;
+  opacity:1!important;
+}
+
+.sf19-auth-form input:focus{
+  background:#fff!important;
+  border-color:#7259df!important;
+  box-shadow:0 0 0 4px rgba(114,89,223,.10)!important;
+}
+
+.sf19-primary-button{
+  min-height:50px!important;
+  margin-top:2px!important;
+  border-radius:13px!important;
+  background:linear-gradient(100deg,#7052e7 0%,#4778df 48%,#27a8d2 100%)!important;
+  color:#fff!important;
+  font-size:14px!important;
+  font-weight:900!important;
+  box-shadow:0 10px 24px rgba(88,77,211,.20)!important;
+}
+
+.sf19-primary-button:hover:not(:disabled){
+  transform:translateY(-1px)!important;
+  box-shadow:0 13px 28px rgba(88,77,211,.24)!important;
+}
+
+.sf19-mode-link{
+  margin-top:22px!important;
+  color:#6244d5!important;
+  font-size:13px!important;
+  font-weight:850!important;
+}
+
+.sf19-mode-link:hover{
+  color:#4627b7!important;
+  text-decoration:underline!important;
+}
+
+.sf19-auth-footnote{
+  margin-top:24px!important;
+  padding-top:18px!important;
+  border-top:1px solid #edf0f3!important;
+  color:#81919c!important;
+  font-size:11px!important;
+}
+
+.sf19-config-warning,
+.sf19-auth-error{
+  font-size:12.5px!important;
+}
+
+@media(max-width:800px){
+  .sf19-auth-page{
+    padding:34px 14px 48px!important;
+  }
+}
+
+@media(max-width:560px){
+  .sf19-auth-card{
+    padding:26px 20px 24px!important;
+    border-radius:21px!important;
+  }
+
+  .sf19-auth-card h1{
+    font-size:27px!important;
+  }
+
+  .sf19-auth-intro{
+    font-size:14px!important;
+  }
+}

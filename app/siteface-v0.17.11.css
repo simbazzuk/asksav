@@ -1,0 +1,378 @@
+/* SiteFace v0.17.11 - Global Typography Scale */
+
+/* HOME / ANALYSE / HISTORY shared navigation */
+.sf179-brand strong,
+.sf178-brand strong,
+.sf1710-brand strong{
+  font-size:22px!important;
+}
+
+.sf179-brand small,
+.sf178-brand small,
+.sf1710-brand small{
+  font-size:10px!important;
+}
+
+.sf179-side-cta,
+.sf178-side-cta,
+.sf1710-side-cta{
+  font-size:13px!important;
+  padding:14px!important;
+}
+
+.sf179-side-nav a,
+.sf178-side-nav a,
+.sf1710-side-nav a{
+  font-size:13px!important;
+  padding:13px!important;
+}
+
+.sf179-side-card strong,
+.sf178-side-card strong,
+.sf1710-side-card strong{
+  font-size:12px!important;
+}
+
+.sf179-side-card p,
+.sf178-side-card p,
+.sf1710-side-card p{
+  font-size:10px!important;
+}
+
+.sf179-version,
+.sf179-status,
+.sf178-version,
+.sf178-status,
+.sf1710-version,
+.sf1710-status{
+  font-size:9.5px!important;
+}
+
+/* Top navigation */
+.sf179-header>nav a,
+.sf178-header>nav a,
+.sf1710-header>nav a{
+  font-size:13px!important;
+}
+
+.sf179-mantra,
+.sf178-mantra,
+.sf1710-mantra{
+  font-size:11px!important;
+}
+
+.sf179-avatar,
+.sf178-avatar,
+.sf1710-avatar{
+  font-size:11px!important;
+}
+
+/* HOME */
+.sf179-kicker{
+  font-size:13px!important;
+}
+
+.sf179-copy h1{
+  font-size:72px!important;
+}
+
+.sf179-copy>p{
+  font-size:18px!important;
+}
+
+.sf179-primary,
+.sf179-secondary{
+  font-size:13px!important;
+}
+
+.sf179-proof span{
+  font-size:10px!important;
+}
+
+.sf179-product-copy small,
+.sf179-value-card small{
+  font-size:8px!important;
+}
+
+.sf179-product-copy strong{
+  font-size:18px!important;
+}
+
+.sf179-product-copy span{
+  font-size:10px!important;
+}
+
+.sf179-value-card strong{
+  font-size:28px!important;
+}
+
+.sf179-value-card span{
+  font-size:9px!important;
+}
+
+.sf179-float small{
+  font-size:8px!important;
+}
+
+.sf179-float strong{
+  font-size:12px!important;
+}
+
+.sf179-float span{
+  font-size:9px!important;
+}
+
+.sf179-section-heading h2{
+  font-size:41px!important;
+}
+
+.sf179-section-heading p{
+  font-size:14px!important;
+}
+
+.sf179-step h3{
+  font-size:18px!important;
+}
+
+.sf179-step p{
+  font-size:11px!important;
+}
+
+.sf179-example-head h2{
+  font-size:33px!important;
+}
+
+.sf179-example-head p{
+  font-size:12px!important;
+}
+
+.sf179-value-grid small{
+  font-size:8px!important;
+}
+
+.sf179-value-grid strong{
+  font-size:20px!important;
+}
+
+.sf179-value-grid .main strong{
+  font-size:28px!important;
+}
+
+.sf179-reasons span{
+  font-size:9px!important;
+}
+
+.sf179-use-grid h3{
+  font-size:18px!important;
+}
+
+.sf179-use-grid p{
+  font-size:11px!important;
+}
+
+.sf179-final-cta h2{
+  font-size:36px!important;
+}
+
+.sf179-final-cta p{
+  font-size:12px!important;
+}
+
+/* ANALYSE */
+.sf178-kicker{
+  font-size:13px!important;
+}
+
+.sf178-hero h1{
+  font-size:58px!important;
+}
+
+.sf178-hero p{
+  font-size:16px!important;
+}
+
+.sf178-flow-card strong{
+  font-size:13px!important;
+}
+
+.sf178-flow-card small{
+  font-size:9.5px!important;
+}
+
+.sf178-card-title h2{
+  font-size:27px!important;
+}
+
+.sf178-card-title p{
+  font-size:11px!important;
+}
+
+.sf178-drop-inner strong{
+  font-size:15px!important;
+}
+
+.sf178-drop-inner small{
+  font-size:9.5px!important;
+}
+
+.sf178-file-buttons label{
+  font-size:11px!important;
+}
+
+.sf178-hint input{
+  font-size:10.5px!important;
+}
+
+.sf178-tips span{
+  font-size:9px!important;
+}
+
+.sf178-analyse-button{
+  font-size:13.5px!important;
+}
+
+.sf178-report-title strong{
+  font-size:20px!important;
+}
+
+.sf178-report-title small{
+  font-size:10px!important;
+}
+
+.sf178-report-empty h2{
+  font-size:31px!important;
+}
+
+.sf178-report-empty>p{
+  font-size:12px!important;
+}
+
+.sf178-report-cards strong{
+  font-size:11px!important;
+}
+
+.sf178-report-cards p{
+  font-size:9px!important;
+}
+
+.sf178-result-card h2{
+  font-size:26px!important;
+}
+
+.sf178-result-card p{
+  font-size:10.5px!important;
+}
+
+.sf178-result-label{
+  font-size:8.5px!important;
+}
+
+.sf178-result-score{
+  font-size:25px!important;
+}
+
+.sf178-verify strong{
+  font-size:9.5px!important;
+}
+
+.sf178-verify p{
+  font-size:9px!important;
+}
+
+.sf178-market-links strong{
+  font-size:10px!important;
+}
+
+.sf178-market-links small{
+  font-size:8px!important;
+}
+
+/* HISTORY */
+.sf1710-kicker{
+  font-size:12px!important;
+}
+
+.sf1710-hero h1{
+  font-size:50px!important;
+}
+
+.sf1710-hero p{
+  font-size:14px!important;
+}
+
+.sf1710-primary{
+  font-size:11.5px!important;
+}
+
+.sf1710-search input{
+  font-size:11px!important;
+}
+
+.sf1710-summary{
+  font-size:10px!important;
+}
+
+.sf1710-summary strong{
+  font-size:13px!important;
+}
+
+.sf1710-card-top span{
+  font-size:8.5px!important;
+}
+
+.sf1710-card-top h2{
+  font-size:19px!important;
+}
+
+.sf1710-card-top p{
+  font-size:9.5px!important;
+}
+
+.sf1710-badges span{
+  font-size:8.5px!important;
+}
+
+.sf1710-metrics small{
+  font-size:7.5px!important;
+}
+
+.sf1710-metrics strong{
+  font-size:14px!important;
+}
+
+.sf1710-card-footer span{
+  font-size:8.5px!important;
+}
+
+.sf1710-card-footer a{
+  font-size:9px!important;
+}
+
+.sf1710-empty h2{
+  font-size:32px!important;
+}
+
+.sf1710-empty p{
+  font-size:12px!important;
+}
+
+/* Keep mobile sensible */
+@media(max-width:700px){
+  .sf179-copy h1{
+    font-size:45px!important;
+  }
+
+  .sf178-hero h1{
+    font-size:42px!important;
+  }
+
+  .sf1710-hero h1{
+    font-size:40px!important;
+  }
+
+  .sf179-side-nav a,
+  .sf178-side-nav a,
+  .sf1710-side-nav a{
+    font-size:12px!important;
+  }
+}

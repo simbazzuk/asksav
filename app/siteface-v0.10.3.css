@@ -1,0 +1,447 @@
+/* SiteFace v0.10.3 - Simplified Dashboard */
+
+.sf103-home {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.sf103-eyebrow {
+  display: block;
+  color: #0c7b5b;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+
+/* Hero */
+
+.sf103-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(340px, .85fr);
+  gap: 32px;
+  align-items: center;
+  overflow: hidden;
+  padding: 36px;
+  border: 1px solid #cce2d9;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 88% 14%, rgba(98, 176, 255, .20), transparent 23%),
+    radial-gradient(circle at 74% 95%, rgba(35, 180, 140, .17), transparent 30%),
+    linear-gradient(135deg, #ecfaf5 0%, #f4f9ff 58%, #faf7ff 100%);
+  box-shadow: 0 13px 32px rgba(34, 55, 47, .08);
+}
+
+.sf103-hero::after {
+  content: "";
+  position: absolute;
+  width: 290px;
+  height: 290px;
+  right: -130px;
+  top: -160px;
+  border-radius: 50%;
+  border: 38px solid rgba(255, 255, 255, .32);
+  pointer-events: none;
+}
+
+.sf103-hero-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+}
+
+.sf103-hero h2 {
+  margin: 8px 0 14px;
+  font-size: clamp(34px, 4vw, 52px);
+  line-height: 1.02;
+  letter-spacing: -.04em;
+  color: #20282d;
+}
+
+.sf103-hero-lead {
+  max-width: 690px;
+  margin: 0;
+  color: #53636c;
+  font-size: 16px;
+  line-height: 1.66;
+}
+
+.sf103-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.sf103-actions .btn {
+  min-height: 43px;
+  padding-inline: 18px;
+}
+
+.sf103-trust {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin-top: 20px;
+  color: #708079;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.sf103-trust i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #7fb9a5;
+}
+
+/* Compact comparison visual */
+
+.sf103-comparison {
+  position: relative;
+  z-index: 2;
+  padding: 17px;
+  border: 1px solid rgba(255, 255, 255, .9);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .88);
+  box-shadow: 0 12px 28px rgba(45, 75, 64, .12);
+  backdrop-filter: blur(8px);
+}
+
+.sf103-comparison-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 13px;
+  color: #3f4b51;
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.sf103-status-pill {
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #e3f6ee;
+  color: #107556;
+  font-size: 9px;
+}
+
+.sf103-images {
+  display: grid;
+  grid-template-columns: 1fr 24px 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.sf103-image-card {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  border: 1px solid #dde4e1;
+  border-radius: 11px;
+  background: #fff;
+}
+
+.sf103-image-card small {
+  display: block;
+  padding: 7px 8px;
+  color: #6d7980;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.sf103-image-label {
+  position: absolute;
+  z-index: 3;
+  left: 7px;
+  top: 7px;
+  padding: 4px 6px;
+  border-radius: 5px;
+  background: rgba(36, 44, 49, .8);
+  color: white;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.sf103-image-label.current {
+  background: rgba(17, 125, 92, .9);
+}
+
+.sf103-wall {
+  position: relative;
+  height: 112px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.38), transparent 32%),
+    #f1eadc;
+}
+
+.sf103-window {
+  position: absolute;
+  left: 17%;
+  top: 18px;
+  width: 32%;
+  height: 50px;
+  border: 5px solid #f7f5ef;
+  box-shadow: 0 0 0 1px rgba(60, 70, 70, .13);
+  background:
+    linear-gradient(90deg, transparent 47%, rgba(255,255,255,.85) 48%, rgba(255,255,255,.85) 52%, transparent 53%),
+    linear-gradient(0deg, transparent 47%, rgba(255,255,255,.85) 48%, rgba(255,255,255,.85) 52%, transparent 53%),
+    #9bc9dd;
+}
+
+.sf103-floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 27px;
+  border-top: 4px solid #fff;
+  background: #b79269;
+}
+
+.sf103-mark {
+  position: absolute;
+  right: 19%;
+  top: 53px;
+  width: 31px;
+  height: 19px;
+  border-radius: 48% 42% 57% 40%;
+  transform: rotate(-12deg);
+  background: rgba(151, 111, 58, .42);
+  filter: blur(.4px);
+}
+
+.sf103-compare-arrow {
+  display: grid;
+  place-items: center;
+  color: #4d8b77;
+  font-size: 19px;
+  font-weight: 900;
+}
+
+.sf103-result {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 11px;
+  border: 1px solid #f0d3bd;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #fff4ec, #fffaf7);
+}
+
+.sf103-result-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: #f4c8a8;
+  color: #a94d17;
+  font-weight: 950;
+}
+
+.sf103-result strong {
+  display: block;
+  color: #3b454a;
+  font-size: 11px;
+}
+
+.sf103-result p {
+  margin: 3px 0 0;
+  color: #737e84;
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+.sf103-confidence {
+  padding-left: 8px;
+  text-align: right;
+}
+
+.sf103-confidence strong {
+  color: #126d52;
+  font-size: 14px;
+}
+
+.sf103-confidence span {
+  display: block;
+  color: #8a9499;
+  font-size: 8px;
+}
+
+.sf103-review-link {
+  display: block;
+  margin-top: 10px;
+  color: #0d7658;
+  font-size: 10px;
+  font-weight: 850;
+  text-align: right;
+  text-decoration: none;
+}
+
+/* One-line explainer */
+
+.sf103-explainer {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 15px;
+  border: 1px solid #dce5e1;
+  border-radius: 11px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(38, 52, 47, .035);
+  color: #68757c;
+  font-size: 11px;
+}
+
+.sf103-explainer strong {
+  color: #344149;
+}
+
+.sf103-explainer a {
+  color: #0c7657;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+/* Portfolio */
+
+.sf103-dashboard-section {
+  margin: 28px 0;
+}
+
+.sf103-section-title {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 13px;
+}
+
+.sf103-section-title h3 {
+  margin: 4px 0 0;
+  font-size: 19px;
+}
+
+.sf103-section-title > a {
+  color: #0c7657;
+  font-size: 11px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.sf103-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.sf103-metric {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 94px;
+  padding: 17px;
+  border: 1px solid #dde5e1;
+  border-radius: 13px;
+  box-shadow: 0 7px 17px rgba(40, 51, 47, .045);
+  color: inherit;
+  text-decoration: none;
+}
+
+.sf103-metric.properties {
+  background: linear-gradient(135deg, #edf9f4, #fff);
+  border-color: #cae6d9;
+}
+
+.sf103-metric.findings {
+  background: linear-gradient(135deg, #fff2e8, #fff);
+  border-color: #efd4bf;
+}
+
+.sf103-metric.review {
+  background: linear-gradient(135deg, #f1f5ff, #fff);
+  border-color: #d1daf1;
+}
+
+.sf103-metric-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, .88);
+  box-shadow: 0 4px 11px rgba(40, 50, 46, .07);
+  color: #126f54;
+  font-size: 19px;
+  font-weight: 900;
+}
+
+.sf103-metric strong {
+  display: block;
+  color: #242c31;
+  font-size: 25px;
+  line-height: 1;
+}
+
+.sf103-metric span {
+  display: block;
+  margin-top: 6px;
+  color: #68757b;
+  font-size: 11px;
+  font-weight: 750;
+}
+
+/* Hide the old v0.10 / v0.10.2 marketing blocks if an earlier dashboard copy
+   remains mounted accidentally. */
+.sf102-get-started,
+.sf102-flow-card,
+.sf102-benefits {
+  display: none !important;
+}
+
+/* If the dashboard still wraps the SiteFacePurpose component in older spacing,
+   keep it compact. */
+.sf102-purpose {
+  display: contents;
+}
+
+@media (max-width: 1050px) {
+  .sf103-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .sf103-comparison {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 760px) {
+  .sf103-hero {
+    padding: 23px;
+  }
+
+  .sf103-hero h2 {
+    font-size: 35px;
+  }
+
+  .sf103-explainer {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .sf103-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .sf103-images {
+    grid-template-columns: 1fr 20px 1fr;
+  }
+}

@@ -1,0 +1,531 @@
+"use client";
+
+import InspectionPageIntro from "../../components/InspectionPageIntro";
+import InspectionGuidanceCards from "../../components/InspectionGuidanceCards";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+
+type Asset = {
+  property_id: string;
+  room_id: string;
+  room_name: string;
+  asset_id: string;
+  asset_name: string;
+  display_order: number;
+};
+
+const inspectionTypeHelp: Record<string, { title: string; description: string }> = {
+  ROUTINE: {
+    title: "Routine inspection",
+    description:
+      "Regular condition check to identify changes or issues since the previous inspection.",
+  },
+  CHECK_IN: {
+    title: "Check-in",
+    description:
+      "Establish the property's condition and photographic baseline when a new occupant moves in.",
+  },
+  CHECK_OUT: {
+    title: "Check-out",
+    description:
+      "Record the property's condition when an occupant leaves and compare it against earlier evidence.",
+  },
+  MAINTENANCE: {
+    title: "Maintenance",
+    description:
+      "Inspect a specific repair, defect or maintenance concern and capture supporting evidence.",
+  },
+};
+
+export default function InspectionSessionClient() {
+  const searchParams = useSearchParams();
+  const initialProperty = searchParams.get("property") || "PROP001";
+
+  const [propertyId, setPropertyId] = useState(initialProperty);
+  const [inspectionType, setInspectionType] = useState("ROUTINE");
+  const [assets, setAssets] = useState<Asset[]>([]);
+  const [sessionId, setSessionId] = useState("");
+  const [session, setSession] = useState<any>(null);
+  const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
+
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [preview, setPreview] = useState("");
+  const [previousPreview, setPreviousPreview] = useState("");
+  const [previousInfo, setPreviousInfo] = useState<any>(null);
+
+  const [completed, setCompleted] = useState<Record<string, any>>({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function loadAssets(id = propertyId) {
+    setError("");
+
+    try {
+      const response = await fetch(
+        `/api/properties/${encodeURIComponent(id)}/assets`
+      );
+
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.error || "Could not load property assets.");
+      }
+
+      setAssets(payload);
+      setSelectedAsset(payload[0] || null);
+      return payload as Asset[];
+    } catch (e) {
+      setError(
+        e instanceof Error ? e.message : "Could not load property assets."
+      );
+      return [] as Asset[];
+    }
+  }
+
+  useEffect(() => {
+    loadAssets(initialProperty);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function beginSession() {
+    if (assets.length === 0) {
+      setError(
+        "Configure at least one inspection item before starting an inspection."
+      );
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/sessions", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          propertyId,
+          inspectionType,
+          totalItems: assets.length,
+        }),
+      });
+
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.error || "Could not start session.");
+      }
+
+      const createdSessionId = payload.sessionId || payload.session_id;
+
+      if (!createdSessionId) {
+        throw new Error("Session was created but no session ID was returned.");
+      }
+
+      setSessionId(String(createdSessionId));
+      setSession(payload);
+
+      const refreshedAssets = await loadAssets(propertyId);
+      const firstAsset = refreshedAssets[0] || assets[0];
+
+      if (firstAsset) {
+        await selectAsset(firstAsset);
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Could not start session.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function selectAsset(asset: Asset) {
+    setSelectedAsset(asset);
+    setPhoto(null);
+    setPreview("");
+    setPreviousPreview("");
+    setPreviousInfo(null);
+
+    try {
+      const qs = new URLSearchParams({
+        propertyId,
+        asset: asset.asset_id,
+      });
+
+      const response = await fetch(`/api/previous-image?${qs.toString()}`);
+      const payload = await response.json();
+
+      if (response.ok) {
+        setPreviousInfo(payload);
+
+        if (payload.exists && payload.previewUrl) {
+          setPreviousPreview(payload.previewUrl);
+        }
+      }
+    } catch {
+      // Previous evidence is optional. The current image can become a baseline.
+    }
+  }
+
+  function onPhoto(file: File | null) {
+    setPhoto(file);
+
+    if (!file) {
+      setPreview("");
+      return;
+    }
+
+    setPreview(URL.createObjectURL(file));
+  }
+
+  async function analyseCurrent() {
+    if (!photo || !selectedAsset || !sessionId) return;
+
+    setLoading(true);
+    setError("");
+
+    const form = new FormData();
+    form.append("current", photo);
+    form.append("propertyId", propertyId);
+    form.append("asset", selectedAsset.asset_id);
+    form.append("sessionId", sessionId);
+    form.append("roomId", selectedAsset.room_id);
+    form.append("roomName", selectedAsset.room_name);
+    form.append("assetId", selectedAsset.asset_id);
+    form.append("assetName", selectedAsset.asset_name);
+
+    try {
+      const response = await fetch("/api/inspect", {
+        method: "POST",
+        body: form,
+      });
+
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.error || "Inspection failed.");
+      }
+
+      const completedNow = {
+        ...completed,
+        [selectedAsset.asset_id]: payload,
+      };
+
+      setCompleted(completedNow);
+
+      const currentIndex = assets.findIndex(
+        (a) => a.asset_id === selectedAsset.asset_id
+      );
+
+      const next = assets.find(
+        (a, idx) => idx > currentIndex && !completedNow[a.asset_id]
+      );
+
+      if (next) {
+        await selectAsset(next);
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Inspection failed.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const rooms = useMemo(
+    () => Array.from(new Set(assets.map((a) => a.room_name))),
+    [assets]
+  );
+
+  const doneCount = Object.keys(completed).length;
+  const progress = assets.length
+    ? Math.round((doneCount / assets.length) * 100)
+    : 0;
+  const result = selectedAsset ? completed[selectedAsset.asset_id] : null;
+  const typeHelp =
+    inspectionTypeHelp[inspectionType] || inspectionTypeHelp.ROUTINE;
+
+  if (!sessionId) {
+    return (
+      <>
+        <InspectionPageIntro />
+
+        <section className="card card-pad session-start-card sf126-session-start">
+          <div className="form-grid-2">
+            <div>
+              <label>Property ID</label>
+              <input
+                value={propertyId}
+                onChange={(e) => setPropertyId(e.target.value)}
+                onBlur={() => loadAssets(propertyId)}
+                aria-describedby="sf1261-property-help"
+              />
+
+              <div
+                id="sf1261-property-help"
+                className="sf1261-property-help"
+              >
+                <div
+                  className="sf1261-property-help-icon"
+                  aria-hidden="true"
+                >
+                  i
+                </div>
+                <div>
+                  <strong>What is a Property ID?</strong>
+                  <span>
+                    Enter the unique SiteFace reference for the property, for
+                    example PROP001. You can find this on the Properties page.
+                  </span>
+                  <a href="/properties">View properties</a>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label>Inspection type</label>
+              <select
+                value={inspectionType}
+                onChange={(e) => setInspectionType(e.target.value)}
+              >
+                <option value="ROUTINE">Routine inspection</option>
+                <option value="CHECK_IN">Check-in</option>
+                <option value="CHECK_OUT">Check-out</option>
+                <option value="MAINTENANCE">Maintenance</option>
+              </select>
+
+              <div className="sf126-type-help" aria-live="polite">
+                <div className="sf126-type-help-icon" aria-hidden="true">
+                  i
+                </div>
+                <div>
+                  <strong>{typeHelp.title}</strong>
+                  <span>{typeHelp.description}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className={`session-ready ${
+              assets.length === 0 ? "sf1031-not-ready" : ""
+            }`}
+          >
+            <strong>{assets.length} inspection items configured</strong>
+            <span>
+              {assets.length > 0
+                ? "Ready to create a new inspection session."
+                : "Configure this property before starting an inspection."}
+            </span>
+          </div>
+
+          {assets.length === 0 && (
+            <div className="sf1031-no-items">
+              <strong>Inspection setup required</strong>
+              <p>
+                Add at least one room or asset to this property before starting
+                an inspection.
+              </p>
+
+              <div className="sf1031-configure-actions">
+                <a
+                  className="btn secondary"
+                  href={`/properties/${encodeURIComponent(
+                    propertyId
+                  )}/configure`}
+                >
+                  Configure property
+                </a>
+                <span className="sf1031-configure-help">
+                  Then return here to begin the inspection.
+                </span>
+              </div>
+            </div>
+          )}
+
+          <button
+            className="btn"
+            disabled={loading || assets.length === 0}
+            onClick={beginSession}
+          >
+            {loading ? "Starting..." : "Begin inspection"}
+          </button>
+
+          <InspectionGuidanceCards />
+
+          {error && <div className="error">{error}</div>}
+        </section>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div className="session-header-card card">
+        <div>
+          <div className="session-eyebrow">Inspection session</div>
+          <strong>{propertyId}</strong>
+          <span>{inspectionType.replaceAll("_", " ")}</span>
+        </div>
+
+        <div className="session-progress-copy">
+          <strong>
+            {doneCount} / {assets.length}
+          </strong>
+          <span>{progress}% complete</span>
+        </div>
+      </div>
+
+      <div className="inspection-shell">
+        <aside className="card inspect-side">
+          <strong style={{ fontSize: 13 }}>Inspection checklist</strong>
+
+          <div className="progress">
+            <div style={{ width: `${progress}%` }} />
+          </div>
+
+          {rooms.map((room) => (
+            <div key={room}>
+              <div className="room-heading">{room}</div>
+
+              {assets
+                .filter((a) => a.room_name === room)
+                .map((asset) => {
+                  const done = Boolean(completed[asset.asset_id]);
+                  const active =
+                    selectedAsset?.asset_id === asset.asset_id;
+
+                  return (
+                    <button
+                      key={asset.asset_id}
+                      className={`check-item ${active ? "active" : ""}`}
+                      onClick={() => selectAsset(asset)}
+                    >
+                      <span
+                        className={`dot ${
+                          done ? "done" : active ? "active" : ""
+                        }`}
+                      />
+                      {asset.asset_name}
+                    </button>
+                  );
+                })}
+            </div>
+          ))}
+        </aside>
+
+        <section className="card inspect-main">
+          {selectedAsset ? (
+            <>
+              <h2 className="inspect-title">
+                {selectedAsset.room_name}
+                {" - "}
+                {selectedAsset.asset_name}
+              </h2>
+
+              <div className="inspect-subtitle">
+                Match today's framing to the previous inspection where
+                practical.
+              </div>
+
+              <div className="capture-grid">
+                <div className="capture-card">
+                  <h3>Previous inspection</h3>
+
+                  <div className="frame">
+                    {previousPreview ? (
+                      <>
+                        <img
+                          src={previousPreview}
+                          alt="Previous inspection"
+                        />
+                        <div className="frame-guide" />
+                        <div className="cross" />
+                      </>
+                    ) : (
+                      <span>
+                        {previousInfo?.exists === false
+                          ? "No previous image - today's photo becomes the baseline."
+                          : "No previous image loaded."}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="capture-card">
+                  <h3>Today's photo</h3>
+
+                  <div className="frame">
+                    {preview ? (
+                      <>
+                        <img src={preview} alt="Today's inspection" />
+                        <div className="frame-guide" />
+                        <div className="cross" />
+                      </>
+                    ) : (
+                      <span>Take or choose a photo</span>
+                    )}
+                  </div>
+
+                  <div style={{ marginTop: 10 }}>
+                    <label className="sf1251-browse-picture">
+                      <span
+                        className="sf1251-browse-icon"
+                        aria-hidden="true"
+                      >
+                        +
+                      </span>
+                      <span className="sf1251-browse-text">
+                        Browse picture
+                      </span>
+                      <input
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        capture="environment"
+                        onChange={(e) =>
+                          onPhoto(e.target.files?.[0] || null)
+                        }
+                      />
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="actions">
+                <button
+                  className="btn"
+                  disabled={!photo || loading}
+                  onClick={analyseCurrent}
+                >
+                  {loading ? "Analysing..." : "Analyse & complete item"}
+                </button>
+              </div>
+
+              {result && (
+                <div className="ai-result good">
+                  <h3>
+                    {result.defect_detected
+                      ? "Condition issue detected"
+                      : "No condition issue detected"}
+                  </h3>
+                  <p>{result.summary}</p>
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="empty-state">
+              No inspection items configured.
+            </div>
+          )}
+
+          {error && <div className="error">{error}</div>}
+
+          {sessionId && (
+            <div className="review-session-bar">
+              <a
+                className="btn secondary"
+                href={`/sessions/${sessionId}`}
+              >
+                Review inspection
+              </a>
+            </div>
+          )}
+        </section>
+      </div>
+    </>
+  );
+}

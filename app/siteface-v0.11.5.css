@@ -1,0 +1,153 @@
+/* SiteFace v0.11.5 — Findings Layout Cleanup
+   Removes the accidental nested-header border and restores clean card hierarchy. */
+
+.finding-card,
+[class*="finding-card"]{
+  padding:20px !important;
+  overflow:hidden;
+}
+
+/* Remove accidental nested panel treatment from the finding header/status row */
+.finding-card > div:first-child,
+[class*="finding-card"] > div:first-child{
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  border-radius:0 !important;
+  padding:0 !important;
+  margin:0 0 12px 0 !important;
+}
+
+/* Header layout: content left, pills right */
+.finding-card > div:first-child{
+  display:flex !important;
+  align-items:flex-start !important;
+  justify-content:space-between !important;
+  gap:16px !important;
+}
+
+.finding-card > div:first-child > div:first-child{
+  min-width:0 !important;
+  flex:1 1 auto !important;
+}
+
+.finding-card > div:first-child > div:last-child{
+  flex:0 0 auto !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  padding:0 !important;
+}
+
+/* Tighten metadata spacing */
+.finding-card h3,
+.finding-card h2{
+  margin:4px 0 3px !important;
+  line-height:1.2 !important;
+}
+
+.finding-card [class*="property"]{
+  margin:0 !important;
+}
+
+.finding-card [class*="meta"],
+.finding-card small{
+  margin:0 !important;
+}
+
+/* Body description */
+.finding-card > p{
+  margin:14px 0 !important;
+  color:#91a9b1 !important;
+}
+
+/* Recommended action becomes a clean single panel */
+.finding-card [class*="recommend"],
+.finding-card [class*="recommended"],
+.finding-card [class*="action-panel"],
+.finding-card [class*="advice"],
+.finding-card .recommendation,
+.finding-card .recommended-action{
+  margin:0 0 14px 0 !important;
+  padding:14px 15px !important;
+  background:linear-gradient(135deg,rgba(34,201,145,.08),rgba(85,168,255,.045)) !important;
+  border:1px solid #2d5059 !important;
+  border-left:3px solid #22c991 !important;
+  border-radius:10px !important;
+  box-shadow:none !important;
+}
+
+.finding-card [class*="recommend"] strong,
+.finding-card [class*="recommended"] strong,
+.finding-card [class*="action-panel"] strong,
+.finding-card [class*="advice"] strong,
+.finding-card .recommendation strong,
+.finding-card .recommended-action strong{
+  display:block !important;
+  margin-bottom:5px !important;
+  color:#ffffff !important;
+}
+
+.finding-card [class*="recommend"] p,
+.finding-card [class*="recommended"] p,
+.finding-card [class*="action-panel"] p,
+.finding-card [class*="advice"] p,
+.finding-card .recommendation p,
+.finding-card .recommended-action p{
+  margin:0 !important;
+  color:#bdd0d0 !important;
+  line-height:1.45 !important;
+}
+
+/* Action buttons sit cleanly under the recommendation */
+.finding-card > div:last-child{
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  margin-top:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  padding:0 !important;
+}
+
+/* Ensure pills have no inherited panel background */
+.finding-card [class*="badge"],
+.finding-card [class*="pill"],
+.finding-card [class*="severity"],
+.finding-card [class*="status"]{
+  box-shadow:none !important;
+}
+
+/* Avoid generic v0.11 selectors creating boxes inside finding card */
+.finding-card [class*="panel"],
+.finding-card [class*="surface"],
+.finding-card [class*="card"]{
+  box-shadow:none !important;
+}
+
+/* But preserve recommendation styling */
+.finding-card [class*="recommend"],
+.finding-card [class*="recommended"],
+.finding-card [class*="action-panel"],
+.finding-card [class*="advice"]{
+  border-left:3px solid #22c991 !important;
+}
+
+/* Responsive */
+@media(max-width:700px){
+  .finding-card > div:first-child{
+    flex-direction:column !important;
+  }
+
+  .finding-card > div:first-child > div:last-child{
+    align-self:flex-start !important;
+  }
+
+  .finding-card > div:last-child{
+    flex-wrap:wrap !important;
+  }
+}

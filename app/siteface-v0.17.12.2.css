@@ -1,0 +1,40 @@
+/* SiteFace v0.17.12.2 - Active sidebar navigation contrast hotfix */
+
+/* Active Analyse/Home/History row must use dark readable text on the pale active background. */
+.sf178-side-nav a.active,
+.sf178-side-nav a.active *,
+.sf179-side-nav a.active,
+.sf179-side-nav a.active *,
+.sf1710-side-nav a.active,
+.sf1710-side-nav a.active * {
+  color: #0b6f54 !important;
+  -webkit-text-fill-color: #0b6f54 !important;
+  opacity: 1 !important;
+}
+
+/* Slightly strengthen the active background so the selected row is obvious. */
+.sf178-side-nav a.active,
+.sf179-side-nav a.active,
+.sf1710-side-nav a.active {
+  background: linear-gradient(90deg,#d9f4e9 0%,#dfefff 100%) !important;
+  font-weight: 900 !important;
+}
+
+/* Ensure inactive sidebar links stay dark and readable too. */
+.sf178-side-nav a:not(.active),
+.sf179-side-nav a:not(.active),
+.sf1710-side-nav a:not(.active) {
+  color: #30454d !important;
+  -webkit-text-fill-color: #30454d !important;
+  opacity: 1 !important;
+}
+
+/* Fallback for any active sidebar /analyse link rendered by older shell classes. */
+aside nav a[href="/analyse"].active,
+aside nav a[href="/analyse"].active *,
+aside a[href="/analyse"].active,
+aside a[href="/analyse"].active * {
+  color: #0b6f54 !important;
+  -webkit-text-fill-color: #0b6f54 !important;
+  opacity: 1 !important;
+}

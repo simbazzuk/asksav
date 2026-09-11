@@ -1,0 +1,416 @@
+import { bigquery, dataset, location, projectId, storage } from "./google";
+
+type AnyObject = Record<string, any>;
+
+function cleanString(value: unknown) {
+  if (value === null || value === undefined) return null;
+  const text = String(value).trim();
+  return text || null;
+}
+
+function cleanNumber(value: unknown) {
+  if (value === null || value === undefined || value === "") return null;
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
+function cleanList(value: unknown) {
+  if (!Array.isArray(value)) return [];
+  return value.map(cleanString).filter(Boolean).slice(0, 10);
+}
+
+function clampConfidence(value: unknown) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return 0;
+  return Math.max(0, Math.min(1, n));
+}
+
+function stripFence(value: string) {
+  return value
+    .replace(/^\s*```(?:json|javascript|js)?\s*/i, "")
+    .replace(/\s*```\s*$/i, "")
+    .trim();
+}
+
+function findBalancedJsonObject(value: string) {
+  const start = value.indexOf("{");
+  if (start < 0) return null;
+
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+
+  for (let i = start; i < value.length; i++) {
+    const ch = value[i];
+
+    if (escaped) {
+      escaped = false;
+      continue;
+    }
+
+    if (ch === "\\") {
+      if (inString) escaped = true;
+      continue;
+    }
+
+    if (ch === '"') {
+      inString = !inString;
+      continue;
+    }
+
+    if (inString) continue;
+
+    if (ch === "{") depth += 1;
+    if (ch === "}") {
+      depth -= 1;
+      if (depth === 0) return value.slice(start, i + 1);
+    }
+  }
+
+  return null;
+}
+
+function parseGeneratedJson(value: unknown, label: string): AnyObject {
+  if (value && typeof value === "object" && !Array.isArray(value)) {
+    return value as AnyObject;
+  }
+
+  let text = String(value ?? "").trim();
+  if (!text) throw new Error(`${label} returned no generated text.`);
+
+  console.log(`[SiteFace] ${label} raw response:`, text.slice(0, 6000));
+
+  const candidates: string[] = [];
+  const add = (candidate: string | null | undefined) => {
+    const next = candidate?.trim();
+    if (next && !candidates.includes(next)) candidates.push(next);
+  };
+
+  add(text);
+  add(stripFence(text));
+
+  const fenced = text.match(/```(?:json|javascript|js)?\s*([\s\S]*?)```/i);
+  add(fenced?.[1]);
+
+  // Sometimes a generated JSON object is itself returned as a JSON-encoded string.
+  try {
+    const outer = JSON.parse(text);
+    if (outer && typeof outer === "object" && !Array.isArray(outer)) {
+      return outer as AnyObject;
+    }
+    if (typeof outer === "string") {
+      add(outer);
+      add(stripFence(outer));
+    }
+  } catch {
+    // Continue through the fallback candidates below.
+  }
+
+  for (const candidate of [...candidates]) {
+    add(findBalancedJsonObject(candidate));
+  }
+
+  let lastError = "";
+
+  for (const candidate of candidates) {
+    try {
+      const parsed = JSON.parse(candidate);
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+        return parsed as AnyObject;
+      }
+      if (typeof parsed === "string") {
+        const parsedAgain = JSON.parse(stripFence(parsed));
+        if (parsedAgain && typeof parsedAgain === "object" && !Array.isArray(parsedAgain)) {
+          return parsedAgain as AnyObject;
+        }
+      }
+    } catch (error) {
+      lastError = error instanceof Error ? error.message : String(error);
+    }
+  }
+
+  console.error(`[SiteFace] ${label} JSON parse failed. Raw response:`, text);
+  throw new Error(
+    `${label} returned an unexpected response format. Raw output was logged in the server console.` +
+      (lastError ? ` Parser detail: ${lastError}` : "")
+  );
+}
+
+function buildIdentityText(result: AnyObject) {
+  return [
+    cleanString(result?.identification?.brand),
+    cleanString(result?.identification?.item_name),
+    cleanString(result?.identification?.model),
+    cleanString(result?.identification?.variant),
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
+async function generateVisualAnalysis(uri: string, hint: string) {
+  const prompt = `
+You are the visual intelligence engine for SiteFace.
+
+Analyse ONE photograph of a physical item.
+
+Perform two independent tasks:
+1. IDENTIFY the item as specifically as the visible evidence supports.
+2. Assess VISIBLE CONDITION only.
+
+Rules:
+- Never invent a brand, model, variant, age, specification or defect.
+- If a brand or model cannot be established, use a generic item name and lower confidence.
+- Do not infer hidden, internal or functional condition from appearance.
+- Cosmetic wear is different from functional or structural damage.
+- Mention important limitations caused by framing, blur, lighting or obscured areas.
+- Condition grade must be one of: EXCELLENT, GOOD, FAIR, POOR, UNKNOWN.
+- Confidence values must be numbers from 0 to 1.
+- Do NOT provide a monetary valuation in this response.
+- Produce a concise search query suitable for finding comparable used items.
+${hint ? `The user supplied this optional hint: ${JSON.stringify(hint)}` : ""}
+
+OUTPUT CONTRACT:
+Return exactly ONE valid JSON object.
+Do not use markdown fences.
+Do not add commentary before or after the JSON.
+Use double quotes around every JSON key and string value.
+Use null for unknown brand/model/variant.
+
+Required JSON shape:
+{
+  "identification": {
+    "category": "string",
+    "item_name": "string",
+    "brand": null,
+    "model": null,
+    "variant": null,
+    "confidence": 0.0,
+    "identifying_features": ["string"]
+  },
+  "condition": {
+    "grade": "GOOD",
+    "confidence": 0.0,
+    "summary": "string",
+    "visible_wear": ["string"],
+    "visible_damage": ["string"],
+    "limitations": ["string"]
+  },
+  "valuation_context": {
+    "search_query": "string",
+    "attributes_to_confirm": ["string"]
+  }
+}
+`.trim();
+
+  const query = `
+    SELECT
+      ml_generate_text_llm_result AS response,
+      ml_generate_text_status AS status
+    FROM ML.GENERATE_TEXT(
+      MODEL \`${projectId}.${dataset}.gemini_model\`,
+      (
+        SELECT
+          @prompt AS prompt,
+          OBJ.MAKE_REF(@uri) AS image
+      ),
+      STRUCT(
+        0.0 AS temperature,
+        2048 AS max_output_tokens,
+        TRUE AS flatten_json_output
+      )
+    )
+  `;
+
+  const [rows] = await bigquery.query({
+    query,
+    location,
+    params: { prompt, uri },
+  });
+
+  const row = (rows[0] || {}) as AnyObject;
+  const status = String(row.status || "").trim();
+
+  if (status) {
+    console.error("[SiteFace] visual model status:", status);
+    throw new Error(`Visual model returned status: ${status}`);
+  }
+
+  return parseGeneratedJson(row.response, "Visual analysis");
+}
+
+async function generateMarketIntelligence(analysis: AnyObject) {
+  const identity = buildIdentityText(analysis);
+  const identificationConfidence = clampConfidence(analysis?.identification?.confidence);
+  const condition = cleanString(analysis?.condition?.grade) || "UNKNOWN";
+  const searchQuery =
+    cleanString(analysis?.valuation_context?.search_query) ||
+    identity ||
+    cleanString(analysis?.identification?.item_name) ||
+    "used item";
+
+  if (!identity || identificationConfidence < 0.45) {
+    return {
+      available: false,
+      reason: "Identification confidence is too low for a responsible valuation.",
+      currency: "GBP",
+      low: null,
+      high: null,
+      suggested: null,
+      quick_sale: null,
+      confidence: 0,
+      evidence_summary: null,
+      search_query: searchQuery,
+    };
+  }
+
+  const prompt = `
+You are the market intelligence layer for SiteFace.
+
+Research the CURRENT UK second-hand market for:
+Identity: ${identity}
+Visible condition grade: ${condition}
+Comparable search phrase: ${searchQuery}
+
+Use Google Search grounding.
+
+Estimate a RESPONSIBLE used-market asking-price range in GBP.
+Use comparable currently advertised items when possible.
+Do not describe asking prices as completed/sold prices unless the evidence explicitly proves that.
+Do not invent model details or specifications that were not supplied.
+If the item identity is too broad or the evidence is weak, set "available" to false.
+
+OUTPUT CONTRACT:
+Return exactly ONE valid JSON object.
+Do not use markdown fences.
+Do not add commentary before or after the JSON.
+Use double quotes around every JSON key and string value.
+
+Required JSON shape:
+{
+  "available": true,
+  "reason": null,
+  "currency": "GBP",
+  "low": 0,
+  "high": 0,
+  "suggested": 0,
+  "quick_sale": 0,
+  "confidence": 0.0,
+  "evidence_summary": "brief explanation of the evidence and uncertainty",
+  "search_query": "concise marketplace search query"
+}
+`.trim();
+
+  try {
+    const query = `
+      SELECT
+        ml_generate_text_llm_result AS response,
+        ml_generate_text_status AS status
+      FROM ML.GENERATE_TEXT(
+        MODEL \`${projectId}.${dataset}.gemini_model\`,
+        (SELECT @prompt AS prompt),
+        STRUCT(
+          0.0 AS temperature,
+          2048 AS max_output_tokens,
+          TRUE AS flatten_json_output,
+          TRUE AS ground_with_google_search
+        )
+      )
+    `;
+
+    const [rows] = await bigquery.query({
+      query,
+      location,
+      params: { prompt },
+    });
+
+    const row = (rows[0] || {}) as AnyObject;
+    const status = String(row.status || "").trim();
+    if (status) throw new Error(status);
+
+    const parsed = parseGeneratedJson(row.response, "Market intelligence");
+
+    return {
+      available: Boolean(parsed?.available),
+      reason: cleanString(parsed?.reason),
+      currency: cleanString(parsed?.currency) || "GBP",
+      low: cleanNumber(parsed?.low),
+      high: cleanNumber(parsed?.high),
+      suggested: cleanNumber(parsed?.suggested),
+      quick_sale: cleanNumber(parsed?.quick_sale),
+      confidence: clampConfidence(parsed?.confidence),
+      evidence_summary: cleanString(parsed?.evidence_summary),
+      search_query: cleanString(parsed?.search_query) || searchQuery,
+    };
+  } catch (error) {
+    console.warn("[SiteFace] market intelligence unavailable:", error);
+    return {
+      available: false,
+      reason:
+        error instanceof Error
+          ? `Live market intelligence is not available yet. ${error.message}`
+          : "Live market intelligence is not available for this analysis yet.",
+      currency: "GBP",
+      low: null,
+      high: null,
+      suggested: null,
+      quick_sale: null,
+      confidence: 0,
+      evidence_summary: null,
+      search_query: searchQuery,
+    };
+  }
+}
+
+export async function analyseItemPhoto(image: File, hint = "") {
+  const bytes = Buffer.from(await image.arrayBuffer());
+
+  const bucketName = process.env.SITEFACE_BUCKET || "siteface-images-dev";
+  const objectName = `item-analysis/${crypto.randomUUID()}/${image.name || "item.jpg"}`;
+  const object = storage.bucket(bucketName).file(objectName);
+
+  await object.save(bytes, {
+    contentType: image.type,
+    resumable: false,
+    metadata: { cacheControl: "private, max-age=0" },
+  });
+
+  const uri = `gs://${bucketName}/${objectName}`;
+  const parsed = await generateVisualAnalysis(uri, hint);
+
+  const analysis = {
+    identification: {
+      category: cleanString(parsed?.identification?.category) || "Item",
+      item_name: cleanString(parsed?.identification?.item_name) || "Unidentified item",
+      brand: cleanString(parsed?.identification?.brand),
+      model: cleanString(parsed?.identification?.model),
+      variant: cleanString(parsed?.identification?.variant),
+      confidence: clampConfidence(parsed?.identification?.confidence),
+      identifying_features: cleanList(parsed?.identification?.identifying_features),
+    },
+    condition: {
+      grade: cleanString(parsed?.condition?.grade) || "UNKNOWN",
+      confidence: clampConfidence(parsed?.condition?.confidence),
+      summary: cleanString(parsed?.condition?.summary) || "No condition summary returned.",
+      visible_wear: cleanList(parsed?.condition?.visible_wear),
+      visible_damage: cleanList(parsed?.condition?.visible_damage),
+      limitations: cleanList(parsed?.condition?.limitations),
+    },
+    valuation_context: {
+      search_query:
+        cleanString(parsed?.valuation_context?.search_query) ||
+        cleanString(parsed?.identification?.item_name) ||
+        "used item",
+      attributes_to_confirm: cleanList(parsed?.valuation_context?.attributes_to_confirm),
+    },
+  };
+
+  console.log("[SiteFace] normalised visual analysis:", JSON.stringify(analysis, null, 2));
+
+  const market = await generateMarketIntelligence(analysis);
+
+  return {
+    ...analysis,
+    market,
+    evidence_uri: uri,
+  };
+}

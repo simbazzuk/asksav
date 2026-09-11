@@ -1,0 +1,159 @@
+/* SiteFace v0.11 — Dark Property Intelligence Design System
+   UI-only release. Existing application logic and data remain unchanged. */
+
+:root{
+  --sf-bg:#07151c;--sf-bg-2:#0a1b23;--sf-nav:#081a21;--sf-panel:#10242d;
+  --sf-panel-2:#142b35;--sf-panel-3:#18343e;--sf-line:#25414b;
+  --sf-text:#f4fbf8;--sf-muted:#9fb2b9;--sf-green:#22c991;--sf-green-2:#55dfb2;
+  --sf-blue:#55a8ff;--sf-purple:#9a86ff;--sf-cyan:#39d4c4;
+  --sf-amber:#f2bd55;--sf-red:#ff716a;--sf-good:#39d98a;
+}
+
+html{background:var(--sf-bg)}
+body{background:
+ radial-gradient(circle at 82% 4%,rgba(34,201,145,.07),transparent 25%),
+ linear-gradient(180deg,var(--sf-bg),#091820 52%,#08161d);
+ color:var(--sf-text);min-height:100vh}
+
+main{color:var(--sf-text)}
+a{color:inherit}
+
+/* Broad compatibility with the existing SiteFace shell/cards */
+[class*="card"],[class*="panel"],[class*="surface"]{
+  border-color:var(--sf-line);
+}
+.card,.panel,.dashboard-card,.property-card,.finding-card,.history-card,
+.session-start-card,.inspection-session-card,.sf-inspection-card{
+  background:linear-gradient(145deg,var(--sf-panel),#0d2028)!important;
+  border:1px solid var(--sf-line)!important;
+  color:var(--sf-text)!important;
+  box-shadow:0 14px 35px rgba(0,0,0,.18)!important;
+}
+
+h1,h2,h3,h4,h5,h6{color:var(--sf-text)}
+p,label,small{color:var(--sf-muted)}
+strong{color:var(--sf-text)}
+
+input,select,textarea{
+  color:var(--sf-text)!important;background:#0b1d25!important;
+  border-color:#31505b!important;color-scheme:dark
+}
+input::placeholder,textarea::placeholder{color:#718991!important}
+option{background:#0b1d25;color:var(--sf-text)}
+
+button,.btn{
+  transition:transform .16s ease,box-shadow .16s ease,background .16s ease
+}
+button:not(:disabled):hover,.btn:not(:disabled):hover{transform:translateY(-1px)}
+.btn:not(.secondary),button.btn:not(.secondary){
+  background:linear-gradient(135deg,var(--sf-green),#13976d)!important;
+  border-color:transparent!important;color:#031812!important;
+  box-shadow:0 8px 20px rgba(34,201,145,.16)!important
+}
+.btn.secondary,.secondary.btn{
+  background:#142b35!important;border:1px solid #31505b!important;color:#dceae7!important
+}
+
+/* Shell/sidebar — supports common names used through the iterations */
+aside,.sidebar,.app-sidebar,[class*="sidebar"]{
+  background:
+   radial-gradient(circle at 30% 0%,rgba(34,201,145,.13),transparent 25%),
+   linear-gradient(180deg,#0a211f,#08191f 55%,#07161c)!important;
+  border-color:#19363d!important;color:#eaf7f3!important
+}
+aside a,.sidebar a,.app-sidebar a,[class*="sidebar"] a{color:#a9c1c2}
+aside a:hover,.sidebar a:hover,[class*="sidebar"] a:hover{
+  background:rgba(255,255,255,.055)!important;color:#fff!important
+}
+aside a[aria-current="page"],.sidebar a.active,[class*="sidebar"] a.active{
+  background:linear-gradient(90deg,rgba(34,201,145,.20),rgba(34,201,145,.07))!important;
+  color:#fff!important;border-color:rgba(85,223,178,.22)!important
+}
+header,.topbar,.app-header,[class*="topbar"]{
+  background:rgba(7,21,28,.86)!important;border-color:var(--sf-line)!important;
+  backdrop-filter:blur(14px)
+}
+
+/* v0.10 dashboard hero converted into a dark intelligence hero */
+.sf1032-inspection-hero{
+  border:1px solid #28504d!important;
+  background:
+   radial-gradient(circle at 85% 25%,rgba(85,168,255,.13),transparent 27%),
+   radial-gradient(circle at 72% 110%,rgba(34,201,145,.17),transparent 35%),
+   linear-gradient(135deg,#102b2a,#0d222b 60%,#102438)!important;
+  box-shadow:0 18px 45px rgba(0,0,0,.20)!important
+}
+.sf1032-eyebrow{color:var(--green-2,var(--sf-green-2))!important}
+.sf1032-inspection-copy h2{color:#fff!important}
+.sf1032-inspection-copy h2 span{color:var(--sf-green-2)!important}
+.sf1032-inspection-copy p{color:#a9bec2!important}
+.sf1032-inspection-icon{background:rgba(34,201,145,.12)!important;color:var(--sf-green-2)!important}
+.sf1032-inspection-tagline{background:rgba(16,43,53,.80)!important;color:#a9c9c5!important}
+.sf1032-inspection-tagline strong{color:#fff!important}
+
+/* Inspection guidance */
+.sf1032-guide{box-shadow:none!important}
+.sf1032-guide.blue{background:linear-gradient(135deg,rgba(85,168,255,.12),#10242d)!important;border-color:rgba(85,168,255,.28)!important}
+.sf1032-guide.purple{background:linear-gradient(135deg,rgba(154,134,255,.13),#10242d)!important;border-color:rgba(154,134,255,.29)!important}
+.sf1032-guide.green{background:linear-gradient(135deg,rgba(34,201,145,.12),#10242d)!important;border-color:rgba(34,201,145,.27)!important}
+.sf1032-guide-icon{background:#0b1e27!important}
+.sf1032-guide strong{color:#fff!important}.sf1032-guide p{color:#9fb2b9!important}
+
+/* Warning and status surfaces */
+.session-ready.sf1031-not-ready,.sf1031-no-items{
+  background:linear-gradient(90deg,rgba(255,113,106,.12),rgba(255,113,106,.045))!important;
+  border-color:rgba(255,113,106,.35)!important
+}
+.sf1031-no-items strong,.session-ready.sf1031-not-ready strong{color:#ff938d!important}
+.sf1031-no-items p,.sf1031-configure-help{color:#c9aaaa!important}
+.sf1031-configure-actions .btn.secondary{
+  background:rgba(255,113,106,.08)!important;border-color:rgba(255,113,106,.35)!important;color:#ffaaa5!important
+}
+
+/* Dashboard/portfolio metrics — accommodate v0.10.x class families */
+[class*="metric"],[class*="kpi"]{
+  background:linear-gradient(145deg,#112831,#0d2028)!important;
+  border-color:#294650!important;color:#fff!important
+}
+[class*="metric"] strong,[class*="kpi"] strong{color:#fff!important}
+
+/* Tables */
+table{background:var(--sf-panel)!important;color:var(--sf-text)!important}
+th{background:#142b35!important;color:#9fb6bd!important;border-color:var(--sf-line)!important}
+td{border-color:#203b45!important;color:#dce8e7!important}
+tbody tr:hover{background:#132a33!important}
+
+/* Tags / badges */
+.badge,.pill,[class*="badge"],[class*="pill"]{
+  background:#17323c!important;border-color:#2c4b56!important;color:#cfe0df!important
+}
+
+/* Preserve semantic status colour */
+[class*="good"],[class*="healthy"]{color:var(--sf-good)}
+[class*="attention"],[class*="warning"]{color:var(--sf-amber)}
+[class*="poor"],[class*="critical"],[class*="danger"]{color:var(--sf-red)}
+
+/* Property/findings/history links */
+.property-card:hover,.finding-card:hover,.history-card:hover{
+  border-color:#397061!important;box-shadow:0 16px 38px rgba(0,0,0,.23)!important
+}
+
+/* Scrollbar */
+*{scrollbar-color:#31505b #091a21}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:#091a21}
+::-webkit-scrollbar-thumb{background:#31505b;border-radius:8px;border:2px solid #091a21}
+
+/* Keep generated/print reports light */
+@media print{
+  html,body,main{background:#fff!important;color:#172126!important}
+  .card,.panel,[class*="card"],[class*="panel"]{
+    background:#fff!important;color:#172126!important;border-color:#d9e0e3!important;box-shadow:none!important
+  }
+  h1,h2,h3,h4,h5,h6,strong{color:#172126!important}
+  p,label,small{color:#56636a!important}
+}
+
+@media(max-width:720px){
+  .sf1032-inspection-hero{background:linear-gradient(145deg,#102b2a,#0d222b)!important}
+}

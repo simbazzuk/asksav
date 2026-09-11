@@ -1,0 +1,394 @@
+"use client";
+
+import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
+
+type Result = {
+  identification?: {
+    item_name?: string;
+    brand?: string | null;
+    model?: string | null;
+    variant?: string | null;
+    confidence?: number;
+    identifying_features?: string[];
+  };
+  verification?: {
+    verified?: boolean;
+    reason?: string;
+  };
+  condition?: {
+    grade?: string;
+    confidence?: number;
+    summary?: string;
+    visible_wear?: string[];
+    visible_damage?: string[];
+    limitations?: string[];
+  };
+  valuation_context?: {
+    search_query?: string;
+  };
+  market?: {
+    available?: boolean;
+    reason?: string | null;
+    currency?: string;
+    low?: number | null;
+    high?: number | null;
+    suggested?: number | null;
+    quick_sale?: number | null;
+    confidence?: number;
+    evidence_summary?: string | null;
+    search_query?: string;
+  };
+};
+
+function pct(value?: number) {
+  return typeof value === "number" ? `${Math.round(value * 100)}%` : "—";
+}
+
+function money(value?: number | null, currency = "GBP") {
+  if (typeof value !== "number") return "—";
+  try {
+    return new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency,
+      maximumFractionDigits: 0,
+    }).format(value);
+  } catch {
+    return `£${Math.round(value)}`;
+  }
+}
+
+function marketplaceLinks(query: string) {
+  const q = encodeURIComponent(query);
+  return [
+    { label: "eBay UK", href: `https://www.ebay.co.uk/sch/i.html?_nkw=${q}`, mark: "e" },
+    { label: "Google Shopping", href: `https://www.google.com/search?tbm=shop&q=${q}`, mark: "G" },
+    { label: "Gumtree", href: `https://www.gumtree.com/search?search_category=all&q=${q}`, mark: "g" },
+  ];
+}
+
+function persistSiteFaceHistory(payload: any) {
+  try {
+    const record = {
+      id: crypto.randomUUID(),
+      created_at: new Date().toISOString(),
+      item_name: payload?.identification?.item_name || "Analysed item",
+      brand: payload?.identification?.brand || null,
+      model: payload?.identification?.model || null,
+      identification_confidence: payload?.identification?.confidence ?? 0,
+      verified: Boolean(payload?.verification?.verified),
+      condition: payload?.condition?.grade || "UNKNOWN",
+      condition_confidence: payload?.condition?.confidence ?? 0,
+      market_available: Boolean(payload?.market?.available),
+      currency: payload?.market?.currency || "GBP",
+      low: payload?.market?.low ?? null,
+      high: payload?.market?.high ?? null,
+      search_query:
+        payload?.market?.search_query ||
+        payload?.valuation_context?.search_query ||
+        payload?.identification?.item_name ||
+        "",
+    };
+
+    const key = "siteface:item-history";
+    const existingRaw = localStorage.getItem(key);
+    const existing = existingRaw ? JSON.parse(existingRaw) : [];
+    const next = [record, ...(Array.isArray(existing) ? existing : [])].slice(0, 30);
+    localStorage.setItem(key, JSON.stringify(next));
+  } catch (error) {
+    console.warn("[SiteFace] Unable to persist local item history:", error);
+  }
+}
+export default function AnalyseItemClient() {
+  const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [result, setResult] = useState<Result | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    document.documentElement.classList.add("sf178-active");
+    document.body.classList.add("sf178-active");
+
+    return () => {
+      document.documentElement.classList.remove("sf178-active");
+      document.body.classList.remove("sf178-active");
+      if (preview) URL.revokeObjectURL(preview);
+    };
+  }, [preview]);
+
+  const searchQuery =
+    result?.market?.search_query ||
+    result?.valuation_context?.search_query ||
+    result?.identification?.item_name ||
+    "used item";
+
+  const links = useMemo(() => marketplaceLinks(searchQuery), [searchQuery]);
+
+  function chooseFile(e: ChangeEvent<HTMLInputElement>) {
+    const next = e.target.files?.[0] ?? null;
+    if (preview) URL.revokeObjectURL(preview);
+    setFile(next);
+    setPreview(next ? URL.createObjectURL(next) : null);
+    setResult(null);
+    setError("");
+  }
+
+  async function analyse(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!file) {
+      setError("Choose a photo first.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    setResult(null);
+
+    const form = new FormData(e.currentTarget);
+    form.set("image", file);
+
+    try {
+      const response = await fetch("/api/analyse-item", {
+        method: "POST",
+        body: form,
+      });
+
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || "Analysis failed.");
+      setResult(payload);
+      persistSiteFaceHistory(payload);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Analysis failed.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="sf178-shell">
+      <aside className="sf178-sidebar">
+        <a href="/" className="sf178-brand">
+          <span className="sf178-logo">SF</span>
+          <span>
+            <strong>SiteFace</strong>
+            <small>Visual Intelligence</small>
+          </span>
+        </a>
+
+        <a href="/analyse" className="sf178-side-cta">＋ Analyse an item</a>
+
+        <nav className="sf178-side-nav">
+          <a href="/"><span>⌂</span>Home</a>
+          <a href="/analyse" className="active"><span>◉</span>Analyse</a>
+          <a href="/history"><span>◷</span>History</a>
+        </nav>
+
+        <div className="sf178-side-card">
+          <span className="sf178-bulb">◉</span>
+          <div>
+            <strong>See it. Know it.<br />Value it.</strong>
+            <p>Visual intelligence for the things you own and discover.</p>
+          </div>
+        </div>
+
+        <div className="sf178-version">v0.17.8</div>
+        <div className="sf178-status">● All systems ready</div>
+      </aside>
+
+      <header className="sf178-header">
+        <nav>
+          <a href="/">Home</a>
+          <a href="/analyse" className="active">Analyse</a>
+          <a href="/history">History</a>
+        </nav>
+
+        <div className="sf178-header-actions">
+          <div className="sf178-mantra">◉ <span>See it. Know it. Value it.</span></div>
+          <div className="sf178-avatar">SP</div>
+        </div>
+      </header>
+
+      <main className="sf178-main">
+        <section className="sf178-hero">
+          <div className="sf178-hero-copy">
+            <span className="sf178-kicker">VISUAL INTELLIGENCE</span>
+            <h1>See it. <span>Know it.</span> <em>Value it.</em></h1>
+            <p>Upload one photo and SiteFace turns it into a verified item report with condition and market insight.</p>
+          </div>
+
+          <div className="sf178-object-strip" aria-hidden="true">
+            <div className="blue">⌚</div>
+            <div className="sand">🪑</div>
+            <div className="mint">👟</div>
+            <div className="pink">👜</div>
+            <div className="violet">🎧</div>
+            <div className="blue">💻</div>
+          </div>
+        </section>
+
+        <section className="sf178-flow">
+          {[
+            ["🔎","Identify","What is it?","blue"],
+            ["🛡","Verify","Can we trust it?","green"],
+            ["⚙","Condition","What's the state?","amber"],
+            ["£","Value","What's it worth?","violet"],
+            ["◫","Discover","Find similar","purple"],
+          ].map(([icon,title,sub,tone], i) => (
+            <article key={title} className={`sf178-flow-card ${tone}`}>
+              <span className="sf178-flow-icon">{icon}</span>
+              <div><strong>{title}</strong><small>{sub}</small></div>
+              {i < 4 && <b>→</b>}
+            </article>
+          ))}
+        </section>
+
+        <section className="sf178-workspace">
+          <form className="sf178-upload-card" onSubmit={analyse}>
+            <div className="sf178-card-title">
+              <span className="sf178-title-icon">📷</span>
+              <div>
+                <h2>Upload a photo</h2>
+                <p>Show the full item where possible. Labels and logos help with exact identification.</p>
+              </div>
+            </div>
+
+            <label className={`sf178-dropzone ${preview ? "has-image" : ""}`}>
+              {preview ? (
+                <img src={preview} alt="Selected item" />
+              ) : (
+                <div className="sf178-drop-inner">
+                  <span className="sf178-upload-icon">🖼</span>
+                  <strong>Drop, browse or take a photo</strong>
+                  <small>JPG, PNG or WebP · Up to 10 MB</small>
+                </div>
+              )}
+              <input type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={chooseFile} />
+            </label>
+
+            <div className="sf178-or">or</div>
+
+            <div className="sf178-file-buttons">
+              <label className="secondary">📷 Take a photo<input type="file" accept="image/*" capture="environment" onChange={chooseFile} /></label>
+              <label className="primary">⇧ Choose a file<input type="file" accept="image/jpeg,image/png,image/webp" onChange={chooseFile} /></label>
+            </div>
+
+            <label className="sf178-hint">
+              <span>◇</span>
+              <input name="hint" placeholder="Anything you already know? (Optional)  e.g. A4Tech keyboard, office chair, Samsung TV..." />
+            </label>
+
+            <div className="sf178-tips">
+              <span>✓ Show the full item</span>
+              <span>✓ Include logos or labels</span>
+              <span>✓ Good lighting</span>
+            </div>
+
+            <button className="sf178-analyse-button" disabled={!file || loading}>
+              ✦ {loading ? "Analysing item..." : "Analyse item"}
+            </button>
+
+            {error && <div className="sf178-error">{error}</div>}
+          </form>
+
+          <section className="sf178-report">
+            {!result ? (
+              <>
+                <div className="sf178-report-title">
+                  <span className="sf178-report-title-icon">▤</span>
+                  <div>
+                    <strong>Your visual intelligence report</strong>
+                    <small>Upload a photo to see what SiteFace can tell you about your item.</small>
+                  </div>
+                </div>
+
+                <div className="sf178-report-empty">
+                  <div className="sf178-report-art">
+                    <div className="sf178-art-back one"></div>
+                    <div className="sf178-art-back two"></div>
+                    <div className="sf178-art-main">🔎</div>
+                    <div className="sf178-art-chip left">◇</div>
+                    <div className="sf178-art-chip right">✹</div>
+                    <div className="sf178-art-chip bottom">▥</div>
+                  </div>
+
+                  <h2>Upload a photo to see your results</h2>
+                  <p>SiteFace will identify the item, verify the result, assess its visible condition and show indicative market value with similar items.</p>
+
+                  <div className="sf178-report-cards">
+                    <article className="blue"><span>🔎</span><strong>Identified item</strong><p>Brand, model and category</p></article>
+                    <article className="green"><span>🛡</span><strong>Verification</strong><p>Cross-checks and confidence</p></article>
+                    <article className="amber"><span>⚙</span><strong>Condition</strong><p>Visible wear and quality</p></article>
+                    <article className="violet"><span>£</span><strong>Market value</strong><p>Estimated range and comparables</p></article>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="sf178-results">
+                <div className="sf178-report-title">
+                  <span className="sf178-report-title-icon">▤</span>
+                  <div><strong>Your visual intelligence report</strong><small>Verified insights from your uploaded item.</small></div>
+                </div>
+
+                <article className="sf178-result-card identify">
+                  <div className="sf178-result-head">
+                    <div>
+                      <span className="sf178-result-label">IDENTIFIED ITEM</span>
+                      <h2>{result.identification?.item_name || "Item identified"}</h2>
+                      <p>{[result.identification?.brand, result.identification?.model, result.identification?.variant].filter(Boolean).join(" · ") || "Brand/model not confirmed"}</p>
+                    </div>
+                    <div className="sf178-result-score">{pct(result.identification?.confidence)}</div>
+                  </div>
+
+                  <div className={`sf178-verify ${result.verification?.verified ? "ok" : "warn"}`}>
+                    <strong>{result.verification?.verified ? "✓ Identity verified" : "Identity needs review"}</strong>
+                    <p>{result.verification?.reason}</p>
+                  </div>
+                </article>
+
+                <article className="sf178-result-card condition">
+                  <div className="sf178-result-head">
+                    <div>
+                      <span className="sf178-result-label green">CONDITION</span>
+                      <h2>{result.condition?.grade || "UNKNOWN"}</h2>
+                      <p>{result.condition?.summary}</p>
+                    </div>
+                    <div className="sf178-result-score green">{pct(result.condition?.confidence)}</div>
+                  </div>
+                </article>
+
+                <div className="sf178-result-grid">
+                  <article className="sf178-result-card value">
+                    <span className="sf178-result-label violet">MARKET VALUE</span>
+                    {result.market?.available ? (
+                      <>
+                        <h2>{money(result.market.low, result.market.currency)} – {money(result.market.high, result.market.currency)}</h2>
+                        <p>{result.market.evidence_summary}</p>
+                      </>
+                    ) : (
+                      <>
+                        <h2>More detail needed</h2>
+                        <p>{result.market?.reason || "SiteFace needs more verified evidence before showing a value."}</p>
+                      </>
+                    )}
+                  </article>
+
+                  <article className="sf178-result-card discover">
+                    <span className="sf178-result-label violet">DISCOVER</span>
+                    <div className="sf178-market-links">
+                      {links.map(link => (
+                        <a key={link.label} href={link.href} target="_blank" rel="noreferrer">
+                          <span>{link.mark}</span>
+                          <div><strong>{link.label}</strong><small>Search marketplace ↗</small></div>
+                        </a>
+                      ))}
+                    </div>
+                  </article>
+                </div>
+              </div>
+            )}
+          </section>
+        </section>
+      </main>
+    </div>
+  );
+}

@@ -1,0 +1,53 @@
+/* SiteFace v0.17.12.3 - Remove duplicate desktop navigation */
+
+/*
+  Desktop already has the left sidebar navigation, so the duplicate
+  Home / Analyse / History links in the top header are hidden.
+  They are restored on tablet/mobile where the sidebar disappears.
+*/
+
+/* Home */
+.sf179-header > nav {
+  display: none !important;
+}
+
+/* Analyse */
+.sf178-header > nav {
+  display: none !important;
+}
+
+/* History */
+.sf1710-header > nav {
+  display: none !important;
+}
+
+/* Keep the right-hand header controls aligned correctly */
+.sf179-header,
+.sf178-header,
+.sf1710-header {
+  grid-template-columns: 1fr auto !important;
+}
+
+.sf179-header-actions,
+.sf178-header-actions,
+.sf1710-header-actions {
+  grid-column: 2 !important;
+  justify-self: end !important;
+}
+
+/* On smaller screens the sidebar is hidden, so bring top navigation back. */
+@media (max-width: 980px) {
+  .sf179-header > nav,
+  .sf178-header > nav,
+  .sf1710-header > nav {
+    display: flex !important;
+    grid-column: 1 !important;
+    justify-content: center !important;
+  }
+
+  .sf179-header,
+  .sf178-header,
+  .sf1710-header {
+    grid-template-columns: 1fr auto !important;
+  }
+}

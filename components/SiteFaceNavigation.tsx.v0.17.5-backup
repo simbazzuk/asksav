@@ -1,0 +1,27 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
+export default function SiteFaceNavigation() {
+  const pathname = usePathname();
+
+  return (
+    <header className="sf173-topnav">
+      <a href="/" className="sf173-brand">
+        <span className="sf173-logo">SF</span>
+        <span className="sf173-brand-copy">
+          <strong>SiteFace</strong>
+          <small>Visual Intelligence</small>
+        </span>
+      </a>
+
+      <nav className="sf173-links">
+        <a href="/" className={pathname === "/" ? "active" : ""}>Home</a>
+        <a href="/analyse" className={pathname.startsWith("/analyse") ? "active" : ""}>Analyse</a>
+        <a href="/history" className={pathname.startsWith("/history") ? "active" : ""}>History</a>
+      </nav>
+
+      <a href="/analyse" className="sf173-cta">Analyse an item</a>
+    </header>
+  );
+}

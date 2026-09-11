@@ -1,0 +1,68 @@
+/* SiteFace v0.12.6.1 - Property ID guidance */
+
+.sf1261-property-help {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 11px 12px;
+  border: 1px solid rgba(63, 160, 255, 0.22);
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    rgba(14, 48, 65, 0.76),
+    rgba(15, 42, 54, 0.84)
+  );
+}
+
+.sf1261-property-help-icon {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(63, 160, 255, 0.14);
+  color: #70b8ff;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.sf1261-property-help > div:last-child {
+  min-width: 0;
+}
+
+.sf1261-property-help strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #eef7ff;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.sf1261-property-help span {
+  display: block;
+  color: #9fb5bd;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.sf1261-property-help a {
+  display: inline-block;
+  margin-top: 5px;
+  color: #6ec6ff;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.sf1261-property-help a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 760px) {
+  .sf1261-property-help {
+    margin-top: 8px;
+  }
+}

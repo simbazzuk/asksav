@@ -1,0 +1,70 @@
+/* SiteFace v0.12.6.5 - Homepage Register Property CTA */
+
+.sf103-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+
+.sf103-actions .sf1265-register-property {
+  background: linear-gradient(135deg, #31dfa9, #18bd8e) !important;
+  border: 1px solid #2bd5a2 !important;
+  color: #052f32 !important;
+  box-shadow: 0 10px 26px rgba(31, 204, 154, 0.18) !important;
+}
+
+.sf103-actions .sf1265-register-property:hover {
+  filter: brightness(1.04) !important;
+}
+
+.sf103-actions .sf1265-start-inspection {
+  background: #0b3240 !important;
+  border: 1px solid rgba(83, 150, 166, 0.46) !important;
+  color: #ffffff !important;
+}
+
+.sf103-actions .sf1265-view-properties {
+  background: rgba(10, 37, 48, 0.62) !important;
+  border: 1px solid rgba(83, 150, 166, 0.34) !important;
+  color: #d8e8ef !important;
+}
+
+.sf1265-new-user-help {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-top: 12px !important;
+  color: #54727c !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
+
+.sf1265-new-user-help::before {
+  content: "i";
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(36, 201, 151, 0.12);
+  color: #149e78;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+@media (max-width: 700px) {
+  .sf103-actions {
+    align-items: stretch !important;
+  }
+
+  .sf103-actions a {
+    flex: 1 1 100% !important;
+    justify-content: center !important;
+  }
+
+  .sf1265-new-user-help {
+    align-items: flex-start !important;
+  }
+}

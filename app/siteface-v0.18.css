@@ -1,0 +1,160 @@
+/* SiteFace v0.18 - Market Evidence & Comparables */
+
+.sf-market-evidence{
+  margin-top:22px;
+  padding:20px;
+  border:1px solid #ddd1fb;
+  border-radius:18px;
+  background:linear-gradient(135deg,#fff 0%,#faf7ff 100%);
+}
+
+.sf-market-evidence__top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:14px;
+}
+
+.sf-market-evidence__eyebrow{
+  margin:0 0 5px;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.08em;
+  color:#6a35dc;
+  text-transform:uppercase;
+}
+
+.sf-market-evidence__title{
+  margin:0;
+  font-size:20px;
+  line-height:1.2;
+  font-weight:900;
+  color:#13283a;
+}
+
+.sf-market-evidence__summary{
+  margin-top:5px;
+  font-size:13px;
+  color:#60717d;
+}
+
+.sf-market-evidence__confidence{
+  flex:0 0 auto;
+  padding:8px 11px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:900;
+  background:#eee7ff;
+  color:#6133d2;
+}
+
+.sf-market-evidence__stats{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin:14px 0;
+}
+
+.sf-market-evidence__stat{
+  padding:12px 14px;
+  border-radius:14px;
+  background:#fff;
+  border:1px solid #e7e0f4;
+}
+
+.sf-market-evidence__stat small{
+  display:block;
+  font-size:10.5px;
+  font-weight:800;
+  color:#71818a;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+
+.sf-market-evidence__stat strong{
+  display:block;
+  margin-top:4px;
+  font-size:20px;
+  color:#4f29c9;
+}
+
+.sf-market-evidence__list{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:10px;
+}
+
+.sf-market-evidence__item{
+  min-width:0;
+  padding:13px;
+  border-radius:14px;
+  background:#fff;
+  border:1px solid #e3e8e6;
+  text-decoration:none;
+  color:inherit;
+  transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;
+}
+
+.sf-market-evidence__item:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 18px rgba(42,55,66,.08);
+  border-color:#cbb9f1;
+}
+
+.sf-market-evidence__source{
+  font-size:11px;
+  font-weight:900;
+  color:#6b3cdd;
+}
+
+.sf-market-evidence__price{
+  margin-top:6px;
+  font-size:19px;
+  font-weight:900;
+  color:#11283b;
+}
+
+.sf-market-evidence__item-title{
+  margin-top:5px;
+  font-size:11px;
+  line-height:1.35;
+  color:#61727c;
+  overflow:hidden;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+
+.sf-market-evidence__note{
+  margin:12px 0 0;
+  font-size:10.5px;
+  line-height:1.45;
+  color:#73838c;
+}
+
+.sf-market-evidence__empty{
+  padding:14px;
+  border-radius:14px;
+  background:#fff;
+  border:1px dashed #d9dfe0;
+  font-size:12px;
+  color:#687983;
+}
+
+@media(max-width:1100px){
+  .sf-market-evidence__list{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+
+@media(max-width:760px){
+  .sf-market-evidence__stats,
+  .sf-market-evidence__list{
+    grid-template-columns:1fr;
+  }
+
+  .sf-market-evidence__top{
+    flex-direction:column;
+  }
+}

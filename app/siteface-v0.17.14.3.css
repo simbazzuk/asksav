@@ -1,0 +1,109 @@
+/* SiteFace v0.17.14.3 - Horizontal Market Value + Next Step */
+
+.sf-value-action-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:18px!important;
+  align-items:stretch!important;
+  width:100%!important;
+  margin-top:0!important;
+}
+
+/* Let both cards fill the row evenly */
+.sf-value-action-row > article,
+.sf-value-action-row > .sf-action-layer{
+  width:100%!important;
+  min-width:0!important;
+  height:100%!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+
+/* Next step becomes a clean horizontal peer to Market Value */
+.sf-value-action-row .sf-action-layer{
+  padding:20px!important;
+  border:1px solid #cfe3ef!important;
+  border-radius:20px!important;
+  background:linear-gradient(135deg,#ffffff 0%,#f3faff 100%)!important;
+  box-shadow:0 8px 24px rgba(22,55,48,.05)!important;
+  display:flex!important;
+  flex-direction:column!important;
+}
+
+.sf-value-action-row .sf-action-layer__title{
+  font-size:22px!important;
+  line-height:1.2!important;
+}
+
+.sf-value-action-row .sf-action-layer__intro{
+  font-size:13.5px!important;
+  margin-bottom:14px!important;
+}
+
+.sf-value-action-row .sf-action-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:10px!important;
+  flex:1!important;
+}
+
+.sf-value-action-row .sf-action-card{
+  min-height:138px!important;
+  padding:14px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+}
+
+.sf-value-action-row .sf-action-card__icon{
+  width:38px!important;
+  height:38px!important;
+  min-width:38px!important;
+  font-size:18px!important;
+}
+
+.sf-value-action-row .sf-action-card__title{
+  font-size:15px!important;
+}
+
+.sf-value-action-row .sf-action-card__description{
+  font-size:12px!important;
+  line-height:1.4!important;
+}
+
+.sf-value-action-row .sf-action-card__arrow{
+  right:12px!important;
+  bottom:11px!important;
+  font-size:18px!important;
+}
+
+.sf-value-action-row .sf-action-note{
+  margin-top:10px!important;
+  font-size:10.5px!important;
+}
+
+/* Discover remains full width underneath */
+.sf178-market-links{
+  width:100%!important;
+}
+
+@media(max-width:1100px){
+  .sf-value-action-row{
+    grid-template-columns:1fr!important;
+  }
+
+  .sf-value-action-row .sf-action-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+
+@media(max-width:760px){
+  .sf-value-action-row .sf-action-grid{
+    grid-template-columns:1fr!important;
+  }
+
+  .sf-value-action-row .sf-action-card{
+    min-height:auto!important;
+  }
+}

@@ -1,0 +1,119 @@
+/* SiteFace v0.12.3.2 — Homepage Property Header Polish
+   Fixes the visual balance of the property icon + title block. */
+
+/* Exact property identity row */
+.property-summary-name{
+  display:flex!important;
+  align-items:center!important;
+  gap:14px!important;
+  min-height:58px!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+/* Make the icon tile large enough to visually balance PROP001 */
+.property-summary-icon{
+  width:56px!important;
+  height:56px!important;
+  min-width:56px!important;
+  min-height:56px!important;
+  flex:0 0 56px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  align-self:center!important;
+  margin:0!important;
+  padding:0!important;
+  border-radius:13px!important;
+  background:#eef8f5!important;
+  border:1px solid rgba(34,201,145,.20)!important;
+  color:#13966d!important;
+  line-height:0!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+}
+
+/* Centre the actual SVG, not the font baseline */
+.property-summary-icon svg{
+  display:block!important;
+  width:27px!important;
+  height:27px!important;
+  min-width:27px!important;
+  min-height:27px!important;
+  margin:0!important;
+  padding:0!important;
+  position:static!important;
+  inset:auto!important;
+  transform:translateY(1px)!important;
+  stroke:currentColor!important;
+  stroke-width:1.9!important;
+  box-sizing:content-box!important;
+}
+
+/* Keep the text block genuinely centred against the icon */
+.property-summary-name > div:last-child{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-self:stretch!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+.property-summary-name h3{
+  margin:0 0 6px!important;
+  padding:0!important;
+  line-height:1!important;
+  color:#ffffff!important;
+  font-size:18px!important;
+  font-weight:850!important;
+  letter-spacing:-.015em!important;
+}
+
+.property-summary-name p{
+  margin:0!important;
+  padding:0!important;
+  line-height:1.1!important;
+  color:#77949d!important;
+  font-size:12px!important;
+}
+
+/* Ensure the property-card top row itself doesn't baseline-align children */
+.property-card > div:first-child,
+.property-card [class*="property-header"],
+.property-card [class*="summary-header"]{
+  align-items:center!important;
+}
+
+/* Status pill aligns to centre of identity block */
+.property-card > div:first-child > :last-child{
+  align-self:center!important;
+}
+
+/* Slightly more breathing room below property identity */
+.property-card > div:first-child{
+  margin-bottom:16px!important;
+}
+
+/* Keep mobile proportional */
+@media(max-width:700px){
+  .property-summary-icon{
+    width:52px!important;
+    height:52px!important;
+    min-width:52px!important;
+    min-height:52px!important;
+    flex-basis:52px!important;
+  }
+
+  .property-summary-icon svg{
+    width:25px!important;
+    height:25px!important;
+    min-width:25px!important;
+    min-height:25px!important;
+  }
+
+  .property-summary-name{
+    min-height:54px!important;
+  }
+}

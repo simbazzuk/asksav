@@ -1,0 +1,135 @@
+/* SiteFace v0.17.14 - Discover Action Layer
+   Adds a consumer action layer beneath the existing Discover section.
+*/
+
+.sf-action-layer{
+  margin-top:18px;
+  padding:20px;
+  border:1px solid #dce8e4;
+  border-radius:20px;
+  background:linear-gradient(135deg,#ffffff 0%,#f5fbf8 100%);
+  box-shadow:0 8px 24px rgba(22,55,48,.06);
+}
+
+.sf-action-layer__eyebrow{
+  margin:0 0 5px;
+  font-size:12px;
+  line-height:1.3;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#168565;
+}
+
+.sf-action-layer__title{
+  margin:0;
+  font-size:22px;
+  line-height:1.2;
+  font-weight:800;
+  letter-spacing:-.02em;
+  color:#162734;
+}
+
+.sf-action-layer__intro{
+  margin:7px 0 16px;
+  font-size:14px;
+  line-height:1.5;
+  color:#526873;
+}
+
+.sf-action-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+}
+
+.sf-action-card{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+  padding:15px;
+  border:1px solid #dce7e3;
+  border-radius:16px;
+  background:#fff;
+  color:#162734;
+  text-decoration:none;
+  transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;
+}
+
+.sf-action-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(24,55,49,.09);
+  border-color:#b9d7cc;
+}
+
+.sf-action-card__icon{
+  width:44px;
+  height:44px;
+  min-width:44px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:21px;
+  font-weight:800;
+}
+
+.sf-action-card--sell .sf-action-card__icon{
+  color:#0b8060;
+  background:#dcf7ed;
+}
+
+.sf-action-card--replace .sf-action-card__icon{
+  color:#6750d7;
+  background:#eee9ff;
+}
+
+.sf-action-card--similar .sf-action-card__icon{
+  color:#b8329d;
+  background:#fde6f7;
+}
+
+.sf-action-card__copy{
+  min-width:0;
+  flex:1;
+}
+
+.sf-action-card__title{
+  display:block;
+  font-size:16px;
+  line-height:1.25;
+  font-weight:800;
+  color:#162734;
+}
+
+.sf-action-card__description{
+  display:block;
+  margin-top:3px;
+  font-size:12.5px;
+  line-height:1.4;
+  color:#60737d;
+}
+
+.sf-action-card__arrow{
+  font-size:19px;
+  line-height:1;
+  color:#73858d;
+}
+
+.sf-action-note{
+  margin:13px 0 0;
+  font-size:11.5px;
+  line-height:1.45;
+  color:#74858c;
+}
+
+@media(max-width:900px){
+  .sf-action-grid{grid-template-columns:1fr;}
+}
+
+@media(max-width:650px){
+  .sf-action-layer{padding:16px;}
+  .sf-action-layer__title{font-size:20px;}
+  .sf-action-layer__intro{font-size:13px;}
+}

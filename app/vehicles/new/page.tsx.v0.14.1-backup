@@ -1,0 +1,83 @@
+import AppShell from "../../components/AppShell";
+import Link from "next/link";
+
+export default function NewVehiclePage() {
+  return (
+    <AppShell title="Vehicles">
+      <div className="sf14-vehicle-page">
+        <div className="sf14-vehicle-hero">
+          <div>
+            <div className="sf14-kicker">VEHICLE CONDITION INTELLIGENCE</div>
+            <h1>Register vehicle</h1>
+            <p>
+              Create a vehicle record for checkout and return inspections. SiteFace
+              will use guided evidence capture to help distinguish existing damage
+              from new changes.
+            </p>
+          </div>
+          <span className="sf14-vehicle-badge">Vehicle workflow · Preview</span>
+        </div>
+
+        <div className="sf14-vehicle-grid">
+          <section className="card card-pad">
+            <h2>Vehicle details</h2>
+            <p className="sf14-muted">
+              v0.14 introduces the vehicle workflow and inspection template. Persistent
+              vehicle registration will be connected in the next data-model release.
+            </p>
+
+            <div className="sf14-form-preview">
+              <label>
+                Registration
+                <input disabled placeholder="e.g. AB12 CDE" />
+              </label>
+              <label>
+                Make
+                <input disabled placeholder="e.g. BMW" />
+              </label>
+              <label>
+                Model
+                <input disabled placeholder="e.g. 1 Series" />
+              </label>
+              <label>
+                Fleet / reference ID
+                <input disabled placeholder="Optional internal reference" />
+              </label>
+            </div>
+          </section>
+
+          <section className="card card-pad">
+            <div className="sf14-kicker">DEFAULT VEHICLE TEMPLATE</div>
+            <h2>Inspection areas</h2>
+
+            <div className="sf14-vehicle-areas">
+              {[
+                ["Front", "Bumper · Bonnet · Windscreen · Headlights"],
+                ["Driver side", "Doors · Wheels · Mirror"],
+                ["Passenger side", "Doors · Wheels · Mirror"],
+                ["Rear", "Bumper · Boot · Rear lights · Rear window"],
+                ["Interior", "Dashboard · Seats · Load area"],
+              ].map(([area, items]) => (
+                <div key={area}>
+                  <strong>{area}</strong>
+                  <small>{items}</small>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        <div className="sf14-preview-note">
+          <div>
+            <strong>Same SiteFace comparison engine</strong>
+            <p>
+              Previous evidence → guided recapture → comparability check → condition
+              comparison → finding → evidence report.
+            </p>
+          </div>
+          <Link className="btn secondary" href="/">Back to inspection types</Link>
+        </div>
+      </div>
+    </AppShell>
+  );
+}

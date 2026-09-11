@@ -1,0 +1,296 @@
+"use client";
+
+import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
+
+type Result = {
+  classification?: { object_class?: string; confidence?: number; hint_consistency?: string; hint_note?: string | null; };
+  identification?: { category?: string; item_name?: string; brand?: string | null; model?: string | null; variant?: string | null; confidence?: number; identifying_features?: string[]; };
+  verification?: { verified?: boolean; verification_confidence?: number; status?: string; reason?: string; };
+  condition?: { grade?: string; confidence?: number; summary?: string; visible_wear?: string[]; visible_damage?: string[]; limitations?: string[]; };
+  valuation_context?: { search_query?: string; attributes_to_confirm?: string[]; };
+  market?: { available?: boolean; reason?: string | null; currency?: string; low?: number | null; high?: number | null; suggested?: number | null; quick_sale?: number | null; confidence?: number; evidence_summary?: string | null; search_query?: string; };
+};
+
+function pct(value?: number) {
+  if (typeof value !== "number") return "—";
+  return `${Math.round(value * 100)}%`;
+}
+
+function money(value?: number | null, currency = "GBP") {
+  if (typeof value !== "number") return "—";
+  try {
+    return new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency,
+      maximumFractionDigits: 0,
+    }).format(value);
+  } catch {
+    return `£${Math.round(value)}`;
+  }
+}
+
+function marketplaceLinks(query: string) {
+  const q = encodeURIComponent(query);
+  return [
+    { label: "eBay UK", href: `https://www.ebay.co.uk/sch/i.html?_nkw=${q}`, mark: "e" },
+    { label: "Google Shopping", href: `https://www.google.com/search?tbm=shop&q=${q}`, mark: "G" },
+    { label: "Gumtree", href: `https://www.gumtree.com/search?search_category=all&q=${q}`, mark: "g" },
+  ];
+}
+
+export default function AnalyseItemClient() {
+  const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [result, setResult] = useState<Result | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => () => { if (preview) URL.revokeObjectURL(preview); }, [preview]);
+
+  const searchQuery =
+    result?.market?.search_query ||
+    result?.valuation_context?.search_query ||
+    result?.identification?.item_name ||
+    "used item";
+
+  const links = useMemo(() => marketplaceLinks(searchQuery), [searchQuery]);
+
+  function chooseFile(e: ChangeEvent<HTMLInputElement>) {
+    const next = e.target.files?.[0] ?? null;
+    if (preview) URL.revokeObjectURL(preview);
+    setFile(next);
+    setPreview(next ? URL.createObjectURL(next) : null);
+    setResult(null);
+    setError("");
+  }
+
+  async function analyse(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!file) {
+      setError("Choose a photo first.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    setResult(null);
+
+    const form = new FormData(e.currentTarget);
+    form.set("image", file);
+
+    try {
+      const response = await fetch("/api/analyse-item", { method: "POST", body: form });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || "Analysis failed.");
+      setResult(payload);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Analysis failed.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <main className="sf175-page">
+      <section className="sf175-hero">
+        <div className="sf175-hero-copy">
+          <span className="sf175-eyebrow">VISUAL INTELLIGENCE</span>
+          <h1>See it. <span>Know it.</span> Value it.</h1>
+          <p>Upload one photo and get a verified view of what the item is, its visible condition and what the market says.</p>
+        </div>
+
+        <div className="sf175-steps" aria-label="Analysis stages">
+          {[
+            ["01", "Identify", "What is it?"],
+            ["02", "Verify", "Can we trust it?"],
+            ["03", "Condition", "How does it look?"],
+            ["04", "Value", "What's it worth?"],
+            ["05", "Discover", "What's similar?"],
+          ].map(([n, title, sub]) => (
+            <div key={n} className={`sf175-step s${n}`}>
+              <span>{n}</span>
+              <div><strong>{title}</strong><small>{sub}</small></div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="sf175-workspace">
+        <form className="sf175-upload-card" onSubmit={analyse}>
+          <div className="sf175-card-heading">
+            <div>
+              <span className="sf175-label">YOUR ITEM</span>
+              <h2>Upload a photo</h2>
+            </div>
+            <span className="sf175-badge">1 photo</span>
+          </div>
+
+          <p className="sf175-help">Show the full item where possible. Labels and logos help with exact identification.</p>
+
+          <label className={`sf175-dropzone ${preview ? "has-image" : ""}`}>
+            {preview ? (
+              <img src={preview} alt="Selected item" />
+            ) : (
+              <div className="sf175-drop-content">
+                <span className="sf175-camera">◎</span>
+                <strong>Drop, browse or take a photo</strong>
+                <small>JPG, PNG or WebP · up to 10 MB</small>
+              </div>
+            )}
+            <input type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={chooseFile} />
+          </label>
+
+          {preview && (
+            <label className="sf175-change-photo">
+              Change photo
+              <input type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={chooseFile} />
+            </label>
+          )}
+
+          <label className="sf175-field">
+            <span>Anything you already know? <small>Optional</small></span>
+            <input name="hint" placeholder="e.g. A4Tech keyboard, office chair..." />
+          </label>
+
+          <div className="sf175-tips">
+            <span>✓ Full item</span>
+            <span>✓ Labels visible</span>
+            <span>✓ Good lighting</span>
+          </div>
+
+          <button className="sf175-analyse-button" disabled={!file || loading}>
+            {loading ? "Analysing your item..." : "Analyse item"}
+          </button>
+
+          {error && <div className="sf175-error">{error}</div>}
+        </form>
+
+        <section className="sf175-report-column">
+          {!result ? (
+            <div className="sf175-empty-report">
+              <div className="sf175-report-visual">
+                <div className="sf175-visual-card a"></div>
+                <div className="sf175-visual-card b"></div>
+                <div className="sf175-visual-core">◎</div>
+              </div>
+
+              <span className="sf175-eyebrow">YOUR REPORT</span>
+              <h2>One photo. A useful answer.</h2>
+              <p>SiteFace checks identity before using it for condition and value, so you can see what is known and what still needs confirmation.</p>
+
+              <div className="sf175-report-preview">
+                <article className="blue">
+                  <span>01</span>
+                  <strong>Identify</strong>
+                  <small>Recognise the item</small>
+                </article>
+                <article className="green">
+                  <span>02</span>
+                  <strong>Verify</strong>
+                  <small>Cross-check the result</small>
+                </article>
+                <article className="mint">
+                  <span>03</span>
+                  <strong>Condition</strong>
+                  <small>Assess visible wear</small>
+                </article>
+                <article className="violet">
+                  <span>04</span>
+                  <strong>Value</strong>
+                  <small>Estimate market range</small>
+                </article>
+              </div>
+
+              <div className="sf175-trust-strip">
+                <span>✓ Verified identity</span>
+                <span>✓ Visible evidence</span>
+                <span>✓ Market context</span>
+              </div>
+            </div>
+          ) : (
+            <div className="sf175-results">
+              <article className="sf175-result-card identify">
+                <div className="sf175-result-head">
+                  <div>
+                    <span className="sf175-pill blue">IDENTIFIED</span>
+                    <h2>{result.identification?.item_name || "Item identified"}</h2>
+                    <p>{[result.identification?.brand, result.identification?.model, result.identification?.variant].filter(Boolean).join(" · ") || "Brand/model not confirmed"}</p>
+                  </div>
+                  <div className="sf175-score blue">
+                    <strong>{pct(result.identification?.confidence)}</strong>
+                    <small>confidence</small>
+                  </div>
+                </div>
+
+                <div className={`sf175-verify ${result.verification?.verified ? "ok" : "warn"}`}>
+                  <strong>{result.verification?.verified ? "✓ Identity verified" : "Identity needs review"}</strong>
+                  <p>{result.verification?.reason}</p>
+                </div>
+
+                {!!result.identification?.identifying_features?.length && (
+                  <div className="sf175-tags">
+                    {result.identification.identifying_features.slice(0, 5).map((x) => <span key={x}>{x}</span>)}
+                  </div>
+                )}
+              </article>
+
+              <article className="sf175-result-card condition">
+                <div className="sf175-result-head">
+                  <div>
+                    <span className="sf175-pill green">CONDITION</span>
+                    <h2>{result.condition?.grade || "UNKNOWN"}</h2>
+                    <p>{result.condition?.summary}</p>
+                  </div>
+                  <div className="sf175-score green">
+                    <strong>{pct(result.condition?.confidence)}</strong>
+                    <small>confidence</small>
+                  </div>
+                </div>
+
+                <div className="sf175-condition-grid">
+                  <div><strong>Visible wear</strong>{(result.condition?.visible_wear?.length ? result.condition.visible_wear : ["None confidently identified"]).slice(0, 3).map(x => <span key={x}>{x}</span>)}</div>
+                  <div><strong>Visible damage</strong>{(result.condition?.visible_damage?.length ? result.condition.visible_damage : ["None confidently identified"]).slice(0, 3).map(x => <span key={x}>{x}</span>)}</div>
+                  <div className="limited"><strong>Cannot confirm</strong>{(result.condition?.limitations?.length ? result.condition.limitations : ["No additional limitations returned"]).slice(0, 3).map(x => <span key={x}>{x}</span>)}</div>
+                </div>
+              </article>
+
+              <div className="sf175-bottom-grid">
+                <article className="sf175-result-card value">
+                  <span className="sf175-pill violet">MARKET VALUE</span>
+                  {result.market?.available ? (
+                    <>
+                      <h2>{money(result.market.low, result.market.currency)} – {money(result.market.high, result.market.currency)}</h2>
+                      <p>{result.market.evidence_summary}</p>
+                      <div className="sf175-price-pair">
+                        <div><span>Suggested</span><strong>{money(result.market.suggested, result.market.currency)}</strong></div>
+                        <div><span>Quick sale</span><strong>{money(result.market.quick_sale, result.market.currency)}</strong></div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <h2>More detail needed</h2>
+                      <p>{result.market?.reason || "SiteFace needs more verified evidence before showing a value."}</p>
+                    </>
+                  )}
+                </article>
+
+                <article className="sf175-result-card discover">
+                  <span className="sf175-pill violet">DISCOVER</span>
+                  <h3>Find similar items</h3>
+                  <div className="sf175-market-links">
+                    {links.map(link => (
+                      <a key={link.label} href={link.href} target="_blank" rel="noreferrer">
+                        <span>{link.mark}</span>
+                        <div><strong>{link.label}</strong><small>Search marketplace ↗</small></div>
+                      </a>
+                    ))}
+                  </div>
+                </article>
+              </div>
+            </div>
+          )}
+        </section>
+      </section>
+    </main>
+  );
+}

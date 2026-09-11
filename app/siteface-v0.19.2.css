@@ -1,0 +1,274 @@
+/* SiteFace v0.19.2 - Account page visual polish */
+
+.sf19-account-page{
+  max-width:1240px!important;
+  padding-top:88px!important;
+  padding-bottom:80px!important;
+}
+
+.sf19-account-hero{
+  padding:26px 28px!important;
+  border-radius:24px!important;
+  background:
+    radial-gradient(circle at 88% 10%, rgba(106,81,226,.07), transparent 28%),
+    linear-gradient(135deg,#ffffff 0%,#fbfcff 100%)!important;
+}
+
+.sf19-avatar{
+  width:62px!important;
+  height:62px!important;
+  border-radius:18px!important;
+  background:linear-gradient(145deg,#5ed8bd 0%,#62a8dc 48%,#7353e6 100%)!important;
+  box-shadow:0 10px 20px rgba(91,78,210,.16)!important;
+}
+
+.sf19-account-title .sf19-eyebrow,
+.sf19-plan-card .sf19-eyebrow,
+.sf19-usage-card .sf19-eyebrow,
+.sf19-entitlements-panel .sf19-eyebrow,
+.sf19-account-next .sf19-eyebrow{
+  color:#25b88f!important;
+}
+
+.sf19-account-title h1{
+  color:#172b3a!important;
+  font-size:30px!important;
+  line-height:1.1!important;
+  font-weight:900!important;
+  letter-spacing:-.03em!important;
+  -webkit-text-fill-color:#172b3a!important;
+  text-shadow:none!important;
+}
+
+.sf19-account-title>p:last-child{
+  margin-top:7px!important;
+  color:#5f7280!important;
+  font-size:13px!important;
+}
+
+.sf19-secondary-button{
+  min-height:42px!important;
+  padding:0 16px!important;
+  border-radius:12px!important;
+  color:#213746!important;
+  font-weight:850!important;
+  background:#fff!important;
+}
+
+.sf19-secondary-button:hover{
+  background:#f7f9fb!important;
+  transform:translateY(-1px)!important;
+}
+
+.sf19-account-grid{
+  gap:20px!important;
+  margin-top:20px!important;
+  grid-template-columns:1.45fr .55fr!important;
+}
+
+.sf19-plan-card,
+.sf19-usage-card,
+.sf19-entitlements-panel,
+.sf19-account-next{
+  border-radius:22px!important;
+}
+
+.sf19-plan-card,
+.sf19-usage-card{
+  padding:24px!important;
+}
+
+.sf19-plan-top h2,
+.sf19-usage-card h2{
+  color:#172b3a!important;
+  font-size:34px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:-.035em!important;
+  -webkit-text-fill-color:#172b3a!important;
+  text-shadow:none!important;
+}
+
+.sf19-plan-card>p,
+.sf19-usage-card>p{
+  color:#60717f!important;
+  font-size:13.5px!important;
+  line-height:1.6!important;
+}
+
+.sf19-plan-pill{
+  padding:8px 12px!important;
+  background:#eaf8f3!important;
+  color:#18896b!important;
+  border:1px solid #c9ebdf!important;
+  font-size:10px!important;
+  letter-spacing:.06em!important;
+}
+
+.sf19-usage-card{
+  background:
+    linear-gradient(135deg,#ffffff 0%,#f8fbff 100%)!important;
+}
+
+.sf19-usage-meter{
+  height:9px!important;
+  margin-top:20px!important;
+  background:#e9eef2!important;
+}
+
+.sf19-usage-meter span{
+  background:linear-gradient(90deg,#52d4b3,#5d8ce2,#7052e5)!important;
+}
+
+.sf19-entitlements-panel{
+  margin-top:20px!important;
+  padding:26px!important;
+}
+
+.sf19-section-heading h2{
+  color:#172b3a!important;
+  font-size:24px!important;
+  line-height:1.15!important;
+  font-weight:900!important;
+  letter-spacing:-.025em!important;
+  -webkit-text-fill-color:#172b3a!important;
+  text-shadow:none!important;
+}
+
+.sf19-section-heading>span{
+  padding:7px 10px!important;
+  background:#eaf8f3!important;
+  color:#168466!important;
+  border:1px solid #cbeadf!important;
+}
+
+.sf19-entitlement-grid{
+  gap:14px!important;
+  margin-top:22px!important;
+}
+
+.sf19-entitlement-grid>div{
+  min-height:78px!important;
+  padding:16px!important;
+  border:1px solid #dfe5ea!important;
+  border-radius:16px!important;
+  background:linear-gradient(135deg,#fbfcfe 0%,#f7f9fb 100%)!important;
+}
+
+.sf19-entitlement-grid>div:nth-child(1),
+.sf19-entitlement-grid>div:nth-child(2){
+  background:linear-gradient(135deg,#f5fff9 0%,#edf9f4 100%)!important;
+  border-color:#d2eee2!important;
+}
+
+.sf19-entitlement-grid>div:nth-child(3){
+  background:linear-gradient(135deg,#f8f6ff 0%,#f1ecff 100%)!important;
+  border-color:#ddd1fb!important;
+}
+
+.sf19-entitlement-grid>div:nth-child(4),
+.sf19-entitlement-grid>div:nth-child(5){
+  background:linear-gradient(135deg,#f7fbff 0%,#edf6fd 100%)!important;
+  border-color:#d5e8f5!important;
+}
+
+.sf19-entitlement-grid>div:nth-child(6){
+  background:linear-gradient(135deg,#fff9f2 0%,#fff3e3 100%)!important;
+  border-color:#f3dec0!important;
+}
+
+.sf19-entitlement-grid span{
+  margin-bottom:9px!important;
+  color:#617381!important;
+  font-size:11px!important;
+  font-weight:800!important;
+}
+
+.sf19-entitlement-grid strong{
+  color:#172b3a!important;
+  font-size:15px!important;
+  font-weight:900!important;
+}
+
+.sf19-account-next{
+  margin-top:20px!important;
+  padding:26px!important;
+  background:
+    radial-gradient(circle at 90% 20%,rgba(44,171,207,.08),transparent 30%),
+    linear-gradient(135deg,#f8f5ff 0%,#f3fbfa 100%)!important;
+}
+
+.sf19-account-next h2{
+  color:#172b3a!important;
+  font-size:24px!important;
+  line-height:1.15!important;
+  font-weight:900!important;
+  letter-spacing:-.025em!important;
+  -webkit-text-fill-color:#172b3a!important;
+  text-shadow:none!important;
+}
+
+.sf19-account-next p:last-child{
+  color:#60727e!important;
+  font-size:13.5px!important;
+  line-height:1.65!important;
+}
+
+.sf19-primary-link{
+  min-width:154px!important;
+  min-height:48px!important;
+  border-radius:14px!important;
+  background:linear-gradient(100deg,#7053e6 0%,#4f75df 50%,#29a7d2 100%)!important;
+  box-shadow:0 10px 24px rgba(87,76,208,.20)!important;
+}
+
+.sf19-primary-link:hover{
+  transform:translateY(-1px)!important;
+  box-shadow:0 13px 28px rgba(87,76,208,.24)!important;
+}
+
+/* Keep account content visually dominant beneath global nav */
+.sf19-account-hero,
+.sf19-plan-card,
+.sf19-usage-card,
+.sf19-entitlements-panel,
+.sf19-account-next{
+  box-shadow:0 14px 34px rgba(44,57,82,.07)!important;
+}
+
+/* Improve readability on narrow screens */
+@media(max-width:900px){
+  .sf19-account-grid{
+    grid-template-columns:1fr!important;
+  }
+}
+
+@media(max-width:800px){
+  .sf19-account-page{
+    padding-top:78px!important;
+  }
+
+  .sf19-account-hero{
+    padding:20px!important;
+  }
+
+  .sf19-account-title h1{
+    font-size:25px!important;
+  }
+
+  .sf19-plan-top h2,
+  .sf19-usage-card h2{
+    font-size:30px!important;
+  }
+
+  .sf19-entitlements-panel,
+  .sf19-account-next{
+    padding:20px!important;
+  }
+}
+
+@media(max-width:520px){
+  .sf19-entitlement-grid{
+    grid-template-columns:1fr!important;
+  }
+}
