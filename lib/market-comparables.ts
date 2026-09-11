@@ -32,7 +32,18 @@ const projectId =
 const dataset = process.env.SITEFACE_BQ_DATASET || "siteface";
 const model = process.env.SITEFACE_BQ_GEMINI_MODEL || "gemini_model";
 
-const bigquery = new BigQuery({ projectId });
+const credentials =
+  process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY
+    ? {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+      }
+    : undefined;
+
+const bigquery = new BigQuery({
+  projectId,
+  credentials,
+});
 
 function stripJsonFences(text: string): string {
   const trimmed = text.trim();

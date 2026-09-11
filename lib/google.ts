@@ -11,5 +11,17 @@ if (!projectId || !bucketName) {
   throw new Error("Missing GOOGLE_CLOUD_PROJECT or GCS_BUCKET environment variables.");
 }
 
-export const bigquery = new BigQuery({ projectId, location });
+const credentials =
+  process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY
+    ? {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+      }
+    : undefined;
+
+export const bigquery = new BigQuery({
+  projectId,
+  location,
+  credentials,
+});
 export const storage = new Storage({ projectId });
