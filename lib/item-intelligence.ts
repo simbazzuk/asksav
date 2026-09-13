@@ -1005,11 +1005,35 @@ function base64UrlJson(value: unknown) {
 
 async function getGoogleStorageAccessToken() {
   const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+
+  let privateKey = process.env.GOOGLE_PRIVATE_KEY?.trim();
+
+  if (
+    privateKey &&
+    privateKey.startsWith('"') &&
+    privateKey.endsWith('"')
+  ) {
+    privateKey = privateKey.slice(1, -1);
+  }
+
+  privateKey = privateKey
+    ?.replace(/\\r\\n/g, "\n")
+    .replace(/\\n/g, "\n")
+    .replace(/\r\n/g, "\n")
+    .trim();
 
   if (!clientEmail || !privateKey) {
     throw new Error(
       "Missing GOOGLE_CLIENT_EMAIL or GOOGLE_PRIVATE_KEY for GCS REST upload."
+    );
+  }
+
+  if (
+    !privateKey.includes("-----BEGIN PRIVATE KEY-----") ||
+    !privateKey.includes("-----END PRIVATE KEY-----")
+  ) {
+    throw new Error(
+      "GOOGLE_PRIVATE_KEY is present but is not a valid PEM private key."
     );
   }
 
