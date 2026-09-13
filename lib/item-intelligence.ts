@@ -1,5 +1,6 @@
 import { bigquery, dataset, location, projectId, storage } from "./google";
 
+import { createSign } from "node:crypto";
 type AnyObject = Record<string, any>;
 
 type UsageSource = "AI_GENERATE_TEXT" | "ML_FALLBACK_ESTIMATE";
@@ -994,72 +995,142 @@ Return exactly one JSON object:
   }
 }
 
+function base64UrlJson(value: unknown) {
+  return Buffer.from(JSON.stringify(value))
+    .toString("base64")
+    .replace(/=/g, "")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_");
+}
+
+async function getGoogleStorageAccessToken() {
+  const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+
+  if (!clientEmail || !privateKey) {
+    throw new Error(
+      "Missing GOOGLE_CLIENT_EMAIL or GOOGLE_PRIVATE_KEY for GCS REST upload."
+    );
+  }
+
+  const now = Math.floor(Date.now() / 1000);
+  const header = base64UrlJson({ alg: "RS256", typ: "JWT" });
+  const payload = base64UrlJson({
+    iss: clientEmail,
+    scope: "https://www.googleapis.com/auth/devstorage.read_write",
+    aud: "https://oauth2.googleapis.com/token",
+    iat: now,
+    exp: now + 3600,
+  });
+
+  const unsignedToken = `${header}.${payload}`;
+  const signer = createSign("RSA-SHA256");
+  signer.update(unsignedToken);
+  signer.end();
+
+  const signature = signer
+    .sign(privateKey, "base64")
+    .replace(/=/g, "")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_");
+
+  const assertion = `${unsignedToken}.${signature}`;
+
+  const tokenResponse = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
+      assertion,
+    }),
+  });
+
+  const tokenBody = (await tokenResponse.json()) as {
+    access_token?: string;
+    token_type?: string;
+    expires_in?: number;
+    error?: string;
+    error_description?: string;
+  };
+
+  if (!tokenResponse.ok || !tokenBody.access_token) {
+    throw new Error(
+      `Google OAuth token request failed (${tokenResponse.status}): ${
+        tokenBody.error_description || tokenBody.error || "Unknown OAuth error"
+      }`
+    );
+  }
+
+  return tokenBody.access_token;
+}
+
+async function uploadItemImageViaGcsRest(args: {
+  bucketName: string;
+  objectName: string;
+  bytes: Buffer;
+  contentType: string;
+}) {
+  const accessToken = await getGoogleStorageAccessToken();
+
+  const uploadUrl =
+    `https://storage.googleapis.com/upload/storage/v1/b/` +
+    `${encodeURIComponent(args.bucketName)}/o` +
+    `?uploadType=media&name=${encodeURIComponent(args.objectName)}`;
+
+  console.log("[AskSAV] GCS REST upload start", {
+    bucketName: args.bucketName,
+    objectName: args.objectName,
+    contentType: args.contentType || "application/octet-stream",
+    bufferSize: args.bytes.length,
+  });
+
+  const response = await fetch(uploadUrl, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": args.contentType || "application/octet-stream",
+      "Cache-Control": "private, max-age=0",
+    },
+    body: new Uint8Array(args.bytes),
+  });
+
+  if (!response.ok) {
+    const responseText = await response.text();
+
+    console.error("[AskSAV] GCS REST upload failed", {
+      bucketName: args.bucketName,
+      objectName: args.objectName,
+      status: response.status,
+      statusText: response.statusText,
+      responseBody: responseText.slice(0, 2000),
+    });
+
+    throw new Error(
+      `GCS REST upload failed (${response.status} ${response.statusText})`
+    );
+  }
+
+  console.log("[AskSAV] GCS REST upload success", {
+    bucketName: args.bucketName,
+    objectName: args.objectName,
+    bufferSize: args.bytes.length,
+  });
+}
 export async function analyseItemPhoto(image: File, hint = "") {
   const usage: UsageCollector = { calls: [] };
   const bytes = Buffer.from(await image.arrayBuffer());
 
   const bucketName = process.env.SITEFACE_BUCKET || "siteface-images-dev";
   const objectName = `item-analysis/${crypto.randomUUID()}/${image.name || "item.jpg"}`;
-  const object = storage.bucket(bucketName).file(objectName);
 
-  console.log("[AskSAV] GCS upload start", {
+  await uploadItemImageViaGcsRest({
     bucketName,
     objectName,
-    contentType: image.type || "application/octet-stream",
-    bufferSize: bytes.length,
-    googleClientEmailPresent: Boolean(process.env.GOOGLE_CLIENT_EMAIL),
-    googlePrivateKeyPresent: Boolean(process.env.GOOGLE_PRIVATE_KEY),
+    bytes,
+    contentType: image.type,
   });
-
-  try {
-    await object.save(bytes, {
-      contentType: image.type,
-      resumable: false,
-      metadata: { cacheControl: "private, max-age=0" },
-    });
-
-    console.log("[AskSAV] GCS upload success", {
-      bucketName,
-      objectName,
-      bufferSize: bytes.length,
-    });
-  } catch (error) {
-    const err = error as {
-      name?: unknown;
-      message?: unknown;
-      code?: unknown;
-      status?: unknown;
-      statusCode?: unknown;
-      response?: {
-        status?: unknown;
-        statusText?: unknown;
-        data?: unknown;
-      };
-      errors?: unknown;
-      cause?: unknown;
-    };
-
-    console.error("[AskSAV] GCS upload failed", {
-      bucketName,
-      objectName,
-      contentType: image.type || "application/octet-stream",
-      bufferSize: bytes.length,
-      googleClientEmailPresent: Boolean(process.env.GOOGLE_CLIENT_EMAIL),
-      googlePrivateKeyPresent: Boolean(process.env.GOOGLE_PRIVATE_KEY),
-      errorName: err?.name,
-      errorMessage: err?.message,
-      errorCode: err?.code,
-      errorStatus: err?.status,
-      errorStatusCode: err?.statusCode,
-      responseStatus: err?.response?.status,
-      responseStatusText: err?.response?.statusText,
-      responseData: err?.response?.data,
-      errors: err?.errors,
-      cause: err?.cause,
-    });
-
-    throw error;
-  }
 
   const uri = `gs://${bucketName}/${objectName}`;
 
