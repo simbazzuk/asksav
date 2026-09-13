@@ -24,4 +24,7 @@ export const bigquery = new BigQuery({
   location,
   credentials,
 });
-export const storage = new Storage({ projectId });
+export const storage = new Storage({
+  projectId,
+  credentials,
+});
