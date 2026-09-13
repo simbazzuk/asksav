@@ -1,6 +1,6 @@
 {
     "name":  "siteface-v0.17.13",
-    "version":  "0.19.6.4",
+    "version":  "0.19.6.5.3",
     "private":  true,
     "scripts":  {
                     "dev":  "next dev",

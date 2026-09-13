@@ -1008,8 +1008,16 @@ async function getGoogleStorageAccessToken() {
 
   let privateKey = process.env.GOOGLE_PRIVATE_KEY?.trim();
 
+  if (!clientEmail || !privateKey) {
+    throw new Error(
+      "Missing GOOGLE_CLIENT_EMAIL or GOOGLE_PRIVATE_KEY for GCS REST upload."
+    );
+  }
+
+  const literalEscapedNewlinePresent =
+    privateKey.includes("\\n") || privateKey.includes("\\r\\n");
+
   if (
-    privateKey &&
     privateKey.startsWith('"') &&
     privateKey.endsWith('"')
   ) {
@@ -1017,25 +1025,54 @@ async function getGoogleStorageAccessToken() {
   }
 
   privateKey = privateKey
-    ?.replace(/\\r\\n/g, "\n")
+    .replace(/\\r\\n/g, "\n")
     .replace(/\\n/g, "\n")
     .replace(/\r\n/g, "\n")
     .trim();
 
-  if (!clientEmail || !privateKey) {
+  const pemMatch = privateKey.match(
+    /-----BEGIN PRIVATE KEY-----([\s\S]*?)-----END PRIVATE KEY-----/
+  );
+
+  if (!pemMatch) {
     throw new Error(
-      "Missing GOOGLE_CLIENT_EMAIL or GOOGLE_PRIVATE_KEY for GCS REST upload."
+      "GOOGLE_PRIVATE_KEY is present but PEM markers could not be parsed."
     );
   }
 
-  if (
-    !privateKey.includes("-----BEGIN PRIVATE KEY-----") ||
-    !privateKey.includes("-----END PRIVATE KEY-----")
-  ) {
+  const rawBody = pemMatch[1]
+    .replace(/\\r/g, "")
+    .replace(/\\n/g, "")
+    .replace(/\s+/g, "")
+    .replace(/"/g, "")
+    .trim();
+
+  const base64BodyValid =
+    rawBody.length > 0 &&
+    rawBody.length % 4 === 0 &&
+    /^[A-Za-z0-9+/]+={0,2}$/.test(rawBody);
+
+  console.log("[AskSAV] Google private key diagnostics", {
+    pemHeaderDetected: privateKey.includes("-----BEGIN PRIVATE KEY-----"),
+    pemFooterDetected: privateKey.includes("-----END PRIVATE KEY-----"),
+    literalEscapedNewlinePresent,
+    base64BodyValid,
+    bodyLength: rawBody.length,
+  });
+
+  if (!base64BodyValid) {
     throw new Error(
-      "GOOGLE_PRIVATE_KEY is present but is not a valid PEM private key."
+      "GOOGLE_PRIVATE_KEY PEM body is malformed or is not valid Base64."
     );
   }
+
+  const wrappedBody =
+    rawBody.match(/.{1,64}/g)?.join("\n") ?? rawBody;
+
+  privateKey =
+    "-----BEGIN PRIVATE KEY-----\n" +
+    wrappedBody +
+    "\n-----END PRIVATE KEY-----\n";
 
   const now = Math.floor(Date.now() / 1000);
   const header = base64UrlJson({ alg: "RS256", typ: "JWT" });
