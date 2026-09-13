@@ -1004,75 +1004,56 @@ function base64UrlJson(value: unknown) {
 }
 
 async function getGoogleStorageAccessToken() {
-  const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+  const encoded = process.env.GOOGLE_SERVICE_ACCOUNT_JSON_B64?.trim();
 
-  let privateKey = process.env.GOOGLE_PRIVATE_KEY?.trim();
+  let clientEmail: string | undefined;
+  let privateKey: string | undefined;
+
+  if (encoded) {
+    try {
+      const decoded = Buffer.from(encoded, "base64").toString("utf8");
+      const parsed = JSON.parse(decoded) as {
+        client_email?: string;
+        private_key?: string;
+      };
+
+      clientEmail = parsed.client_email;
+      privateKey = parsed.private_key;
+
+      if (!clientEmail || !privateKey) {
+        throw new Error(
+          "Decoded service account JSON is missing client_email or private_key."
+        );
+      }
+
+      console.log("[AskSAV] Google credentials source", {
+        source: "GOOGLE_SERVICE_ACCOUNT_JSON_B64",
+        clientEmailPresent: true,
+        privateKeyPresent: true,
+      });
+    } catch (error) {
+      throw new Error(
+        `Invalid GOOGLE_SERVICE_ACCOUNT_JSON_B64: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
+    }
+  } else {
+    clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+    privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+
+    console.log("[AskSAV] Google credentials source", {
+      source: "GOOGLE_CLIENT_EMAIL + GOOGLE_PRIVATE_KEY fallback",
+      clientEmailPresent: Boolean(clientEmail),
+      privateKeyPresent: Boolean(privateKey),
+    });
+  }
 
   if (!clientEmail || !privateKey) {
     throw new Error(
-      "Missing GOOGLE_CLIENT_EMAIL or GOOGLE_PRIVATE_KEY for GCS REST upload."
+      "Missing Google service account credentials. Set GOOGLE_SERVICE_ACCOUNT_JSON_B64 or the legacy GOOGLE_CLIENT_EMAIL / GOOGLE_PRIVATE_KEY variables."
     );
   }
-
-  const literalEscapedNewlinePresent =
-    privateKey.includes("\\n") || privateKey.includes("\\r\\n");
-
-  if (
-    privateKey.startsWith('"') &&
-    privateKey.endsWith('"')
-  ) {
-    privateKey = privateKey.slice(1, -1);
-  }
-
-  privateKey = privateKey
-    .replace(/\\r\\n/g, "\n")
-    .replace(/\\n/g, "\n")
-    .replace(/\r\n/g, "\n")
-    .trim();
-
-  const pemMatch = privateKey.match(
-    /-----BEGIN PRIVATE KEY-----([\s\S]*?)-----END PRIVATE KEY-----/
-  );
-
-  if (!pemMatch) {
-    throw new Error(
-      "GOOGLE_PRIVATE_KEY is present but PEM markers could not be parsed."
-    );
-  }
-
-  const rawBody = pemMatch[1]
-    .replace(/\\r/g, "")
-    .replace(/\\n/g, "")
-    .replace(/\s+/g, "")
-    .replace(/"/g, "")
-    .trim();
-
-  const base64BodyValid =
-    rawBody.length > 0 &&
-    rawBody.length % 4 === 0 &&
-    /^[A-Za-z0-9+/]+={0,2}$/.test(rawBody);
-
-  console.log("[AskSAV] Google private key diagnostics", {
-    pemHeaderDetected: privateKey.includes("-----BEGIN PRIVATE KEY-----"),
-    pemFooterDetected: privateKey.includes("-----END PRIVATE KEY-----"),
-    literalEscapedNewlinePresent,
-    base64BodyValid,
-    bodyLength: rawBody.length,
-  });
-
-  if (!base64BodyValid) {
-    throw new Error(
-      "GOOGLE_PRIVATE_KEY PEM body is malformed or is not valid Base64."
-    );
-  }
-
-  const wrappedBody =
-    rawBody.match(/.{1,64}/g)?.join("\n") ?? rawBody;
-
-  privateKey =
-    "-----BEGIN PRIVATE KEY-----\n" +
-    wrappedBody +
-    "\n-----END PRIVATE KEY-----\n";
 
   const now = Math.floor(Date.now() / 1000);
   const header = base64UrlJson({ alg: "RS256", typ: "JWT" });
@@ -1126,7 +1107,6 @@ async function getGoogleStorageAccessToken() {
 
   return tokenBody.access_token;
 }
-
 async function uploadItemImageViaGcsRest(args: {
   bucketName: string;
   objectName: string;

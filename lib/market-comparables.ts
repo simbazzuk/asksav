@@ -32,13 +32,52 @@ const projectId =
 const dataset = process.env.SITEFACE_BQ_DATASET || "siteface";
 const model = process.env.SITEFACE_BQ_GEMINI_MODEL || "gemini_model";
 
-const credentials =
-  process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY
-    ? {
-        client_email: process.env.GOOGLE_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+type GoogleServiceAccountCredentials = {
+  client_email: string;
+  private_key: string;
+};
+
+function getGoogleServiceAccountCredentials(): GoogleServiceAccountCredentials | undefined {
+  const encoded = process.env.GOOGLE_SERVICE_ACCOUNT_JSON_B64?.trim();
+
+  if (encoded) {
+    try {
+      const decoded = Buffer.from(encoded, "base64").toString("utf8");
+      const parsed = JSON.parse(decoded) as {
+        client_email?: string;
+        private_key?: string;
+      };
+
+      if (!parsed.client_email || !parsed.private_key) {
+        throw new Error(
+          "Decoded service account JSON is missing client_email or private_key."
+        );
       }
-    : undefined;
+
+      return {
+        client_email: parsed.client_email,
+        private_key: parsed.private_key,
+      };
+    } catch (error) {
+      throw new Error(
+        `Invalid GOOGLE_SERVICE_ACCOUNT_JSON_B64: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
+    }
+  }
+
+  if (process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY) {
+    return {
+      client_email: process.env.GOOGLE_CLIENT_EMAIL,
+      private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+    };
+  }
+
+  return undefined;
+}
+
+const credentials = getGoogleServiceAccountCredentials();
 
 const bigquery = new BigQuery({
   projectId,
