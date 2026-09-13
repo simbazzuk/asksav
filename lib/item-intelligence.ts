@@ -1002,11 +1002,64 @@ export async function analyseItemPhoto(image: File, hint = "") {
   const objectName = `item-analysis/${crypto.randomUUID()}/${image.name || "item.jpg"}`;
   const object = storage.bucket(bucketName).file(objectName);
 
-  await object.save(bytes, {
-    contentType: image.type,
-    resumable: false,
-    metadata: { cacheControl: "private, max-age=0" },
+  console.log("[AskSAV] GCS upload start", {
+    bucketName,
+    objectName,
+    contentType: image.type || "application/octet-stream",
+    bufferSize: bytes.length,
+    googleClientEmailPresent: Boolean(process.env.GOOGLE_CLIENT_EMAIL),
+    googlePrivateKeyPresent: Boolean(process.env.GOOGLE_PRIVATE_KEY),
   });
+
+  try {
+    await object.save(bytes, {
+      contentType: image.type,
+      resumable: false,
+      metadata: { cacheControl: "private, max-age=0" },
+    });
+
+    console.log("[AskSAV] GCS upload success", {
+      bucketName,
+      objectName,
+      bufferSize: bytes.length,
+    });
+  } catch (error) {
+    const err = error as {
+      name?: unknown;
+      message?: unknown;
+      code?: unknown;
+      status?: unknown;
+      statusCode?: unknown;
+      response?: {
+        status?: unknown;
+        statusText?: unknown;
+        data?: unknown;
+      };
+      errors?: unknown;
+      cause?: unknown;
+    };
+
+    console.error("[AskSAV] GCS upload failed", {
+      bucketName,
+      objectName,
+      contentType: image.type || "application/octet-stream",
+      bufferSize: bytes.length,
+      googleClientEmailPresent: Boolean(process.env.GOOGLE_CLIENT_EMAIL),
+      googlePrivateKeyPresent: Boolean(process.env.GOOGLE_PRIVATE_KEY),
+      errorName: err?.name,
+      errorMessage: err?.message,
+      errorCode: err?.code,
+      errorStatus: err?.status,
+      errorStatusCode: err?.statusCode,
+      responseStatus: err?.response?.status,
+      responseStatusText: err?.response?.statusText,
+      responseData: err?.response?.data,
+      errors: err?.errors,
+      cause: err?.cause,
+    });
+
+    throw error;
+  }
 
   const uri = `gs://${bucketName}/${objectName}`;
 
