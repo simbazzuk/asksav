@@ -6,11 +6,12 @@ import {
   verifyFirebaseRequest,
 } from "../../../../lib/v20-entitlements";
 
+import { AskSavTimeoutError, withAskSavTimeout } from "../../../../lib/asksav-timeout";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 120;
 
-export async function POST(request: Request) {
+async function protectedAnalysisPost(request: Request) {
   let identity: { uid: string; email: string | null } | null = null;
   let reservedPeriod: string | null = null;
 
@@ -101,5 +102,60 @@ export async function POST(request: Request) {
       { error: "AskSAV could not start the protected analysis request." },
       { status: 500 }
     );
+  }
+}
+
+const ASKSAV_PROTECTED_ANALYSIS_TIMEOUT_MS = 105_000;
+
+export async function POST(request: Request) {
+  const requestId =
+    request.headers.get("x-vercel-id") ||
+    request.headers.get("x-request-id") ||
+    crypto.randomUUID();
+
+  const started = Date.now();
+
+  console.info(
+    `[AskSAV v0.20.2.6] request started id=${requestId}`,
+  );
+
+  try {
+    const response = await withAskSavTimeout(
+      "protected-analysis",
+      () => protectedAnalysisPost(request),
+      ASKSAV_PROTECTED_ANALYSIS_TIMEOUT_MS,
+    );
+
+    console.info(
+      `[AskSAV v0.20.2.6] request completed id=${requestId} totalMs=${Date.now() - started}`,
+    );
+
+    return response;
+  } catch (error) {
+    const totalMs = Date.now() - started;
+
+    if (error instanceof AskSavTimeoutError) {
+      console.error(
+        `[AskSAV v0.20.2.6] controlled timeout id=${requestId} stage=${error.stage} totalMs=${totalMs}`,
+      );
+
+      return Response.json(
+        {
+          error: "ANALYSIS_TIMEOUT",
+          message:
+            "AskSAV is taking longer than expected. Please try again with a clearer or closer image.",
+          retryable: true,
+          requestId,
+        },
+        { status: 504 },
+      );
+    }
+
+    console.error(
+      `[AskSAV v0.20.2.6] protected analysis failed id=${requestId} totalMs=${totalMs}`,
+      error,
+    );
+
+    throw error;
   }
 }

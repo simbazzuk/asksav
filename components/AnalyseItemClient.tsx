@@ -340,6 +340,14 @@ function askSavFriendlyAnalysisError(error: unknown): string {
         : "";
 
   if (
+    /ANALYSIS_TIMEOUT/i.test(raw) ||
+    /taking longer than expected/i.test(raw) ||
+    /timed out/i.test(raw) ||
+    /timeout/i.test(raw)
+  ) {
+    return "AskSAV is taking longer than expected. Please try again with a clearer or closer image.";
+  }
+  if (
     /string did not match the expected pattern/i.test(raw) ||
     /invalid url/i.test(raw) ||
     /failed to parse url/i.test(raw) ||
