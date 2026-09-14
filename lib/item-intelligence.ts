@@ -1293,6 +1293,123 @@ export async function analyseItemPhoto(image: File, hint = "") {
  * identification / condition / verification result. A fresh telemetry
  * collector is supplied only for this optional request.
  */
+function askSavMarketHasUsableValue(value: any) {
+  if (!value || typeof value !== "object") return false;
+
+  const candidates = [
+    value,
+    value.market,
+    value.market_value,
+    value.marketValue,
+    value.market_intelligence,
+    value.marketIntelligence,
+    value.result,
+    value.data,
+  ].filter(Boolean);
+
+  return candidates.some((candidate: any) => {
+    if (!candidate || typeof candidate !== "object") return false;
+
+    return (
+      candidate.available === true ||
+      candidate.low != null ||
+      candidate.high != null ||
+      candidate.suggested != null ||
+      candidate.quick_sale != null
+    );
+  });
+}
+
+function askSavCleanMarketText(value: unknown) {
+  if (typeof value !== "string") return value;
+
+  let text = value.replace(/\s+/g, " ").trim();
+
+  // Remove adjacent duplicate words, e.g. "Tripp Tripp suitcase".
+  text = text.replace(/\b([A-Za-z0-9'-]+)(?:\s+\1\b)+/gi, "$1");
+
+  // Remove adjacent duplicate short phrases, e.g.
+  // "Tripp Purple Tripp Purple suitcase".
+  const words = text.split(" ");
+  for (let size = 1; size <= 3; size++) {
+    let changed = true;
+
+    while (changed) {
+      changed = false;
+
+      for (let i = 0; i + size * 2 <= words.length; i++) {
+        const left = words.slice(i, i + size).join(" ").toLowerCase();
+        const right = words.slice(i + size, i + size * 2).join(" ").toLowerCase();
+
+        if (left && left === right) {
+          words.splice(i + size, size);
+          changed = true;
+          break;
+        }
+      }
+    }
+  }
+
+  return words.join(" ").trim();
+}
+
+function askSavCleanMarketContext(value: any): any {
+  if (Array.isArray(value)) {
+    return value.map(askSavCleanMarketContext);
+  }
+
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, child]) => [
+        key,
+        askSavCleanMarketContext(child),
+      ]),
+    );
+  }
+
+  return askSavCleanMarketText(value);
+}
+
+function askSavBroadenIdentification(value: any) {
+  const cleaned = askSavCleanMarketContext(value);
+
+  if (!cleaned || typeof cleaned !== "object") return cleaned;
+
+  const result = { ...cleaned } as Record<string, any>;
+
+  // Keep useful product identity while removing hyper-specific wording that can
+  // make a live market lookup too narrow.
+  for (const key of [
+    "description",
+    "evidence",
+    "verification_notes",
+    "visual_notes",
+    "reasoning",
+  ]) {
+    delete result[key];
+  }
+
+  // If brand is already repeated at the start of model/name, remove the repeat.
+  const brand = typeof result.brand === "string" ? result.brand.trim() : "";
+
+  for (const key of ["model", "name", "item_name", "product_name", "title"]) {
+    if (brand && typeof result[key] === "string") {
+      const pattern = new RegExp(`^${brand.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s+`, "i");
+      result[key] = result[key].replace(pattern, "").trim();
+    }
+  }
+
+  return result;
+}
+
+/**
+ * AskSAV on-demand market entrypoint.
+ *
+ * v0.20.3.7.3 keeps the normal Analyse flow fast and performs live market
+ * research only after the user requests it. If the first lookup is too narrow
+ * or returns unavailable, AskSAV makes one controlled retry with cleaned,
+ * broader identification context. It never invents a valuation.
+ */
 export async function generateAskSavOnDemandMarket(
   analysis: Record<string, any>,
 ) {
@@ -1306,12 +1423,60 @@ export async function generateAskSavOnDemandMarket(
     );
   }
 
-  const marketUsage: any[] = [];
+  const primaryUsage: any[] = [];
 
-  return generateMarketIntelligence(
+  console.info("[AskSAV market] primary live lookup started");
+
+  const primary = await generateMarketIntelligence(
     identification as any,
     condition as any,
     verification as any,
-    marketUsage as any,
+    primaryUsage as any,
   );
+
+  if (askSavMarketHasUsableValue(primary)) {
+    console.info("[AskSAV market] primary live lookup returned usable pricing");
+    return primary;
+  }
+
+  const retryIdentification = askSavBroadenIdentification(identification);
+
+  console.info("[AskSAV market] primary lookup unavailable; retrying with cleaned context", {
+    originalSearchQuery: primary?.search_query ?? null,
+    cleanedBrand: retryIdentification?.brand ?? null,
+    cleanedModel: retryIdentification?.model ?? null,
+    cleanedName:
+      retryIdentification?.name ??
+      retryIdentification?.item_name ??
+      retryIdentification?.product_name ??
+      retryIdentification?.title ??
+      null,
+    category:
+      retryIdentification?.category ??
+      retryIdentification?.item_category ??
+      null,
+  });
+
+  const retryUsage: any[] = [];
+
+  const retry = await generateMarketIntelligence(
+    retryIdentification as any,
+    condition as any,
+    verification as any,
+    retryUsage as any,
+  );
+
+  if (askSavMarketHasUsableValue(retry)) {
+    console.info("[AskSAV market] cleaned-context retry returned usable pricing");
+    return retry;
+  }
+
+  console.info("[AskSAV market] cleaned-context retry also unavailable", {
+    primarySearchQuery: primary?.search_query ?? null,
+    retrySearchQuery: retry?.search_query ?? null,
+  });
+
+  // Prefer the retry because its search query/context is normally cleaner.
+  // Preserve the primary result only if the retry returned nothing at all.
+  return retry ?? primary;
 }
