@@ -274,3 +274,173 @@
 }
 
 /* AskSAV v0.20.3.7.4.1.1 market wide UI END */
+
+/* AskSAV v0.20.3.7.4.2 market colour fullwidth BEGIN */
+
+/*
+ * Make Market Intelligence read as a full-width report section.
+ * These rules intentionally override older result-grid width constraints.
+ */
+.sf-commercial-layout:has(.asksav-market-wide),
+.sf178-result-grid:has(.asksav-market-wide),
+.sf176-result-grid:has(.asksav-market-wide),
+.sf176-report-grid:has(.asksav-market-wide) {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.asksav-market-wide {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  grid-column: 1 / -1 !important;
+  justify-self: stretch !important;
+  align-self: stretch !important;
+
+  padding: 34px 32px 28px !important;
+  border: 1px solid #d9d2ff !important;
+  border-top: 5px solid #7148ff !important;
+  border-radius: 22px !important;
+
+  background:
+    radial-gradient(circle at 92% 8%, rgba(124, 88, 255, 0.10), transparent 28%),
+    linear-gradient(135deg, #ffffff 0%, #fbfaff 55%, #f6f3ff 100%) !important;
+
+  box-shadow: 0 16px 38px rgba(64, 44, 120, 0.08) !important;
+}
+
+/* Keep the market narrative comfortably wide. */
+.asksav-market-wide p {
+  max-width: 1050px !important;
+  color: #44546a !important;
+  line-height: 1.7 !important;
+}
+
+/* Headings and main range */
+.asksav-market-wide h2,
+.asksav-market-wide h3 {
+  color: #11263d !important;
+}
+
+.asksav-market-wide [class*="range"],
+.asksav-market-wide [class*="price"] {
+  color: #5227d6 !important;
+}
+
+/*
+ * Market metric strip.
+ * Existing AskSAV versions use several different class names, so support all
+ * known variants while leaving the rest of the app untouched.
+ */
+.asksav-market-wide .asksav-market-metrics,
+.asksav-market-wide .market-metrics,
+.asksav-market-wide .asksav-market-stats {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+  width: 100% !important;
+  background: transparent !important;
+}
+
+/* Suggested value */
+.asksav-market-wide .asksav-market-metrics > *:nth-child(1),
+.asksav-market-wide .market-metrics > *:nth-child(1),
+.asksav-market-wide .asksav-market-stats > *:nth-child(1) {
+  background: linear-gradient(135deg, #effdf7 0%, #dff8ec 100%) !important;
+  border: 1px solid #c5eedb !important;
+  color: #087f5b !important;
+}
+
+/* Quick sale */
+.asksav-market-wide .asksav-market-metrics > *:nth-child(2),
+.asksav-market-wide .market-metrics > *:nth-child(2),
+.asksav-market-wide .asksav-market-stats > *:nth-child(2) {
+  background: linear-gradient(135deg, #f1f7ff 0%, #e1efff 100%) !important;
+  border: 1px solid #c9e0ff !important;
+  color: #155fd1 !important;
+}
+
+/* Confidence */
+.asksav-market-wide .asksav-market-metrics > *:nth-child(3),
+.asksav-market-wide .market-metrics > *:nth-child(3),
+.asksav-market-wide .asksav-market-stats > *:nth-child(3) {
+  background: linear-gradient(135deg, #f8f3ff 0%, #eee5ff 100%) !important;
+  border: 1px solid #dfd1ff !important;
+  color: #5b2bd1 !important;
+}
+
+.asksav-market-wide .asksav-market-metrics > *,
+.asksav-market-wide .market-metrics > *,
+.asksav-market-wide .asksav-market-stats > * {
+  min-height: 96px !important;
+  padding: 18px 20px !important;
+  border-radius: 17px !important;
+  box-shadow: none !important;
+}
+
+/* Metric labels */
+.asksav-market-wide .asksav-market-metrics small,
+.asksav-market-wide .market-metrics small,
+.asksav-market-wide .asksav-market-stats small {
+  color: #6f6a91 !important;
+}
+
+/* Market search panel */
+.asksav-market-wide .asksav-market-search,
+.asksav-market-wide .market-search {
+  width: 100% !important;
+  max-width: none !important;
+  margin-top: 18px !important;
+  padding: 18px 20px !important;
+  border: 1px solid #e2d9ff !important;
+  border-radius: 16px !important;
+  background: linear-gradient(135deg, #f7f3ff 0%, #eee8ff 100%) !important;
+  color: #34206f !important;
+}
+
+/*
+ * Fallback styling for the current generated structure where the three
+ * metric cards may not carry the historical class names.
+ */
+.asksav-market-wide > div:has(> div:nth-child(3):last-child) {
+  gap: 16px !important;
+  background: transparent !important;
+}
+
+.asksav-market-wide > div:has(> div:nth-child(3):last-child) > div:nth-child(1) {
+  background: linear-gradient(135deg, #effdf7 0%, #dff8ec 100%) !important;
+  border-color: #c5eedb !important;
+}
+
+.asksav-market-wide > div:has(> div:nth-child(3):last-child) > div:nth-child(2) {
+  background: linear-gradient(135deg, #f1f7ff 0%, #e1efff 100%) !important;
+  border-color: #c9e0ff !important;
+}
+
+.asksav-market-wide > div:has(> div:nth-child(3):last-child) > div:nth-child(3) {
+  background: linear-gradient(135deg, #f8f3ff 0%, #eee5ff 100%) !important;
+  border-color: #dfd1ff !important;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .asksav-market-wide {
+    padding: 26px 22px !important;
+  }
+
+  .asksav-market-wide .asksav-market-metrics,
+  .asksav-market-wide .market-metrics,
+  .asksav-market-wide .asksav-market-stats {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .asksav-market-wide {
+    padding: 22px 18px !important;
+    border-radius: 18px !important;
+  }
+}
+
+/* AskSAV v0.20.3.7.4.2 market colour fullwidth END */
