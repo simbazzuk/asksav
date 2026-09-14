@@ -1250,7 +1250,19 @@ export async function analyseItemPhoto(image: File, hint = "") {
     ],
   };
 
-  const market = await askSavVisionCall("generateMarketIntelligence", async () => generateMarketIntelligence(identification, condition, verification, usage));
+  const market = ({
+          available: false,
+          reason: "ON_DEMAND",
+          currency: "GBP",
+          low: null,
+          high: null,
+          suggested: null,
+          quick_sale: null,
+          confidence: 0,
+          evidence_summary:
+            "Market Intelligence is available on demand after the core visual analysis.",
+          search_query: null,
+        });
 
   const cost_telemetry = summariseUsage(usage);
 
