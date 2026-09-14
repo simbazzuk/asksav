@@ -4,6 +4,7 @@ import SiteFaceAccountButton from "./SiteFaceAccountButton";
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { firebaseConfigured, getSiteFaceAuth } from "../lib/siteface-auth";
+import AskSAVMarketIntelligenceButton from "./AskSAVMarketIntelligenceButton";
 
 type AskSAVRuntimeEntitlements = {
   plan: "FREE" | "VIC_PLUS" | "VIC_PRO";
@@ -693,6 +694,10 @@ export default function AnalyseItemClient() {
           </section>
 
               {result && (
+                <>
+                  <AskSAVMarketIntelligenceButton
+                  analysis={result as Record<string, unknown>}
+                />
               <div className="sf-commercial-layout">
                 <div className="sf-commercial-left">
 <article className="sf178-result-card value">
@@ -736,6 +741,7 @@ export default function AnalyseItemClient() {
                     </div>
                   </article>
               </div>
+            </>
             )}
         </section>
       </main>
