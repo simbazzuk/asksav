@@ -826,7 +826,7 @@ function buildIdentityText(result: AnyObject) {
     .join(" ");
 }
 
-async function generateMarketIntelligence(
+export async function generateMarketIntelligence(
   identification: AnyObject,
   condition: AnyObject,
   verification: AnyObject,
@@ -1284,4 +1284,34 @@ export async function analyseItemPhoto(image: File, hint = "") {
   console.log("[SiteFace] v0.17.13 grounded result:", JSON.stringify(result, null, 2));
 
   return result;
+}
+/**
+ * AskSAV on-demand market entrypoint.
+ *
+ * The normal Analyse flow deliberately skips Market Intelligence.
+ * This wrapper reuses the existing market generator using the completed
+ * identification / condition / verification result. A fresh telemetry
+ * collector is supplied only for this optional request.
+ */
+export async function generateAskSavOnDemandMarket(
+  analysis: Record<string, any>,
+) {
+  const identification = analysis?.identification;
+  const condition = analysis?.condition;
+  const verification = analysis?.verification;
+
+  if (!identification || !condition || !verification) {
+    throw new Error(
+      "MARKET_CONTEXT_MISSING: Run a fresh AskSAV analysis before requesting Market Intelligence.",
+    );
+  }
+
+  const marketUsage: any[] = [];
+
+  return generateMarketIntelligence(
+    identification as any,
+    condition as any,
+    verification as any,
+    marketUsage as any,
+  );
 }

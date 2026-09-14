@@ -93,6 +93,7 @@ import "./asksav-v0.20.2.1.css";
 import "./asksav-v0.20.2.2.css";
 import "./asksav-v0.20.2.3.css";
 import "./asksav-v0.20.2.5.css";
+import "./asksav-v0.20.3.6.css";
 import AskSavAnalysisProgress from "../components/AskSavAnalysisProgress";
 export const metadata: Metadata = {
   icons: { icon: "/asksav-icon.png", apple: "/asksav-icon.png" },

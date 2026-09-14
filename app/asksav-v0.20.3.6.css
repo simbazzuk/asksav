@@ -1,0 +1,62 @@
+/* AskSAV v0.20.3.6 - optional on-demand Market Intelligence */
+.asksav-market-demand{
+  margin-top:16px;
+  padding:20px;
+  border:1px solid #ded7fa;
+  border-radius:18px;
+  background:linear-gradient(135deg,#fbf9ff,#f4f0ff);
+  display:grid;
+  gap:14px;
+}
+.asksav-market-demand__eyebrow{
+  display:block;
+  margin-bottom:5px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.08em;
+  color:#7356d8;
+}
+.asksav-market-demand h3{
+  margin:0 0 6px;
+  font-size:20px;
+  color:#26343a;
+}
+.asksav-market-demand p{
+  margin:0;
+  color:#68787f;
+  line-height:1.55;
+}
+.asksav-market-demand button{
+  justify-self:start;
+  border:0;
+  border-radius:12px;
+  padding:12px 18px;
+  background:#6f52d9;
+  color:white;
+  font-weight:800;
+  cursor:pointer;
+}
+.asksav-market-demand button:disabled{
+  opacity:.68;
+  cursor:wait;
+}
+.asksav-market-demand__progress{
+  font-size:13px;
+}
+.asksav-market-demand__error{
+  color:#a33b45!important;
+  font-weight:700;
+}
+.asksav-market-demand--ready{
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+}
+.asksav-market-demand__range{
+  font-size:28px;
+  color:#6847d5;
+}
+@media(max-width:700px){
+  .asksav-market-demand--ready{
+    grid-template-columns:1fr;
+  }
+}
