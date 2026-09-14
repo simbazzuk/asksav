@@ -444,3 +444,91 @@
 }
 
 /* AskSAV v0.20.3.7.4.2 market colour fullwidth END */
+
+/* AskSAV v0.20.3.7.4.3 optional market fullwidth BEGIN */
+
+/*
+ * Optional Market Intelligence is a report-level action, so it should occupy
+ * the same horizontal space as the completed Market Intelligence result.
+ */
+.asksav-market-optional-wide {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  grid-column: 1 / -1 !important;
+  justify-self: stretch !important;
+  align-self: stretch !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+
+  padding: 28px 30px !important;
+  border: 1px solid #ddd5ff !important;
+  border-top: 5px solid #7c4dff !important;
+  border-radius: 22px !important;
+
+  background:
+    radial-gradient(circle at 92% 18%, rgba(124, 77, 255, 0.10), transparent 28%),
+    linear-gradient(135deg, #ffffff 0%, #fbfaff 58%, #f5f1ff 100%) !important;
+
+  box-shadow: 0 15px 34px rgba(67, 45, 119, 0.08) !important;
+}
+
+/* Widen whichever result-grid/container currently owns the optional card. */
+.sf-commercial-layout:has(.asksav-market-optional-wide),
+.sf178-result-grid:has(.asksav-market-optional-wide),
+.sf176-result-grid:has(.asksav-market-optional-wide),
+.sf176-report-grid:has(.asksav-market-optional-wide) {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.sf-commercial-layout > .asksav-market-optional-wide,
+.sf178-result-grid > .asksav-market-optional-wide,
+.sf176-result-grid > .asksav-market-optional-wide,
+.sf176-report-grid > .asksav-market-optional-wide {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* Keep the copy comfortably readable across the wider banner. */
+.asksav-market-optional-wide p {
+  max-width: 820px !important;
+  color: #52637a !important;
+  line-height: 1.65 !important;
+}
+
+.asksav-market-optional-wide h2,
+.asksav-market-optional-wide h3 {
+  max-width: 900px !important;
+  color: #10263f !important;
+  line-height: 1.15 !important;
+}
+
+/* Slightly strengthen the CTA now that the banner has more visual space. */
+.asksav-market-optional-wide button {
+  min-height: 48px !important;
+  padding: 0 22px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 22px rgba(101, 67, 230, 0.20) !important;
+}
+
+@media (max-width: 900px) {
+  .asksav-market-optional-wide {
+    padding: 25px 22px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .asksav-market-optional-wide {
+    padding: 21px 18px !important;
+    border-radius: 18px !important;
+  }
+
+  .asksav-market-optional-wide button {
+    width: 100% !important;
+  }
+}
+
+/* AskSAV v0.20.3.7.4.3 optional market fullwidth END */
