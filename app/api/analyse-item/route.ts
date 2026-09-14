@@ -29,6 +29,48 @@ async function askSavInnerStage<T>(
     throw error;
   }
 }
+
+async function askSavOptionalStage<T>(
+  stage: string,
+  work: () => Promise<T>,
+  timeoutMs: number,
+): Promise<T> {
+  const started = Date.now();
+  console.info(`[AskSAV optional] ${stage} started budget=${timeoutMs}ms`);
+
+  let timer: ReturnType<typeof setTimeout> | undefined;
+
+  try {
+    const timeout = new Promise<never>((_, reject) => {
+      timer = setTimeout(() => {
+        const error = new Error(`${stage} timed out after ${timeoutMs}ms`);
+        error.name = "AskSavOptionalStageTimeout";
+        reject(error);
+      }, timeoutMs);
+    });
+
+    const result = await Promise.race([work(), timeout]);
+
+    console.info(
+      `[AskSAV optional] ${stage} completed in ${Date.now() - started}ms`,
+    );
+
+    return result;
+  } catch (error) {
+    const elapsed = Date.now() - started;
+    const timedOut =
+      error instanceof Error && error.name === "AskSavOptionalStageTimeout";
+
+    console.warn(
+      `[AskSAV optional] ${stage} ${timedOut ? "timed out" : "failed"} after ${elapsed}ms; continuing without market comparables`,
+      error,
+    );
+
+    return null as T;
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
 export async function analyseItemHandler(request: Request) {
   console.info("[AskSAV analysis] handler entered");
   // ASKSAV_V020_INTERNAL_GUARD
@@ -67,7 +109,7 @@ export async function analyseItemHandler(request: Request) {
     }
 
     const result = await askSavInnerStage("vision/analyseItemPhoto", async () => analyseItemPhoto(image, hint));
-    const marketEvidence = await askSavInnerStage("vision/generateMarketComparables", async () => generateMarketComparables(result as Record<string, any>));
+    const marketEvidence = await askSavOptionalStage("market-comparables/generateMarketComparables", async () => generateMarketComparables(result as Record<string, any>), 25000);
 
     return NextResponse.json({
       ...result,
