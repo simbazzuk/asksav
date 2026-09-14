@@ -8,7 +8,29 @@ export const runtime = "nodejs";
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 
+async function askSavInnerStage<T>(
+  stage: string,
+  work: () => Promise<T>,
+): Promise<T> {
+  const started = Date.now();
+  console.info(`[AskSAV analysis] ${stage} started`);
+
+  try {
+    const result = await work();
+    console.info(
+      `[AskSAV analysis] ${stage} completed in ${Date.now() - started}ms`,
+    );
+    return result;
+  } catch (error) {
+    console.error(
+      `[AskSAV analysis] ${stage} failed after ${Date.now() - started}ms`,
+      error,
+    );
+    throw error;
+  }
+}
 export async function POST(request: Request) {
+  console.info("[AskSAV analysis] handler entered");
   // ASKSAV_V020_INTERNAL_GUARD
   const __askSAVMaterial =
     process.env.GOOGLE_SERVICE_ACCOUNT_JSON_B64 ||
@@ -44,8 +66,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Image must be 10MB or smaller." }, { status: 400 });
     }
 
-    const result = await analyseItemPhoto(image, hint);
-    const marketEvidence = await generateMarketComparables(result as Record<string, any>);
+    const result = await askSavInnerStage("vision/analyseItemPhoto", async () => analyseItemPhoto(image, hint));
+    const marketEvidence = await askSavInnerStage("vision/generateMarketComparables", async () => generateMarketComparables(result as Record<string, any>));
 
     return NextResponse.json({
       ...result,
