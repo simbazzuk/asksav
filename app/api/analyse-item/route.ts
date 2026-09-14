@@ -34,7 +34,13 @@ async function askSavOptionalStage<T>(
   stage: string,
   work: () => Promise<T>,
   timeoutMs: number,
+  enabled = true,
 ): Promise<T> {
+  if (!enabled) {
+    console.info(`[AskSAV optional] ${stage} skipped by entitlement`);
+    return null as T;
+  }
+
   const started = Date.now();
   console.info(`[AskSAV optional] ${stage} started budget=${timeoutMs}ms`);
 
@@ -73,6 +79,8 @@ async function askSavOptionalStage<T>(
 }
 export async function analyseItemHandler(request: Request) {
   console.info("[AskSAV analysis] handler entered");
+  const askSavFullMarketEvidence = request.headers.get("x-asksav-full-market-evidence") === "true";
+  console.info(`[AskSAV analysis] full-market-evidence=${askSavFullMarketEvidence}`);
   // ASKSAV_V020_INTERNAL_GUARD
   const __askSAVMaterial =
     process.env.GOOGLE_SERVICE_ACCOUNT_JSON_B64 ||
@@ -109,7 +117,7 @@ export async function analyseItemHandler(request: Request) {
     }
 
     const result = await askSavInnerStage("vision/analyseItemPhoto", async () => analyseItemPhoto(image, hint));
-    const marketEvidence = await askSavOptionalStage("market-comparables/generateMarketComparables", async () => generateMarketComparables(result as Record<string, any>), 25000);
+    const marketEvidence = await askSavOptionalStage("market-comparables/generateMarketComparables", async () => generateMarketComparables(result as Record<string, any>), 15000, askSavFullMarketEvidence);
 
     return NextResponse.json({
       ...result,

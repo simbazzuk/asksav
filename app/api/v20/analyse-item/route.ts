@@ -74,6 +74,8 @@ async function protectedAnalysisPost(request: Request) {
       method: "POST",
       headers: {
         "x-asksav-v20-internal": internalKey,
+        "x-asksav-full-market-evidence":
+          reservation.state.entitlements.fullMarketEvidence ? "true" : "false",
       },
       body: formData,
     });
