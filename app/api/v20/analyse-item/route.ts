@@ -7,17 +7,48 @@ import {
 } from "../../../../lib/v20-entitlements";
 
 import { AskSavTimeoutError, withAskSavTimeout } from "../../../../lib/asksav-timeout";
+async function askSavStage<T>(
+  stage: string,
+  work: () => Promise<T>,
+): Promise<T> {
+  const started = Date.now();
+  console.info(`[AskSAV stage] ${stage} started`);
+
+  try {
+    const result = await work();
+    console.info(
+      `[AskSAV stage] ${stage} completed in ${Date.now() - started}ms`,
+    );
+    return result;
+  } catch (error) {
+    console.error(
+      `[AskSAV stage] ${stage} failed after ${Date.now() - started}ms`,
+      error,
+    );
+    throw error;
+  }
+}
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 120;
 
 async function protectedAnalysisPost(request: Request) {
+  console.info("[AskSAV stage] protected-handler entered");
   let identity: { uid: string; email: string | null } | null = null;
   let reservedPeriod: string | null = null;
 
   try {
     identity = await verifyFirebaseRequest(request);
-    const reservation = await reserveAskSAVAnalysis(identity);
+
+    if (!identity) {
+      throw new Error("AUTH_REQUIRED");
+    }
+
+    const authenticatedIdentity = identity;
+    const reservation = await askSavStage(
+      "entitlement/reserveAskSAVAnalysis",
+      async () => reserveAskSAVAnalysis(authenticatedIdentity),
+    );
 
     if (!reservation.allowed) {
       return NextResponse.json(
@@ -30,7 +61,8 @@ async function protectedAnalysisPost(request: Request) {
       );
     }
 
-    reservedPeriod = reservation.state.usage.periodKey;
+    const reservationPeriod = reservation.state.usage.periodKey;
+    reservedPeriod = reservationPeriod;
     const internalKey = getAskSAVInternalAnalysisKey();
     if (!internalKey) {
       throw new Error("INTERNAL_ANALYSIS_KEY_MISSING");
@@ -49,7 +81,10 @@ async function protectedAnalysisPost(request: Request) {
     const text = await upstream.text();
 
     if (!upstream.ok) {
-      await releaseAskSAVAnalysis(identity, reservedPeriod);
+      await askSavStage(
+        "persistence/releaseAskSAVAnalysis",
+        async () => releaseAskSAVAnalysis(authenticatedIdentity, reservationPeriod),
+      );
       return new Response(text, {
         status: upstream.status,
         headers: {
@@ -63,7 +98,10 @@ async function protectedAnalysisPost(request: Request) {
     try {
       payload = JSON.parse(text);
     } catch {
-      await releaseAskSAVAnalysis(identity, reservedPeriod);
+      await askSavStage(
+        "persistence/releaseAskSAVAnalysis",
+        async () => releaseAskSAVAnalysis(authenticatedIdentity, reservationPeriod),
+      );
       throw new Error("ANALYSIS_RESPONSE_NOT_JSON");
     }
 
@@ -86,8 +124,14 @@ async function protectedAnalysisPost(request: Request) {
     const message = error instanceof Error ? error.message : "UNKNOWN";
 
     if (identity && reservedPeriod) {
+      const identityToRelease = identity;
+      const periodToRelease = reservedPeriod;
+
       try {
-        await releaseAskSAVAnalysis(identity, reservedPeriod);
+        await askSavStage(
+          "persistence/releaseAskSAVAnalysis",
+          async () => releaseAskSAVAnalysis(identityToRelease, periodToRelease),
+        );
       } catch (releaseError) {
         console.error("[AskSAV v0.20] usage reservation release failed", releaseError);
       }
