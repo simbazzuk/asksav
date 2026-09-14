@@ -330,6 +330,31 @@ function AskSAVActionLayer({ query }: { query: string }) {
   );
 }
 
+
+function askSavFriendlyAnalysisError(error: unknown): string {
+  const raw =
+    error instanceof Error
+      ? error.message
+      : typeof error === "string"
+        ? error
+        : "";
+
+  if (
+    /string did not match the expected pattern/i.test(raw) ||
+    /invalid url/i.test(raw) ||
+    /failed to parse url/i.test(raw) ||
+    /unexpected token.*json/i.test(raw) ||
+    /json.*parse/i.test(raw)
+  ) {
+    return "AskSAV could not interpret the analysis response for this image. Try again, or use a closer photo of the item.";
+  }
+
+  if (/network|failed to fetch|load failed/i.test(raw)) {
+    return "AskSAV could not reach the analysis service. Please check your connection and try again.";
+  }
+
+  return raw || "AskSAV could not analyse this image. Please try again.";
+}
 export default function AnalyseItemClient() {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -406,7 +431,7 @@ export default function AnalyseItemClient() {
       setResult(payload);
       persistAskSAVHistory(payload);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Analysis failed.");
+      setError(askSavFriendlyAnalysisError(e));
     } finally {
       setLoading(false);
     }

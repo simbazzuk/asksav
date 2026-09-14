@@ -567,7 +567,15 @@ Return exactly one JSON object:
   "hint_consistency": "CONSISTENT | CONFLICTING | NOT_PROVIDED",
   "hint_note": "string or null"
 }
-`.trim();
+
+CONTEXTUAL OBJECT RULES:
+- Analyse the primary consumer item in the image even when it is being worn, held, carried, installed, attached, or surrounded by other objects.
+- Examples include rings or watches on a hand, jewellery on a person, shoes being worn, a handbag being carried, clothing being worn, furniture in a room, or electronics installed in a home.
+- Do not identify or describe the person. Focus only on the item relevant to the requested visual-intelligence task.
+- If several candidate items are visible, choose the most visually prominent analysable consumer item unless the user hint clearly names another item.
+- For jewellery, watches, precious metals, gemstones and luxury goods, distinguish visible appearance from verified authenticity. Never claim precious-metal purity, gemstone identity, carat weight, authenticity, brand provenance or certification unless visible evidence supports it.
+- If the item can be identified but important verification evidence is missing, still return the best item identification and lower the verification confidence. Recommend a closer image, hallmark, label, serial number or alternate angle where appropriate.
+- Do not fail merely because the target item is shown on a person or in a real-world setting.`.trim();
 
   const parsed = await runVisualJson(uri, prompt, "Broad classification", {}, usage);
 
