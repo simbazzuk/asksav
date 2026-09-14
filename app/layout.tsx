@@ -89,6 +89,7 @@ import "./asksav-v0.19.3.css";
 import "./asksav-v0.19.4.css";
 import "./asksav-v0.19.4.2.css";
 import "./asksav-v0.19.5.css";
+import AskSavAnalysisProgress from "@/components/AskSavAnalysisProgress";
 export const metadata: Metadata = {
   icons: { icon: "/asksav-icon.png", apple: "/asksav-icon.png" },
   title: "AskSAV",
@@ -102,7 +103,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <SiteFaceNavigation />{children}        <SiteFaceAccountButton />
-</body>
+        <AskSavAnalysisProgress />
+      </body>
     </html>
   );
 }

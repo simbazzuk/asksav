@@ -799,3 +799,183 @@ pre {
 [class*="value"] [class*="compar"] {
   background: rgba(255,255,255,0.58) !important;
 }
+
+/* AskSAV v0.19.6.8 - Analysis Progress Experience */
+.asksav-analysis-progress-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(239, 248, 246, 0.72);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+.asksav-analysis-progress-card {
+  width: min(560px, calc(100vw - 32px));
+  border: 1px solid rgba(104, 211, 180, 0.48);
+  border-radius: 26px;
+  padding: 30px;
+  background:
+    radial-gradient(circle at top right, rgba(225, 214, 255, 0.68), transparent 38%),
+    linear-gradient(145deg, rgba(235, 252, 247, 0.98), rgba(247, 251, 255, 0.99));
+  box-shadow: 0 24px 70px rgba(15, 49, 63, 0.18);
+  color: #08263f;
+}
+
+.asksav-analysis-progress-orb {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #19c899, #4285f4);
+  color: white;
+  font-size: 24px;
+  font-weight: 900;
+  box-shadow: 0 10px 28px rgba(25, 200, 153, 0.24);
+  animation: asksavProgressPulse 1.8s ease-in-out infinite;
+}
+
+.asksav-analysis-progress-kicker {
+  display: inline-flex;
+  padding: 6px 10px;
+  margin-bottom: 10px;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.10);
+  color: #1264c5;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.asksav-analysis-progress-card h2 {
+  margin: 0;
+  font-size: clamp(26px, 4vw, 34px);
+  line-height: 1.05;
+}
+
+.asksav-analysis-progress-stage {
+  margin: 18px 0 4px;
+  font-size: 17px;
+  font-weight: 850;
+  color: #0d6f5a;
+}
+
+.asksav-analysis-progress-helper {
+  min-height: 42px;
+  margin: 0 0 22px;
+  color: #527083;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.asksav-analysis-progress-track {
+  height: 14px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(13, 91, 78, 0.10);
+  box-shadow: inset 0 1px 2px rgba(8, 38, 63, 0.08);
+}
+
+.asksav-analysis-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #16c79a, #30b7c8, #5a75f8, #8b5cf6);
+  box-shadow: 0 0 18px rgba(48, 183, 200, 0.28);
+  transition: width 650ms cubic-bezier(.2,.75,.2,1);
+  position: relative;
+  overflow: hidden;
+}
+
+.asksav-analysis-progress-fill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 42%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.52), transparent);
+  transform: translateX(-120%);
+  animation: asksavProgressShimmer 1.6s linear infinite;
+}
+
+.asksav-analysis-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.asksav-analysis-progress-meta strong {
+  color: #5b31d4;
+  font-size: 18px;
+}
+
+.asksav-analysis-progress-meta span {
+  color: #738494;
+  font-size: 12px;
+  text-align: right;
+}
+
+.asksav-analysis-progress-steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 22px;
+}
+
+.asksav-analysis-progress-steps span {
+  padding-top: 9px;
+  border-top: 3px solid rgba(8, 38, 63, 0.10);
+  color: #8b99a5;
+  font-size: 11px;
+  font-weight: 750;
+  text-align: center;
+}
+
+.asksav-analysis-progress-steps span.done {
+  border-top-color: #21b98f;
+  color: #0a765b;
+}
+
+@keyframes asksavProgressShimmer {
+  to { transform: translateX(340%); }
+}
+
+@keyframes asksavProgressPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.055); }
+}
+
+@media (max-width: 640px) {
+  .asksav-analysis-progress-card {
+    padding: 24px 20px;
+    border-radius: 22px;
+  }
+
+  .asksav-analysis-progress-meta {
+    align-items: flex-start;
+  }
+
+  .asksav-analysis-progress-steps {
+    gap: 3px;
+  }
+
+  .asksav-analysis-progress-steps span {
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .asksav-analysis-progress-orb,
+  .asksav-analysis-progress-fill::after {
+    animation: none;
+  }
+
+  .asksav-analysis-progress-fill {
+    transition: none;
+  }
+}
