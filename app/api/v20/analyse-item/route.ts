@@ -7,6 +7,7 @@ import {
 } from "../../../../lib/v20-entitlements";
 
 import { AskSavTimeoutError, withAskSavTimeout } from "../../../../lib/asksav-timeout";
+import { analyseItemHandler } from "../../analyse-item/route";
 async function askSavStage<T>(
   stage: string,
   work: () => Promise<T>,
@@ -69,14 +70,18 @@ async function protectedAnalysisPost(request: Request) {
     }
 
     const formData = await request.formData();
-    const upstream = await askSavStage("upstream/analyse-item", async () => fetch(new URL("/api/analyse-item", request.url), {
+    const internalRequest = new Request(new URL("/api/analyse-item", request.url), {
       method: "POST",
       headers: {
         "x-asksav-v20-internal": internalKey,
       },
       body: formData,
-      cache: "no-store",
-    }));
+    });
+
+    const upstream = await askSavStage(
+      "upstream/analyse-item-direct",
+      async () => analyseItemHandler(internalRequest),
+    );
 
     const text = await upstream.text();
 

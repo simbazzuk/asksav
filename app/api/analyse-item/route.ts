@@ -29,7 +29,7 @@ async function askSavInnerStage<T>(
     throw error;
   }
 }
-export async function POST(request: Request) {
+export async function analyseItemHandler(request: Request) {
   console.info("[AskSAV analysis] handler entered");
   // ASKSAV_V020_INTERNAL_GUARD
   const __askSAVMaterial =
@@ -80,4 +80,13 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
+}
+/**
+ * Next.js route entrypoint.
+ * The protected v0.20 route calls analyseItemHandler directly so that
+ * production analysis does not make an HTTP request back into the same
+ * Vercel deployment.
+ */
+export async function POST(request: Request) {
+  return analyseItemHandler(request);
 }
