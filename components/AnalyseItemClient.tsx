@@ -5,7 +5,17 @@ import SiteFaceAccountButton from "./SiteFaceAccountButton";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { firebaseConfigured, getSiteFaceAuth } from "../lib/siteface-auth";
 import AskSAVMarketIntelligenceButton from "./AskSAVMarketIntelligenceButton";
+
+function askSavLegacyMarketIsOnDemand(result: any) {
+  const market =
+    result?.market_value ??
+    result?.marketValue ??
+    result?.market_intelligence ??
+    result?.marketIntelligence ??
+    result?.market;
 
+  return market?.reason === "ON_DEMAND";
+}
 type AskSAVRuntimeEntitlements = {
   plan: "FREE" | "VIC_PLUS" | "VIC_PRO";
   entitlements: {
@@ -700,22 +710,24 @@ export default function AnalyseItemClient() {
                 />
               <div className="sf-commercial-layout">
                 <div className="sf-commercial-left">
-<article className="sf178-result-card value">
-                    <span className="sf178-result-label violet">MARKET VALUE</span>
-                    {result?.market?.available ? (
-                      <>
-                        <h2>{money(result?.market?.low, result?.market?.currency)} – {money(result?.market?.high, result?.market?.currency)}</h2>
-                        <p>{result?.market?.evidence_summary}</p>
-                      </>
-                    ) : (
-                      <>
-                        <h2>More detail needed</h2>
-                        <p>{result?.market?.reason || "AskSAV needs more verified evidence before showing a value."}</p>
-                      </>
-                    )}
-                  
-                    <MarketEvidencePanel evidence={(result as any)?.market_evidence} />
-                  </article>
+{!askSavLegacyMarketIsOnDemand(result) && (
+  <article className="sf178-result-card value">
+                      <span className="sf178-result-label violet">MARKET VALUE</span>
+                      {result?.market?.available ? (
+                        <>
+                          <h2>{money(result?.market?.low, result?.market?.currency)} – {money(result?.market?.high, result?.market?.currency)}</h2>
+                          <p>{result?.market?.evidence_summary}</p>
+                        </>
+                      ) : (
+                        <>
+                          <h2>More detail needed</h2>
+                          <p>{result?.market?.reason || "AskSAV needs more verified evidence before showing a value."}</p>
+                        </>
+                      )}
+                    
+                      <MarketEvidencePanel evidence={(result as any)?.market_evidence} />
+                    </article>
+)}
                 {result?._asksav?.entitlements?.sellingTools !== "NONE" ? (
                   <AskSAVActionLayer query={result?.market?.search_query || result.identification?.item_name || "similar item"} />
                 ) : (

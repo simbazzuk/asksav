@@ -1,62 +1,152 @@
-/* AskSAV v0.20.3.6 - optional on-demand Market Intelligence */
+/* AskSAV v0.20.3.7.2 - optional Market Intelligence */
 .asksav-market-demand{
-  margin-top:16px;
-  padding:20px;
-  border:1px solid #ded7fa;
-  border-radius:18px;
-  background:linear-gradient(135deg,#fbf9ff,#f4f0ff);
+  margin:18px 0 22px;
+  padding:24px 26px;
+  border:1px solid #d9d1fb;
+  border-top:5px solid #7c4dff;
+  border-radius:20px;
+  background:linear-gradient(135deg,#fcfbff 0%,#f6f2ff 100%);
+  box-shadow:0 12px 30px rgba(79,54,160,.06);
   display:grid;
-  gap:14px;
+  gap:16px;
+  width:100%;
+  box-sizing:border-box;
 }
 .asksav-market-demand__eyebrow{
   display:block;
-  margin-bottom:5px;
+  margin-bottom:7px;
   font-size:11px;
-  font-weight:800;
-  letter-spacing:.08em;
-  color:#7356d8;
+  font-weight:900;
+  letter-spacing:.09em;
+  color:#6840d9;
 }
 .asksav-market-demand h3{
-  margin:0 0 6px;
-  font-size:20px;
-  color:#26343a;
+  margin:0 0 7px;
+  font-size:24px;
+  line-height:1.2;
+  color:#18262d;
 }
 .asksav-market-demand p{
   margin:0;
-  color:#68787f;
-  line-height:1.55;
+  max-width:820px;
+  color:#62747c;
+  line-height:1.6;
+  font-size:14px;
 }
 .asksav-market-demand button{
   justify-self:start;
+  min-height:46px;
   border:0;
   border-radius:12px;
-  padding:12px 18px;
-  background:#6f52d9;
-  color:white;
-  font-weight:800;
+  padding:0 20px;
+  background:linear-gradient(135deg,#714ee3,#9167f5);
+  color:#fff;
+  font-size:14px;
+  font-weight:850;
   cursor:pointer;
+  box-shadow:0 8px 18px rgba(113,78,227,.18);
+}
+.asksav-market-demand button:hover:not(:disabled){
+  transform:translateY(-1px);
 }
 .asksav-market-demand button:disabled{
-  opacity:.68;
+  opacity:.78;
   cursor:wait;
 }
-.asksav-market-demand__progress{
-  font-size:13px;
+.asksav-market-demand__loading{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.asksav-market-demand__spinner{
+  width:16px;
+  height:16px;
+  flex:0 0 16px;
+  border:2px solid #d5c9fb;
+  border-top-color:#714ee3;
+  border-radius:999px;
+  animation:asksav-market-spin .8s linear infinite;
+}
+@keyframes asksav-market-spin{
+  to{transform:rotate(360deg)}
 }
 .asksav-market-demand__error{
-  color:#a33b45!important;
+  color:#a23948!important;
+  font-weight:750;
+}
+.asksav-market-demand--result{
+  gap:20px;
+}
+.asksav-market-demand__header{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:30px;
+  align-items:start;
+}
+.asksav-market-demand__headline-value{
+  min-width:230px;
+  text-align:right;
+}
+.asksav-market-demand__headline-value strong{
+  display:block;
+  color:#5128c7;
+  font-size:34px;
+  line-height:1.05;
+  letter-spacing:-.03em;
+}
+.asksav-market-demand__headline-value small{
+  display:block;
+  margin-top:7px;
+  color:#7b6aa9;
+  font-size:12px;
   font-weight:700;
 }
-.asksav-market-demand--ready{
-  grid-template-columns:minmax(0,1fr) auto;
-  align-items:center;
+.asksav-market-demand__metrics{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
 }
-.asksav-market-demand__range{
-  font-size:28px;
-  color:#6847d5;
+.asksav-market-demand__metrics>div{
+  padding:15px 16px;
+  border:1px solid #e4def8;
+  border-radius:14px;
+  background:rgba(255,255,255,.72);
+}
+.asksav-market-demand__metrics span,
+.asksav-market-demand__query span{
+  display:block;
+  margin-bottom:5px;
+  color:#7a728f;
+  font-size:11px;
+  font-weight:750;
+}
+.asksav-market-demand__metrics strong{
+  color:#2a2140;
+  font-size:19px;
+}
+.asksav-market-demand__query{
+  padding:13px 15px;
+  border-radius:13px;
+  background:#eee9ff;
+}
+.asksav-market-demand__query strong{
+  color:#4e3c83;
+  font-size:13px;
+  font-weight:700;
 }
 @media(max-width:700px){
-  .asksav-market-demand--ready{
+  .asksav-market-demand{
+    padding:20px;
+  }
+  .asksav-market-demand__header{
+    grid-template-columns:1fr;
+    gap:18px;
+  }
+  .asksav-market-demand__headline-value{
+    text-align:left;
+    min-width:0;
+  }
+  .asksav-market-demand__metrics{
     grid-template-columns:1fr;
   }
 }

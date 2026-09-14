@@ -7,9 +7,116 @@ type Props = {
   analysis: Record<string, unknown>;
 };
 
+type MarketRecord = Record<string, any>;
+
+function asObject(value: unknown): MarketRecord | null {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as MarketRecord)
+    : null;
+}
+
+function hasMarketFields(value: unknown): value is MarketRecord {
+  const item = asObject(value);
+  if (!item) return false;
+
+  return [
+    "low",
+    "high",
+    "suggested",
+    "quick_sale",
+    "confidence",
+    "evidence_summary",
+    "search_query",
+  ].some((key) => item[key] !== undefined && item[key] !== null);
+}
+
+/**
+ * The server-side market generator has evolved over several AskSAV patches.
+ * Normalize the response here instead of coupling the UI to one historical
+ * envelope shape.
+ */
+function normalizeMarketPayload(value: unknown): MarketRecord | null {
+  const root = asObject(value);
+  if (!root) return null;
+
+  const queue: unknown[] = [
+    root,
+    root.market,
+    root.market_value,
+    root.marketValue,
+    root.market_intelligence,
+    root.marketIntelligence,
+    root.result,
+    root.data,
+  ];
+
+  const visited = new Set<unknown>();
+
+  while (queue.length) {
+    const candidate = queue.shift();
+
+    if (!candidate || visited.has(candidate)) continue;
+    visited.add(candidate);
+
+    if (hasMarketFields(candidate)) {
+      return candidate;
+    }
+
+    const obj = asObject(candidate);
+    if (!obj) continue;
+
+    for (const key of [
+      "market",
+      "market_value",
+      "marketValue",
+      "market_intelligence",
+      "marketIntelligence",
+      "result",
+      "data",
+      "value",
+      "valuation",
+    ]) {
+      if (obj[key] !== undefined) queue.push(obj[key]);
+    }
+  }
+
+  return root;
+}
+
+function currencyPrefix(currency: unknown) {
+  const code = String(currency || "GBP").toUpperCase();
+  if (code === "GBP") return "Â£";
+  if (code === "EUR") return "â‚¬";
+  if (code === "USD") return "$";
+  return "";
+}
+
+function money(value: unknown, currency: unknown) {
+  if (value === null || value === undefined || value === "") return "â€”";
+
+  const numberValue = Number(value);
+  const formatted = Number.isFinite(numberValue)
+    ? new Intl.NumberFormat("en-GB", {
+        maximumFractionDigits: Number.isInteger(numberValue) ? 0 : 2,
+      }).format(numberValue)
+    : String(value);
+
+  return `${currencyPrefix(currency)}${formatted}`;
+}
+
+function confidenceText(value: unknown) {
+  if (value === null || value === undefined || value === "") return null;
+
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return String(value);
+
+  const percentage = numeric <= 1 ? numeric * 100 : numeric;
+  return `${Math.round(percentage)}%`;
+}
+
 export default function AskSAVMarketIntelligenceButton({ analysis }: Props) {
   const [working, setWorking] = useState(false);
-  const [market, setMarket] = useState<Record<string, any> | null>(null);
+  const [market, setMarket] = useState<MarketRecord | null>(null);
   const [error, setError] = useState("");
 
   async function runMarketIntelligence() {
@@ -46,7 +153,26 @@ export default function AskSAVMarketIntelligenceButton({ analysis }: Props) {
         );
       }
 
-      setMarket(payload?.market ?? null);
+      const normalized = normalizeMarketPayload(
+        payload?.market ?? payload?.result ?? payload,
+      );
+
+      if (!normalized) {
+        throw new Error(
+          "Market research completed but AskSAV could not read the valuation result.",
+        );
+      }
+
+      console.info("[AskSAV market] normalized client result", {
+        available: normalized.available,
+        reason: normalized.reason,
+        hasLow: normalized.low != null,
+        hasHigh: normalized.high != null,
+        hasSuggested: normalized.suggested != null,
+        hasEvidence: Boolean(normalized.evidence_summary),
+      });
+
+      setMarket(normalized);
     } catch (err) {
       setError(
         err instanceof Error
@@ -59,40 +185,85 @@ export default function AskSAVMarketIntelligenceButton({ analysis }: Props) {
   }
 
   if (market) {
+    const currency = market.currency || "GBP";
+    const confidence = confidenceText(market.confidence);
+    const hasRange = market.low != null || market.high != null;
+    const unavailable =
+      market.available === false &&
+      !hasRange &&
+      market.suggested == null &&
+      !market.evidence_summary;
+
     return (
-      <section className="asksav-market-demand asksav-market-demand--ready">
-        <div>
-          <span className="asksav-market-demand__eyebrow">MARKET INTELLIGENCE</span>
-          <h3>Market research complete</h3>
-          <p>
-            {market.evidence_summary ||
-              "AskSAV completed the optional market research for this item."}
-          </p>
+      <section
+        className="asksav-market-demand asksav-market-demand--result"
+        data-asksav-market-result="true"
+      >
+        <div className="asksav-market-demand__header">
+          <div>
+            <span className="asksav-market-demand__eyebrow">
+              MARKET INTELLIGENCE
+            </span>
+            <h3>
+              {unavailable ? "Market estimate unavailable" : "Market research complete"}
+            </h3>
+            <p>
+              {market.evidence_summary ||
+                market.reason ||
+                "AskSAV completed the optional market research for this item."}
+            </p>
+          </div>
+
+          {hasRange && (
+            <div className="asksav-market-demand__headline-value">
+              <strong>
+                {money(market.low, currency)}
+                <span> â€“ </span>
+                {money(market.high, currency)}
+              </strong>
+              <small>Estimated market range</small>
+            </div>
+          )}
         </div>
 
-        {(market.low != null || market.high != null) && (
-          <strong className="asksav-market-demand__range">
-            {market.currency === "GBP" ? "Â£" : ""}
-            {market.low ?? "?"}
-            {" â€“ "}
-            {market.currency === "GBP" ? "Â£" : ""}
-            {market.high ?? "?"}
-          </strong>
+        {!unavailable && (
+          <div className="asksav-market-demand__metrics">
+            <div>
+              <span>Suggested value</span>
+              <strong>{money(market.suggested, currency)}</strong>
+            </div>
+            <div>
+              <span>Quick sale</span>
+              <strong>{money(market.quick_sale, currency)}</strong>
+            </div>
+            <div>
+              <span>Confidence</span>
+              <strong>{confidence || "â€”"}</strong>
+            </div>
+          </div>
+        )}
+
+        {market.search_query && (
+          <div className="asksav-market-demand__query">
+            <span>Market search</span>
+            <strong>{String(market.search_query)}</strong>
+          </div>
         )}
       </section>
     );
   }
 
   return (
-    <section className="asksav-market-demand">
+    <section className="asksav-market-demand" data-asksav-market-cta="true">
       <div>
         <span className="asksav-market-demand__eyebrow">
           OPTIONAL MARKET INTELLIGENCE
         </span>
         <h3>Want to know what it may be worth?</h3>
         <p>
-          Run Market Intelligence separately for indicative UK pricing and
-          supporting market context. Your main item analysis is already complete.
+          Your visual analysis is complete. Run optional market research for
+          indicative UK pricing, likely selling range and supporting market
+          evidence.
         </p>
       </div>
 
@@ -101,13 +272,14 @@ export default function AskSAVMarketIntelligenceButton({ analysis }: Props) {
         onClick={runMarketIntelligence}
         disabled={working}
       >
-        {working ? "Researching marketâ€¦" : "Get Market Intelligence"}
+        {working ? "Researching market..." : "Get Market Intelligence"}
       </button>
 
       {working && (
-        <p className="asksav-market-demand__progress">
-          Checking current market context. This may take a little longer.
-        </p>
+        <div className="asksav-market-demand__loading" aria-live="polite">
+          <span className="asksav-market-demand__spinner" aria-hidden="true" />
+          <p>Checking current market context. This may take a little longer.</p>
+        </div>
       )}
 
       {error && (
