@@ -1293,33 +1293,6 @@ export async function analyseItemPhoto(image: File, hint = "") {
  * identification / condition / verification result. A fresh telemetry
  * collector is supplied only for this optional request.
  */
-function askSavMarketHasUsableValue(value: any) {
-  if (!value || typeof value !== "object") return false;
-
-  const candidates = [
-    value,
-    value.market,
-    value.market_value,
-    value.marketValue,
-    value.market_intelligence,
-    value.marketIntelligence,
-    value.result,
-    value.data,
-  ].filter(Boolean);
-
-  return candidates.some((candidate: any) => {
-    if (!candidate || typeof candidate !== "object") return false;
-
-    return (
-      candidate.available === true ||
-      candidate.low != null ||
-      candidate.high != null ||
-      candidate.suggested != null ||
-      candidate.quick_sale != null
-    );
-  });
-}
-
 function askSavCleanMarketText(value: unknown) {
   if (typeof value !== "string") return value;
 
@@ -1328,8 +1301,7 @@ function askSavCleanMarketText(value: unknown) {
   // Remove adjacent duplicate words, e.g. "Tripp Tripp suitcase".
   text = text.replace(/\b([A-Za-z0-9'-]+)(?:\s+\1\b)+/gi, "$1");
 
-  // Remove adjacent duplicate short phrases, e.g.
-  // "Tripp Purple Tripp Purple suitcase".
+  // Remove adjacent duplicate short phrases.
   const words = text.split(" ");
   for (let size = 1; size <= 3; size++) {
     let changed = true;
@@ -1377,8 +1349,7 @@ function askSavBroadenIdentification(value: any) {
 
   const result = { ...cleaned } as Record<string, any>;
 
-  // Keep useful product identity while removing hyper-specific wording that can
-  // make a live market lookup too narrow.
+  // Remove verbose fields that can make market lookup too narrow.
   for (const key of [
     "description",
     "evidence",
@@ -1389,26 +1360,40 @@ function askSavBroadenIdentification(value: any) {
     delete result[key];
   }
 
-  // If brand is already repeated at the start of model/name, remove the repeat.
   const brand = typeof result.brand === "string" ? result.brand.trim() : "";
 
   for (const key of ["model", "name", "item_name", "product_name", "title"]) {
     if (brand && typeof result[key] === "string") {
-      const pattern = new RegExp(`^${brand.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s+`, "i");
-      result[key] = result[key].replace(pattern, "").trim();
+      const escapedBrand = brand.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      result[key] = result[key]
+        .replace(new RegExp(`^${escapedBrand}\\s+`, "i"), "")
+        .trim();
     }
   }
 
   return result;
 }
 
+function askSavCreateMarketUsageCollector() {
+  // generateMarketIntelligence() appends usage telemetry into named collections.
+  // Keep this deliberately permissive and array-backed so internal `.push(...)`
+  // calls always have somewhere safe to write.
+  return {
+    calls: [],
+    models: [],
+    usage: [],
+    events: [],
+    warnings: [],
+    errors: [],
+  } as any;
+}
+
 /**
- * AskSAV on-demand market entrypoint.
+ * AskSAV on-demand Market Intelligence.
  *
- * v0.20.3.7.3 keeps the normal Analyse flow fast and performs live market
- * research only after the user requests it. If the first lookup is too narrow
- * or returns unavailable, AskSAV makes one controlled retry with cleaned,
- * broader identification context. It never invents a valuation.
+ * v0.20.3.7.4 uses a single live market lookup to stay within the Vercel
+ * execution window. Identification context is cleaned before the call rather
+ * than attempting a second lookup afterwards.
  */
 export async function generateAskSavOnDemandMarket(
   analysis: Record<string, any>,
@@ -1423,60 +1408,38 @@ export async function generateAskSavOnDemandMarket(
     );
   }
 
-  const primaryUsage: any[] = [];
+  const cleanedIdentification = askSavBroadenIdentification(identification);
+  const usage = askSavCreateMarketUsageCollector();
 
-  console.info("[AskSAV market] primary live lookup started");
-
-  const primary = await generateMarketIntelligence(
-    identification as any,
-    condition as any,
-    verification as any,
-    primaryUsage as any,
-  );
-
-  if (askSavMarketHasUsableValue(primary)) {
-    console.info("[AskSAV market] primary live lookup returned usable pricing");
-    return primary;
-  }
-
-  const retryIdentification = askSavBroadenIdentification(identification);
-
-  console.info("[AskSAV market] primary lookup unavailable; retrying with cleaned context", {
-    originalSearchQuery: primary?.search_query ?? null,
-    cleanedBrand: retryIdentification?.brand ?? null,
-    cleanedModel: retryIdentification?.model ?? null,
-    cleanedName:
-      retryIdentification?.name ??
-      retryIdentification?.item_name ??
-      retryIdentification?.product_name ??
-      retryIdentification?.title ??
+  console.info("[AskSAV market] single-pass live lookup started", {
+    brand: cleanedIdentification?.brand ?? null,
+    model: cleanedIdentification?.model ?? null,
+    name:
+      cleanedIdentification?.name ??
+      cleanedIdentification?.item_name ??
+      cleanedIdentification?.product_name ??
+      cleanedIdentification?.title ??
       null,
     category:
-      retryIdentification?.category ??
-      retryIdentification?.item_category ??
+      cleanedIdentification?.category ??
+      cleanedIdentification?.item_category ??
       null,
   });
 
-  const retryUsage: any[] = [];
-
-  const retry = await generateMarketIntelligence(
-    retryIdentification as any,
+  const market = await generateMarketIntelligence(
+    cleanedIdentification as any,
     condition as any,
     verification as any,
-    retryUsage as any,
+    usage as any,
   );
 
-  if (askSavMarketHasUsableValue(retry)) {
-    console.info("[AskSAV market] cleaned-context retry returned usable pricing");
-    return retry;
-  }
-
-  console.info("[AskSAV market] cleaned-context retry also unavailable", {
-    primarySearchQuery: primary?.search_query ?? null,
-    retrySearchQuery: retry?.search_query ?? null,
+  console.info("[AskSAV market] single-pass live lookup completed", {
+    available: market?.available ?? null,
+    low: market?.low ?? null,
+    high: market?.high ?? null,
+    suggested: market?.suggested ?? null,
+    searchQuery: market?.search_query ?? null,
   });
 
-  // Prefer the retry because its search query/context is normally cleaner.
-  // Preserve the primary result only if the retry returned nothing at all.
-  return retry ?? primary;
+  return market;
 }
