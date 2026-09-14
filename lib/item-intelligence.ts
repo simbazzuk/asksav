@@ -1167,6 +1167,35 @@ async function uploadItemImageViaGcsRest(args: {
     bufferSize: args.bytes.length,
   });
 }
+let askSavVisionCallSequence = 0;
+
+async function askSavVisionCall<T>(
+  label: string,
+  work: () => Promise<T>,
+): Promise<T> {
+  const callNumber = ++askSavVisionCallSequence;
+  const started = Date.now();
+
+  console.info(
+    `[AskSAV vision-call] #${callNumber} ${label} started`,
+  );
+
+  try {
+    const result = await work();
+
+    console.info(
+      `[AskSAV vision-call] #${callNumber} ${label} completed in ${Date.now() - started}ms`,
+    );
+
+    return result;
+  } catch (error) {
+    console.error(
+      `[AskSAV vision-call] #${callNumber} ${label} failed after ${Date.now() - started}ms`,
+      error,
+    );
+    throw error;
+  }
+}
 export async function analyseItemPhoto(image: File, hint = "") {
   const usage: UsageCollector = { calls: [] };
   const bytes = Buffer.from(await image.arrayBuffer());
@@ -1183,9 +1212,9 @@ export async function analyseItemPhoto(image: File, hint = "") {
 
   const uri = `gs://${bucketName}/${objectName}`;
 
-  const broad = await classifyObject(uri, hint, usage);
-  const candidate = await identifyObject(uri, hint, broad, usage);
-  const verification = await verifyIdentification(uri, hint, broad, candidate, usage);
+  const broad = await askSavVisionCall("classifyObject", async () => classifyObject(uri, hint, usage));
+  const candidate = await askSavVisionCall("identifyObject", async () => identifyObject(uri, hint, broad, usage));
+  const verification = await askSavVisionCall("verifyIdentification", async () => verifyIdentification(uri, hint, broad, candidate, usage));
 
   const identification = {
     category: candidate.category,
@@ -1203,7 +1232,7 @@ export async function analyseItemPhoto(image: File, hint = "") {
   };
 
   const condition = verification.verified
-    ? await assessCondition(uri, identification, usage)
+    ? await askSavVisionCall("assessCondition", async () => assessCondition(uri, identification, usage))
     : {
         grade: "UNKNOWN",
         confidence: 0,
@@ -1221,7 +1250,7 @@ export async function analyseItemPhoto(image: File, hint = "") {
     ],
   };
 
-  const market = await generateMarketIntelligence(identification, condition, verification, usage);
+  const market = await askSavVisionCall("generateMarketIntelligence", async () => generateMarketIntelligence(identification, condition, verification, usage));
 
   const cost_telemetry = summariseUsage(usage);
 
