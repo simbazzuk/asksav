@@ -85,14 +85,14 @@ function normalizeMarketPayload(value: unknown): MarketRecord | null {
 
 function currencyPrefix(currency: unknown) {
   const code = String(currency || "GBP").toUpperCase();
-  if (code === "GBP") return "Â£";
+  if (code === "GBP") return "£";
   if (code === "EUR") return "â‚¬";
   if (code === "USD") return "$";
   return "";
 }
 
 function money(value: unknown, currency: unknown) {
-  if (value === null || value === undefined || value === "") return "â€”";
+  if (value === null || value === undefined || value === "") return "—";
 
   const numberValue = Number(value);
   const formatted = Number.isFinite(numberValue)
@@ -196,7 +196,7 @@ export default function AskSAVMarketIntelligenceButton({ analysis }: Props) {
 
     return (
       <section
-        className="asksav-market-demand asksav-market-demand--result"
+        className="asksav-market-demand asksav-market-demand--result asksav-market-wide"
         data-asksav-market-result="true"
       >
         <div className="asksav-market-demand__header">
@@ -218,7 +218,7 @@ export default function AskSAVMarketIntelligenceButton({ analysis }: Props) {
             <div className="asksav-market-demand__headline-value">
               <strong>
                 {money(market.low, currency)}
-                <span> â€“ </span>
+                <span> – </span>
                 {money(market.high, currency)}
               </strong>
               <small>Estimated market range</small>
@@ -238,7 +238,7 @@ export default function AskSAVMarketIntelligenceButton({ analysis }: Props) {
             </div>
             <div>
               <span>Confidence</span>
-              <strong>{confidence || "â€”"}</strong>
+              <strong>{confidence || "—"}</strong>
             </div>
           </div>
         )}

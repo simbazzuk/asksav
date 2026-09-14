@@ -150,3 +150,127 @@
     grid-template-columns:1fr;
   }
 }
+
+/* AskSAV v0.20.3.7.4.1.1 market wide UI BEGIN */
+
+.asksav-market-wide {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  grid-column: 1 / -1 !important;
+  align-self: stretch !important;
+  justify-self: stretch !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding: 28px 30px !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+}
+
+.asksav-market-wide > *,
+.asksav-market-wide section,
+.asksav-market-wide article,
+.asksav-market-wide header,
+.asksav-market-wide footer {
+  max-width: none !important;
+  min-width: 0 !important;
+}
+
+.asksav-market-wide p {
+  max-width: 900px !important;
+  line-height: 1.65 !important;
+  overflow-wrap: anywhere !important;
+}
+
+.asksav-market-wide h2,
+.asksav-market-wide h3 {
+  line-height: 1.12 !important;
+}
+
+.asksav-market-wide strong {
+  font-variant-numeric: tabular-nums !important;
+}
+
+.asksav-market-wide .asksav-market-result-header,
+.asksav-market-wide .asksav-market-header,
+.asksav-market-wide .market-result-header {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  gap: 36px !important;
+  align-items: start !important;
+  width: 100% !important;
+}
+
+.asksav-market-wide .asksav-market-metrics,
+.asksav-market-wide .market-metrics,
+.asksav-market-wide .asksav-market-stats {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+  width: 100% !important;
+}
+
+.asksav-market-wide .asksav-market-metric,
+.asksav-market-wide .market-metric,
+.asksav-market-wide .asksav-market-stat {
+  min-width: 0 !important;
+  min-height: 96px !important;
+  padding: 18px 20px !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(99, 102, 241, 0.10) !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+  box-shadow: none !important;
+}
+
+.asksav-market-wide .asksav-market-search,
+.asksav-market-wide .market-search {
+  width: 100% !important;
+  max-width: none !important;
+  margin-top: 18px !important;
+  padding: 17px 20px !important;
+  border-radius: 15px !important;
+}
+
+.sf-commercial-layout > .asksav-market-wide,
+.sf178-result-grid > .asksav-market-wide,
+.sf176-result-grid > .asksav-market-wide,
+.sf176-report-grid > .asksav-market-wide,
+.sf-commercial-layout .asksav-market-wide {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+@media (max-width: 900px) {
+  .asksav-market-wide {
+    padding: 24px !important;
+  }
+
+  .asksav-market-wide .asksav-market-result-header,
+  .asksav-market-wide .asksav-market-header,
+  .asksav-market-wide .market-result-header {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+
+  .asksav-market-wide .asksav-market-metrics,
+  .asksav-market-wide .market-metrics,
+  .asksav-market-wide .asksav-market-stats {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .asksav-market-wide {
+    padding: 20px 18px !important;
+    border-radius: 16px !important;
+  }
+
+  .asksav-market-wide p {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+}
+
+/* AskSAV v0.20.3.7.4.1.1 market wide UI END */
