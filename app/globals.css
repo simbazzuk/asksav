@@ -979,3 +979,14 @@ pre {
     transition: none;
   }
 }
+
+/* AskSAV v0.19.6.8.1 - Analysis Progress State Fix */
+.asksav-progress-fix{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:9999;width:min(620px,calc(100vw - 32px));padding:20px 22px;border:1px solid rgba(93,210,177,.5);border-radius:22px;background:linear-gradient(145deg,rgba(240,253,249,.98),rgba(247,251,255,.99));box-shadow:0 18px 55px rgba(18,57,70,.2);color:#08263f}
+.asksav-progress-head{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+.asksav-progress-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#18c79a,#4786f7);color:#fff;font-size:20px;font-weight:900}
+.asksav-progress-title{font-size:17px;font-weight:900}.asksav-progress-stage{margin-top:2px;color:#0b7b60;font-size:13px;font-weight:800}.asksav-progress-pct{color:#5b31d4;font-size:20px;font-weight:900}
+.asksav-progress-fix p{margin:12px 0 13px;color:#587385;font-size:13px}.asksav-progress-track{height:12px;overflow:hidden;border-radius:999px;background:rgba(13,91,78,.1)}
+.asksav-progress-fill{height:100%;border-radius:inherit;background:linear-gradient(90deg,#16c79a,#36b7c4,#5b74f8,#8b5cf6);transition:width .65s cubic-bezier(.2,.75,.2,1)}
+.asksav-progress-time{margin-top:7px;color:#7a8a97;font-size:11px;text-align:right}.asksav-progress-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:14px}
+.asksav-progress-steps span{padding-top:7px;border-top:3px solid rgba(8,38,63,.1);color:#8a99a5;font-size:10px;font-weight:750;text-align:center}.asksav-progress-steps span.done{border-top-color:#20b98f;color:#0a765b}
+@media(max-width:640px){.asksav-progress-fix{bottom:16px;padding:17px 16px;border-radius:18px}.asksav-progress-steps span{font-size:9px}}
