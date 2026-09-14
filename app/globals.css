@@ -990,3 +990,38 @@ pre {
 .asksav-progress-time{margin-top:7px;color:#7a8a97;font-size:11px;text-align:right}.asksav-progress-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:14px}
 .asksav-progress-steps span{padding-top:7px;border-top:3px solid rgba(8,38,63,.1);color:#8a99a5;font-size:10px;font-weight:750;text-align:center}.asksav-progress-steps span.done{border-top-color:#20b98f;color:#0a765b}
 @media(max-width:640px){.asksav-progress-fix{bottom:16px;padding:17px 16px;border-radius:18px}.asksav-progress-steps span{font-size:9px}}
+
+/* AskSAV v0.20.1.1 - sidebar navigation visibility */
+.sf19-sidebar a,
+.sf19-sidebar button,
+.sf19-sidebar nav a,
+.sf19-sidebar-nav a,
+aside a[href],
+aside nav a[href] {
+  color: #334155 !important;
+  opacity: 1 !important;
+}
+
+.sf19-sidebar a:hover,
+.sf19-sidebar nav a:hover,
+.sf19-sidebar-nav a:hover,
+aside a[href]:hover {
+  color: #0f766e !important;
+  background: rgba(20, 184, 166, 0.08) !important;
+}
+
+.sf19-sidebar a[aria-current="page"],
+.sf19-sidebar nav a[aria-current="page"],
+.sf19-sidebar-nav a[aria-current="page"],
+aside a[href][aria-current="page"] {
+  color: #0f766e !important;
+  background: rgba(20, 184, 166, 0.10) !important;
+  font-weight: 700 !important;
+}
+
+.sf19-sidebar svg,
+.sf19-sidebar-nav svg,
+aside nav svg {
+  color: currentColor !important;
+  opacity: 1 !important;
+}

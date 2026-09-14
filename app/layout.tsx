@@ -82,13 +82,16 @@ import "./siteface-v0.18.2.css";
 import type { Metadata } from "next";
 
 import "./siteface-v0.19.css";
-import SiteFaceAccountButton from "../components/SiteFaceAccountButton";
 import "./siteface-v0.19.1.css";
 import "./siteface-v0.19.2.css";
 import "./asksav-v0.19.3.css";
 import "./asksav-v0.19.4.css";
 import "./asksav-v0.19.4.2.css";
 import "./asksav-v0.19.5.css";
+import "./asksav-v0.20.2.css";
+import "./asksav-v0.20.2.1.css";
+import "./asksav-v0.20.2.2.css";
+import "./asksav-v0.20.2.3.css";
 import AskSavAnalysisProgress from "../components/AskSavAnalysisProgress";
 export const metadata: Metadata = {
   icons: { icon: "/asksav-icon.png", apple: "/asksav-icon.png" },
@@ -102,7 +105,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SiteFaceNavigation />{children}        <SiteFaceAccountButton />
+        <SiteFaceNavigation />{children}
         <AskSavAnalysisProgress />
       </body>
     </html>

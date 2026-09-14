@@ -1,0 +1,146 @@
+/* AskSAV v0.20.2.2
+   Login / authentication typography alignment.
+   UI only — no authentication logic changes.
+*/
+
+/* ---------------------------------------------------------
+   1. Sidebar / global navigation
+   Bring the login page navigation in line with newer pages.
+   --------------------------------------------------------- */
+
+.sf176-brand strong {
+  font-size: 22px !important;
+  line-height: 1.1 !important;
+}
+
+.sf176-brand small {
+  font-size: 10px !important;
+  line-height: 1.35 !important;
+}
+
+.sf176-side-action {
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+  padding-top: 14px !important;
+  padding-bottom: 14px !important;
+}
+
+.sf176-sidebar nav a {
+  font-size: 13px !important;
+  line-height: 1.25 !important;
+  padding-top: 13px !important;
+  padding-bottom: 13px !important;
+}
+
+.sf176-sidebar nav a span {
+  font-size: inherit !important;
+}
+
+.sf176-side-note strong {
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+}
+
+.sf176-side-note p {
+  font-size: 10px !important;
+  line-height: 1.5 !important;
+}
+
+.sf176-version {
+  font-size: 9px !important;
+  line-height: 1.45 !important;
+}
+
+/* Keep top navigation readable and consistent too. */
+.sf176-topbar > nav a {
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+}
+
+/* ---------------------------------------------------------
+   2. Login / register typography
+   Scope to pages that contain a password field so ordinary
+   analysis/history forms are not affected.
+   --------------------------------------------------------- */
+
+body:has(input[type="password"]) main h1,
+body:has(input[type="password"]) main h2 {
+  letter-spacing: -0.025em !important;
+}
+
+body:has(input[type="password"]) main p {
+  font-size: 15px !important;
+  line-height: 1.55 !important;
+}
+
+body:has(input[type="password"]) main form label,
+body:has(input[type="password"]) main label {
+  font-size: 13px !important;
+  line-height: 1.3 !important;
+  font-weight: 800 !important;
+}
+
+body:has(input[type="password"]) main input[type="email"],
+body:has(input[type="password"]) main input[type="password"],
+body:has(input[type="password"]) main input[type="text"] {
+  font-size: 15px !important;
+  line-height: 1.35 !important;
+}
+
+body:has(input[type="password"]) main input::placeholder {
+  font-size: 15px !important;
+  opacity: 0.78 !important;
+}
+
+body:has(input[type="password"]) main button,
+body:has(input[type="password"]) main a[role="button"] {
+  font-size: 14px !important;
+  line-height: 1.25 !important;
+}
+
+/* Login/register links such as "Create an account". */
+body:has(input[type="password"]) main a {
+  font-size: 13px !important;
+}
+
+/* Divider / small helper text should remain secondary,
+   but no longer tiny. */
+body:has(input[type="password"]) main small,
+body:has(input[type="password"]) main [class*="helper"],
+body:has(input[type="password"]) main [class*="footer"],
+body:has(input[type="password"]) main [class*="hint"] {
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+}
+
+/* Google / SSO button text */
+body:has(input[type="password"]) main button span {
+  font-size: inherit !important;
+}
+
+/* ---------------------------------------------------------
+   3. Responsive balance
+   --------------------------------------------------------- */
+
+@media (max-width: 980px) {
+  .sf176-sidebar nav a {
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  body:has(input[type="password"]) main p {
+    font-size: 14px !important;
+  }
+
+  body:has(input[type="password"]) main form label,
+  body:has(input[type="password"]) main label {
+    font-size: 12px !important;
+  }
+
+  body:has(input[type="password"]) main input[type="email"],
+  body:has(input[type="password"]) main input[type="password"],
+  body:has(input[type="password"]) main input[type="text"] {
+    font-size: 16px !important;
+  }
+}

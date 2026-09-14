@@ -1,5 +1,7 @@
 "use client";
 
+import SiteFaceAccountButton from "./SiteFaceAccountButton";
+
 import Link from "next/link";
 import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
@@ -65,7 +67,7 @@ export default function AppShell({
           <div className="topbar-title">{title}</div>
 
           <div className="topbar-actions">
-            <div className="avatar">SP</div>
+            <SiteFaceAccountButton />
           </div>
         </header>
 

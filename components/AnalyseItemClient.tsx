@@ -1,8 +1,30 @@
 "use client";
 
+import SiteFaceAccountButton from "./SiteFaceAccountButton";
+
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
+import { firebaseConfigured, getSiteFaceAuth } from "../lib/siteface-auth";
+
+type AskSAVRuntimeEntitlements = {
+  plan: "FREE" | "VIC_PLUS" | "VIC_PRO";
+  entitlements: {
+    monthlyAnalyses: number | "FAIR_USE";
+    savedItems: number | "UNLIMITED";
+    fullMarketEvidence: boolean;
+    valueHistory: boolean;
+    valueAlerts: boolean;
+    sellingTools: "NONE" | "LIMITED" | "FULL";
+  };
+  usage: {
+    analysesUsed: number;
+    analysesLimit: number | "FAIR_USE";
+    remaining: number | "FAIR_USE";
+    periodKey: string;
+  };
+};
 
 type Result = {
+  _asksav?: AskSAVRuntimeEntitlements;
   identification?: {
     item_name?: string;
     brand?: string | null;
@@ -314,6 +336,7 @@ export default function AnalyseItemClient() {
   const [result, setResult] = useState<Result | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showAuthGate, setShowAuthGate] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.add("sf178-active");
@@ -345,8 +368,19 @@ export default function AnalyseItemClient() {
 
   async function analyse(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (firebaseConfigured() && !getSiteFaceAuth().currentUser) {
+      setShowAuthGate(true);
+      return;
+    }
     if (!file) {
       setError("Choose a photo first.");
+      return;
+    }
+
+    const user = firebaseConfigured() ? getSiteFaceAuth().currentUser : null;
+    if (!user) {
+      setError("Sign in to analyse an item. Your plan and monthly allowance are now protected by your account.");
       return;
     }
 
@@ -358,8 +392,12 @@ export default function AnalyseItemClient() {
     form.set("image", file);
 
     try {
-      const response = await fetch("/api/analyse-item", {
+      const idToken = await user.getIdToken();
+      const response = await fetch("/api/v20/analyse-item", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${idToken}`,
+        },
         body: form,
       });
 
@@ -376,6 +414,54 @@ export default function AnalyseItemClient() {
 
   return (
     <div className="sf178-shell">
+      {showAuthGate && (
+        <div
+          className="sf20-auth-gate-backdrop"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="sf20-auth-gate-title"
+          onMouseDown={(event) => {
+            if (event.currentTarget === event.target) setShowAuthGate(false);
+          }}
+        >
+          <section className="sf20-auth-gate">
+            <div className="sf20-auth-gate__icon" aria-hidden="true">SAV</div>
+            <p className="sf20-auth-gate__eyebrow">Your analysis is ready to start</p>
+            <h2 id="sf20-auth-gate-title">Create a free account to ask SAV</h2>
+            <p className="sf20-auth-gate__copy">
+              Sign in or create your free AskSAV account to analyse this item,
+              keep your results and build your item history.
+            </p>
+            <div className="sf20-auth-gate__allowance">
+              <span aria-hidden="true">&#10003;</span>
+              5 free analyses each month
+            </div>
+
+            <div className="sf20-auth-gate__actions">
+              <a
+                className="sf20-auth-gate__primary"
+                href="/login?create=1&next=/analyse"
+              >
+                Create free account
+              </a>
+              <a
+                className="sf20-auth-gate__secondary"
+                href="/login?next=/analyse"
+              >
+                Sign in
+              </a>
+            </div>
+
+            <button
+              className="sf20-auth-gate__later"
+              type="button"
+              onClick={() => setShowAuthGate(false)}
+            >
+              Not now
+            </button>
+          </section>
+        </div>
+      )}
       <aside className="sf178-sidebar">
         <a href="/" className="sf178-brand">
           <span className="sf178-logo">SAV</span>
@@ -414,7 +500,7 @@ export default function AnalyseItemClient() {
 
         <div className="sf178-header-actions">
           <div className="sf178-mantra">◉ <span>See it. Know it. Value it.</span></div>
-          <div className="sf178-avatar">SP</div>
+          <SiteFaceAccountButton />
         </div>
       </header>
 
@@ -592,7 +678,18 @@ export default function AnalyseItemClient() {
                   
                     <MarketEvidencePanel evidence={(result as any)?.market_evidence} />
                   </article>
-                <AskSAVActionLayer query={result?.market?.search_query || result.identification?.item_name || "similar item"} />
+                {result?._asksav?.entitlements?.sellingTools !== "NONE" ? (
+                  <AskSAVActionLayer query={result?.market?.search_query || result.identification?.item_name || "similar item"} />
+                ) : (
+                  <section className="sf-action-layer">
+                    <div className="sf-action-layer__notice">
+                      <span className="sf-action-layer__notice-icon" aria-hidden="true">i</span>
+                      <span>
+                        Selling and marketplace action tools are available on paid AskSAV plans.
+                      </span>
+                    </div>
+                  </section>
+                )}
                 </div>
 <article className="sf178-result-card discover sf-commercial-discover">
                     <span className="sf178-result-label violet">DISCOVER</span>

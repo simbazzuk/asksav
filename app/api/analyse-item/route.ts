@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 import { analyseItemPhoto } from "../../../lib/item-intelligence";
 
@@ -8,6 +9,24 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 export async function POST(request: Request) {
+  // ASKSAV_V020_INTERNAL_GUARD
+  const __askSAVMaterial =
+    process.env.GOOGLE_SERVICE_ACCOUNT_JSON_B64 ||
+    process.env.GOOGLE_PRIVATE_KEY ||
+    process.env.ASKSAV_INTERNAL_API_KEY ||
+    "";
+  const __askSAVExpectedKey = __askSAVMaterial
+    ? createHash("sha256").update("asksav-v0.20:" + __askSAVMaterial).digest("hex")
+    : "";
+  if (
+    !__askSAVExpectedKey ||
+    request.headers.get("x-asksav-v20-internal") !== __askSAVExpectedKey
+  ) {
+    return Response.json(
+      { error: "Protected analysis endpoint. Use the authenticated AskSAV analysis flow." },
+      { status: 403 }
+    );
+  }
   try {
     const form = await request.formData();
     const image = form.get("image");

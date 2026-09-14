@@ -1,5 +1,7 @@
 "use client";
 
+import SiteFaceAccountButton from "./SiteFaceAccountButton";
+
 import { useEffect, useMemo, useState } from "react";
 
 type StoredAnalysis = {
@@ -129,7 +131,7 @@ export default function ItemHistoryClient() {
 
         <div className="sf1710-header-actions">
           <div className="sf1710-mantra">◉ <span>See it. Know it. Value it.</span></div>
-          <div className="sf1710-avatar">SP</div>
+          <SiteFaceAccountButton />
         </div>
       </header>
 

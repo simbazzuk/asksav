@@ -1,0 +1,145 @@
+/* AskSAV v0.20.1.2
+   Navigation + account controls polish
+   Loaded last so older SiteFace/AskSAV styles cannot wash out navigation text.
+*/
+
+/* Sidebar navigation: force readable text and icons */
+.sf178-sidebar .sf178-side-nav {
+  display: grid !important;
+  gap: 8px !important;
+}
+
+.sf178-sidebar .sf178-side-nav a,
+.sf178-sidebar .sf178-side-nav a:visited {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  min-height: 42px !important;
+  padding: 11px 12px !important;
+  border-radius: 10px !important;
+  color: #334155 !important;
+  background: transparent !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+  font-weight: 800 !important;
+}
+
+.sf178-sidebar .sf178-side-nav a > span,
+.sf178-sidebar .sf178-side-nav a * {
+  color: inherit !important;
+  opacity: 1 !important;
+}
+
+.sf178-sidebar .sf178-side-nav a:hover {
+  color: #0f766e !important;
+  background: #eefbf7 !important;
+}
+
+.sf178-sidebar .sf178-side-nav a.active,
+.sf178-sidebar .sf178-side-nav a[aria-current="page"] {
+  color: #08785c !important;
+  background: linear-gradient(90deg, #dff7ed 0%, #edf8ff 100%) !important;
+  box-shadow: inset 3px 0 0 #14b88a !important;
+}
+
+.sf178-sidebar .sf178-side-nav a.active *,
+.sf178-sidebar .sf178-side-nav a[aria-current="page"] * {
+  color: #08785c !important;
+}
+
+/* Header navigation: avoid washed-out active links */
+.sf178-header > nav a,
+.sf178-header > nav a:visited {
+  color: #475569 !important;
+  opacity: 1 !important;
+}
+
+.sf178-header > nav a.active,
+.sf178-header > nav a[aria-current="page"] {
+  color: #08785c !important;
+}
+
+/* Right-side header controls */
+.sf178-header-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+}
+
+.sf178-header-actions .sf178-mantra {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-height: 36px !important;
+  padding: 0 13px !important;
+  border: 1px solid #dbeee8 !important;
+  border-radius: 12px !important;
+  background: #f1faf7 !important;
+  color: #53676f !important;
+  box-shadow: none !important;
+  white-space: nowrap !important;
+}
+
+/* Whatever the auth component renders (link/button/wrapper), make it one clean account chip */
+.sf178-header-actions > a:not(.sf178-mantra),
+.sf178-header-actions > button,
+.sf178-header-actions > div:not(.sf178-mantra):not(.sf178-avatar) {
+  min-height: 38px !important;
+  border-radius: 14px !important;
+}
+
+.sf178-header-actions a[href="/account"],
+.sf178-header-actions a[href="/login"],
+.sf178-header-actions button {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  min-height: 38px !important;
+  padding: 5px 12px 5px 6px !important;
+  border: 1px solid #dbe4ea !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  color: #263746 !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06) !important;
+  text-decoration: none !important;
+  outline: none !important;
+}
+
+.sf178-header-actions a[href="/account"]:hover,
+.sf178-header-actions a[href="/login"]:hover,
+.sf178-header-actions button:hover {
+  border-color: #9edfd0 !important;
+  background: #fbfffd !important;
+  box-shadow: 0 6px 18px rgba(15, 118, 110, 0.10) !important;
+}
+
+/* Account avatar inside the chip */
+.sf178-header-actions .sf178-avatar,
+.sf178-header-actions a[href="/account"] span:first-child,
+.sf178-header-actions a[href="/login"] span:first-child {
+  flex: 0 0 auto !important;
+}
+
+/* Prevent inherited purple focus/border treatment from making account controls look like two joined boxes */
+.sf178-header-actions * {
+  text-decoration: none !important;
+}
+
+.sf178-header-actions a:focus-visible,
+.sf178-header-actions button:focus-visible {
+  outline: 3px solid rgba(20, 184, 166, 0.22) !important;
+  outline-offset: 2px !important;
+}
+
+/* Keep controls tidy on narrower desktop widths */
+@media (max-width: 1050px) {
+  .sf178-header-actions .sf178-mantra {
+    display: none !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .sf178-sidebar .sf178-side-nav a {
+    color: #334155 !important;
+  }
+}

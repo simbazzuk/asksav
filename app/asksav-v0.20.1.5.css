@@ -1,0 +1,54 @@
+/* AskSAV v0.20.1.5 - global login/account control */
+
+.sf176-top-right {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 12px !important;
+}
+
+.sf176-top-right .sf19-account-chip {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-height: 38px !important;
+  padding: 5px 12px 5px 6px !important;
+  border: 1px solid #d8e4e8 !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  color: #263746 !important;
+  text-decoration: none !important;
+  font-weight: 800 !important;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.06) !important;
+  opacity: 1 !important;
+}
+
+.sf176-top-right .sf19-account-chip:hover {
+  border-color: #9edfd0 !important;
+  background: #fbfffd !important;
+}
+
+.sf176-top-right .sf19-account-chip__icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, #20bca6, #4f7df3) !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  flex: 0 0 auto !important;
+}
+
+.sf176-top-right .sf19-account-chip > span:last-child {
+  color: #263746 !important;
+  opacity: 1 !important;
+  white-space: nowrap !important;
+}
+
+/* Never show the old hard-coded avatar after this patch. */
+.sf176-top-right > .sf176-avatar {
+  display: none !important;
+}

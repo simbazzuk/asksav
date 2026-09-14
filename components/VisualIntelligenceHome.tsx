@@ -1,5 +1,7 @@
 "use client";
 
+import SiteFaceAccountButton from "./SiteFaceAccountButton";
+
 import { useEffect } from "react";
 
 export default function VisualIntelligenceHome() {
@@ -52,7 +54,7 @@ export default function VisualIntelligenceHome() {
 
         <div className="sf179-header-actions">
           <div className="sf179-mantra">◉ <span>See it. Know it. Value it.</span></div>
-          <div className="sf179-avatar">SP</div>
+          <SiteFaceAccountButton />
         </div>
       </header>
 

@@ -1,0 +1,63 @@
+/* AskSAV v0.20.1.8 - header spacing / clipping fix */
+
+.sf176-topbar {
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  align-items: center !important;
+  column-gap: 20px !important;
+}
+
+.sf176-topbar > nav {
+  min-width: 0 !important;
+}
+
+.sf176-top-right {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  min-width: max-content !important;
+  flex-wrap: nowrap !important;
+}
+
+.sf176-mantra {
+  display: inline-flex !important;
+  align-items: center !important;
+  max-width: none !important;
+  min-width: max-content !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  flex: 0 0 auto !important;
+}
+
+.sf176-top-right .sf19-account-chip,
+.sf176-top-right .sf20-auth-controls {
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+}
+
+.sf176-top-right .sf19-account-chip > span:last-child,
+.sf176-top-right .sf20-signout-button {
+  white-space: nowrap !important;
+}
+
+/* On medium screens, prioritize the auth controls and hide the mantra
+   rather than clipping either control. */
+@media (max-width: 1180px) {
+  .sf176-mantra {
+    display: none !important;
+  }
+}
+
+/* Keep the header usable on smaller widths. */
+@media (max-width: 900px) {
+  .sf176-topbar {
+    grid-template-columns: 1fr auto !important;
+    padding-right: 12px !important;
+  }
+
+  .sf176-topbar > nav {
+    gap: 14px !important;
+  }
+}
