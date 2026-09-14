@@ -769,3 +769,33 @@ pre {
   .actions { width: 100%; }
   .actions .btn { flex: 1; }
 }
+
+/* AskSAV v0.19.6.7 - richer result backgrounds */
+
+/* Identified item / identity result: stronger soft-blue surface */
+[class*="identified"][class*="card"],
+[class*="identity"][class*="card"],
+[class*="result"][class*="identity"],
+[class*="identification"][class*="card"] {
+  background: linear-gradient(135deg, #e9f5ff 0%, #f5faff 100%) !important;
+  border-color: #acd8ff !important;
+  box-shadow: inset 0 2px 0 rgba(37, 99, 235, 0.14);
+}
+
+/* Market value: visibly lilac while remaining light and readable */
+[class*="market"][class*="card"],
+[class*="value"][class*="card"],
+[class*="market-value"],
+[class*="marketValue"] {
+  background: linear-gradient(135deg, #f4ebff 0%, #fbf7ff 100%) !important;
+  border-color: #d6b8ff !important;
+  box-shadow: inset 0 2px 0 rgba(124, 58, 237, 0.16);
+}
+
+/* Keep evidence/comparable content distinct inside the coloured value area */
+[class*="market"] [class*="evidence"],
+[class*="value"] [class*="evidence"],
+[class*="market"] [class*="compar"],
+[class*="value"] [class*="compar"] {
+  background: rgba(255,255,255,0.58) !important;
+}
