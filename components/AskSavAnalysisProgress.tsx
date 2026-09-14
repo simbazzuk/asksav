@@ -63,9 +63,9 @@ export default function AskSavAnalysisProgress() {
 
   if(!active) return null;
 
-  let stage=STAGES[0];
+  let stage: readonly [number, string, string] = STAGES[0];
   for(const s of STAGES) if(progress>=s[0]) stage=s;
-  if(complete) stage=[100,"Analysis complete","Your AskSAV result is ready"] as any;
+  if(complete) stage=[100,"Analysis complete","Your AskSAV result is ready"];
 
   const pct=Math.round(progress);
 
