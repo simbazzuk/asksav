@@ -1,14 +1,21 @@
 import { getApp, getApps, initializeApp } from "firebase/app";
+
+async function askSavSendBrandedVerificationEmail(user: any) {
+  const idToken = await user.getIdToken(true);
+  const response = await fetch("/api/v20/send-verification-email", {
+    method: "POST",
+    headers: {
+      "authorization": `Bearer ${idToken}`,
+      "content-type": "application/json",
+    },
+    cache: "no-store",
+  });
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(payload?.error || "Could not send verification email.");
+}
+
 import {
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  getAuth,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  signOut,
-  type User,
-} from "firebase/auth";
+  GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, type User } from "firebase/auth";
 import {
   doc,
   getDoc,
@@ -153,6 +160,7 @@ export async function signInWithGoogle() {
 
 export async function registerWithEmail(email: string, password: string) {
   const credential = await createUserWithEmailAndPassword(getSiteFaceAuth(), email, password);
+      await askSavSendBrandedVerificationEmail(credential.user);
   await ensureSiteFaceUserRecord(credential.user);
   return credential.user;
 }
