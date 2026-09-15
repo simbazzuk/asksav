@@ -769,3 +769,118 @@
     border-top: 0 !important;
   }
 }
+
+
+/* AskSAV v0.20.3.8.3 market banner layout fix */
+
+/*
+ * The v0.20.3.8.2 banner was being constrained by the result layout.
+ * These rules make the result/market row own the available page width,
+ * then let the banner create its internal desktop columns.
+ */
+.asksav-result-with-market-v383,
+.asksav-commercial-layout-v383 {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  grid-column: 1 / -1 !important;
+  justify-self: stretch !important;
+}
+
+.asksav-result-with-market-v383 > .asksav-market-optional-wide,
+.asksav-result-with-market-v383 > .asksav-market-banner-v382,
+.asksav-commercial-layout-v383 > .asksav-market-optional-wide {
+  width: 100% !important;
+  max-width: none !important;
+  grid-column: 1 / -1 !important;
+}
+
+/* Desktop banner */
+.asksav-market-banner-v382 {
+  display: grid !important;
+  grid-template-columns: minmax(460px, 1.2fr) minmax(560px, .95fr) !important;
+  grid-template-rows: auto !important;
+  column-gap: 42px !important;
+  align-items: center !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.asksav-market-banner-v382 h2,
+.asksav-market-banner-v382 h3 {
+  max-width: 780px !important;
+  white-space: normal !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.asksav-market-banner-v382 p {
+  max-width: 760px !important;
+  white-space: normal !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.asksav-market-benefits {
+  grid-column: 2 !important;
+  grid-row: 1 / span 10 !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(150px, 1fr)) !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.asksav-market-benefit {
+  min-width: 0 !important;
+}
+
+/* Tablet: stack the benefit strip beneath the CTA. */
+@media (max-width: 1180px) {
+  .asksav-market-banner-v382 {
+    grid-template-columns: 1fr !important;
+    row-gap: 28px !important;
+  }
+
+  .asksav-market-benefits {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Mobile: one clean column, never squeezed side-by-side. */
+@media (max-width: 720px) {
+  .asksav-market-banner-v382 {
+    display: block !important;
+    padding: 22px 18px !important;
+  }
+
+  .asksav-market-banner-v382 h2,
+  .asksav-market-banner-v382 h3 {
+    font-size: clamp(27px, 9vw, 36px) !important;
+    line-height: 1.08 !important;
+  }
+
+  .asksav-market-banner-v382 button {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .asksav-market-benefits {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    margin-top: 26px !important;
+  }
+
+  .asksav-market-benefit {
+    border-left: 0 !important;
+    border-top: 1px solid #ddd7f5 !important;
+    padding: 18px 10px !important;
+  }
+
+  .asksav-market-benefit:first-child {
+    border-top: 0 !important;
+  }
+}

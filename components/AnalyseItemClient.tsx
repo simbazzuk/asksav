@@ -704,7 +704,7 @@ export default function AnalyseItemClient() {
           </section>
 
               {result && (
-                <>
+                <div className="asksav-result-with-market-v383">
                   <AskSAVMarketIntelligenceButton
                   analysis={result as Record<string, unknown>}
                 />
@@ -753,7 +753,7 @@ export default function AnalyseItemClient() {
                     </div>
                   </article>
               </div>
-            </>
+            </div>
             )}
         </section>
       </main>
