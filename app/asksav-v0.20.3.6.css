@@ -1291,3 +1291,224 @@
     border-top: 0 !important;
   }
 }
+
+
+/* AskSAV v0.20.3.8.6 isolated market promo */
+
+/*
+ * Isolated optional Market Intelligence component.
+ * No v382/v383/v384/v385 class names are used by this markup.
+ */
+.asksav-mi-promo {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(520px, .95fr);
+  gap: 42px;
+  align-items: stretch;
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  min-height: 290px;
+  margin: 0;
+  padding: 32px 34px;
+  border: 1px solid #ddd5ff;
+  border-top: 5px solid #7547ff;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 38% 0%, rgba(124,77,255,.08), transparent 28%),
+    linear-gradient(135deg,#fff 0%,#fbfaff 54%,#f5f2ff 100%);
+  box-shadow: 0 13px 32px rgba(67,45,119,.07);
+  overflow: hidden;
+}
+
+.asksav-mi-promo__content {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 0;
+  max-width: 680px;
+  padding: 6px 10px 6px 2px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.asksav-mi-promo__eyebrow {
+  display: block;
+  margin: 0 0 13px;
+  color: #26c99a;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: .08em;
+}
+
+.asksav-mi-promo__content h3 {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 0 13px;
+  color: #062b55;
+  font-size: clamp(34px,3vw,46px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.asksav-mi-promo__copy {
+  width: 100%;
+  max-width: 610px;
+  margin: 0;
+  color: #385579;
+  font-size: 15px;
+  line-height: 1.55;
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.asksav-mi-promo__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 230px;
+  max-width: 100%;
+  min-height: 46px;
+  margin: 20px 0 0;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 9px;
+  background: linear-gradient(135deg,#6945e8,#8a5cf6);
+  box-shadow: 0 10px 22px rgba(105,69,232,.18);
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.asksav-mi-promo__button:disabled {
+  cursor: wait;
+  opacity: .72;
+}
+
+.asksav-mi-promo__benefits {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  align-items: stretch;
+  min-width: 0;
+  min-height: 220px;
+}
+
+.asksav-mi-promo__benefit {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 20px 18px;
+  text-align: center;
+  border-left: 1px solid #ddd7f5;
+}
+
+.asksav-mi-promo__benefit:first-child {
+  border-left: 0;
+}
+
+.asksav-mi-promo__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  margin: 0 0 13px;
+  border-radius: 50%;
+  background: #eee8ff;
+  color: #6037f2;
+  font-size: 27px;
+  line-height: 1;
+}
+
+.asksav-mi-promo__benefit strong {
+  margin: 0 0 7px;
+  color: #061b3a;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.asksav-mi-promo__benefit > span:last-child {
+  max-width: 165px;
+  color: #3f5577;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.asksav-mi-promo__loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  color: #4b5f7d;
+}
+
+.asksav-mi-promo__loading p {
+  margin: 0;
+}
+
+.asksav-mi-promo__error {
+  margin: 14px 0 0;
+  color: #a61b1b;
+  font-weight: 600;
+}
+
+@media (max-width: 1120px) {
+  .asksav-mi-promo {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 24px;
+    padding: 30px;
+  }
+
+  .asksav-mi-promo__content {
+    max-width: 760px;
+  }
+
+  .asksav-mi-promo__benefits {
+    min-height: 170px;
+  }
+}
+
+@media (max-width: 720px) {
+  .asksav-mi-promo {
+    display: block;
+    padding: 24px 20px;
+    border-radius: 18px;
+  }
+
+  .asksav-mi-promo__content h3 {
+    font-size: clamp(29px,9vw,38px);
+  }
+
+  .asksav-mi-promo__button {
+    width: 100%;
+  }
+
+  .asksav-mi-promo__benefits {
+    grid-template-columns: 1fr;
+    margin-top: 24px;
+  }
+
+  .asksav-mi-promo__benefit {
+    padding: 18px 8px;
+    border-left: 0;
+    border-top: 1px solid #ddd7f5;
+  }
+
+  .asksav-mi-promo__benefit:first-child {
+    border-top: 0;
+  }
+}

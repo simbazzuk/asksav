@@ -254,57 +254,62 @@ export default function AskSAVMarketIntelligenceButton({ analysis }: Props) {
   }
 
   return (
-    <section className="asksav-market-demand" data-asksav-market-cta="true">
-      <div className="asksav-market-optional-wide asksav-market-banner-v382 asksav-market-promo-v385">
-        <span className="asksav-market-demand__eyebrow asksav-market-optional-wide">
+    <section className="asksav-mi-promo" data-asksav-market-cta="true">
+      <div className="asksav-mi-promo__content">
+        <span className="asksav-mi-promo__eyebrow">
           OPTIONAL MARKET INTELLIGENCE
         </span>
+
         <h3>Want to know what it may be worth?</h3>
-        <p>
+
+        <p className="asksav-mi-promo__copy">
           Your visual analysis is complete. Run optional market research for
           indicative UK pricing, likely selling range and supporting market
           evidence.
         </p>
+
+        <button
+          className="asksav-mi-promo__button"
+          type="button"
+          onClick={runMarketIntelligence}
+          disabled={working}
+        >
+          {working ? "Researching market..." : "Get Market Intelligence"}
+        </button>
+
+        {working && (
+          <div className="asksav-mi-promo__loading" aria-live="polite">
+            <span className="asksav-market-demand__spinner" aria-hidden="true" />
+            <p>Checking current market context. This may take a little longer.</p>
+          </div>
+        )}
+
+        {error && (
+          <p className="asksav-mi-promo__error" role="alert">
+            {error}
+          </p>
+        )}
       </div>
 
-      <button
-        type="button"
-        onClick={runMarketIntelligence}
-        disabled={working}
-      >
-        {working ? "Researching market..." : "Get Market Intelligence"}
-      </button>
-
-        <div className="asksav-market-benefits" aria-label="Market Intelligence benefits">
-          <div className="asksav-market-benefit">
-            <span className="asksav-market-benefit-icon" aria-hidden="true">&#8981;</span>
-            <strong>UK market data</strong>
-            <span>See current marketplace listings</span>
-          </div>
-          <div className="asksav-market-benefit">
-            <span className="asksav-market-benefit-icon asksav-market-benefit-bars" aria-hidden="true">&#9645;</span>
-            <strong>Estimated value</strong>
-            <span>Indicative selling range and quick sale price</span>
-          </div>
-          <div className="asksav-market-benefit">
-            <span className="asksav-market-benefit-icon" aria-hidden="true">&#10003;</span>
-            <strong>Supporting evidence</strong>
-            <span>Comparable items and recent sales</span>
-          </div>
+      <div className="asksav-mi-promo__benefits" aria-label="Market Intelligence benefits">
+        <div className="asksav-mi-promo__benefit">
+          <span className="asksav-mi-promo__icon" aria-hidden="true">&#8981;</span>
+          <strong>UK market data</strong>
+          <span>See current marketplace listings</span>
         </div>
 
-      {working && (
-        <div className="asksav-market-demand__loading" aria-live="polite">
-          <span className="asksav-market-demand__spinner" aria-hidden="true" />
-          <p>Checking current market context. This may take a little longer.</p>
+        <div className="asksav-mi-promo__benefit">
+          <span className="asksav-mi-promo__icon asksav-mi-promo__icon--bars" aria-hidden="true">&#9645;</span>
+          <strong>Estimated value</strong>
+          <span>Indicative selling range and quick sale price</span>
         </div>
-      )}
 
-      {error && (
-        <p className="asksav-market-demand__error" role="alert">
-          {error}
-        </p>
-      )}
+        <div className="asksav-mi-promo__benefit">
+          <span className="asksav-mi-promo__icon" aria-hidden="true">&#10003;</span>
+          <strong>Supporting evidence</strong>
+          <span>Comparable items and recent sales</span>
+        </div>
+      </div>
     </section>
   );
 }
