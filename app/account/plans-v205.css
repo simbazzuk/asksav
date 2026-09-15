@@ -109,6 +109,11 @@
   box-shadow: 0 14px 34px rgba(18, 54, 75, 0.06);
 }
 
+.asksav-plan-card--free {
+  border: 2px solid #43cfa9;
+  box-shadow: 0 14px 36px rgba(18, 161, 129, 0.08);
+}
+
 .asksav-plan-card--current {
   border: 2px solid #12a181;
 }

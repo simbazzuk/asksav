@@ -114,8 +114,8 @@ export default function AskSAVPlansPanel() {
           </div>
           <p>
             {typeof limit === "number"
-              ? `${used} of ${limit} analyses used this month Â· ${remaining} remaining`
-              : `${used} analyses used this month Â· Fair-use allowance`}
+              ? `${used} of ${limit} analyses used this month {"\u00B7"} ${remaining} remaining`
+              : `${used} analyses used this month {"\u00B7"} Fair-use allowance`}
           </p>
         </div>
         {typeof limit === "number" && (
@@ -144,7 +144,7 @@ export default function AskSAVPlansPanel() {
           const current = state.plan === card.plan;
           return (
             <article
-              className={`asksav-plan-card${card.plan === "ASKSAV_PRO" ? " asksav-plan-card--pro" : ""}${card.popular ? " asksav-plan-card--popular" : ""}${current ? " asksav-plan-card--current" : ""}`}
+              className={`asksav-plan-card${card.plan === "FREE" ? " asksav-plan-card--free" : ""}${card.plan === "ASKSAV_PRO" ? " asksav-plan-card--pro" : ""}${card.popular ? " asksav-plan-card--popular" : ""}${current ? " asksav-plan-card--current" : ""}`}
               key={card.plan}
             >
               {card.popular && <span className="asksav-popular-badge">MOST POPULAR</span>}
