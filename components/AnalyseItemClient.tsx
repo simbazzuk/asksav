@@ -550,7 +550,9 @@ export default function AnalyseItemClient() {
       </header>
 
       <main className="sf178-main">
-        <AskSAVAnalyseCredits />
+        <div className="asksav-analyse-credit-row-v020394">
+          <AskSAVAnalyseCredits />
+        </div>
         <section className="sf178-hero">
           <div className="sf178-hero-copy">
             <span className="sf178-kicker">VISUAL INTELLIGENCE</span>

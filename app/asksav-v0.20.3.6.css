@@ -1608,3 +1608,134 @@
     margin: 0 0 16px auto;
   }
 }
+
+
+/* AskSAV v0.20.3.9.3 credit indicator contrast */
+
+/* Keep the compact indicator readable over the Analyse header. */
+.asksav-analysis-credits-v02039 {
+  color: #17385f;
+}
+
+.asksav-analysis-credits-v02039 strong {
+  color: #17385f;
+  font-weight: 800;
+}
+
+.asksav-analysis-credits-v02039 small {
+  color: #596b83;
+  font-weight: 600;
+}
+
+.asksav-analysis-credits-v02039.low strong {
+  color: #744900;
+}
+
+.asksav-analysis-credits-v02039.low small {
+  color: #8a5d12;
+}
+
+.asksav-analysis-credits-v02039.empty {
+  border-color: #e59a9f;
+  background: #fff1f2;
+  box-shadow: 0 8px 22px rgba(139,35,43,.10);
+}
+
+.asksav-analysis-credits-v02039.empty strong {
+  color: #8f1d2c;
+}
+
+.asksav-analysis-credits-v02039.empty small {
+  color: #9f3441;
+}
+
+.asksav-analysis-credits-v02039.empty .asksav-analysis-credits-v02039__icon {
+  background: #ffdfe2;
+  color: #a51f30;
+}
+
+.asksav-analysis-credits-v02039.empty .asksav-analysis-credits-v02039__arrow {
+  color: #a83a47;
+}
+
+
+/* AskSAV v0.20.3.9.4.1 Analyse credit position */
+
+.asksav-analyse-credit-row-v020394 {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  z-index: 4;
+  margin: 0;
+}
+
+.asksav-analyse-credit-row-v020394 .asksav-analysis-credits-v02039 {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  margin: 0 !important;
+  flex: 0 0 auto;
+}
+
+@media (min-width: 761px) {
+  .asksav-analyse-credit-row-v020394 {
+    height: 0;
+    transform: translateY(18px);
+  }
+}
+
+@media (max-width: 760px) {
+  .asksav-analyse-credit-row-v020394 {
+    justify-content: flex-start;
+    margin-bottom: 14px;
+  }
+}
+
+
+/* AskSAV v0.20.3.9.5 credit indicator alignment */
+
+/*
+ * Final desktop placement: keep the allowance inside Analyse content,
+ * but lift it into the clear upper-right space above the product icons.
+ * No global-header positioning and no overlap with the illustration row.
+ */
+@media (min-width: 1001px) {
+  .asksav-analyse-credit-row-v020394 {
+    height: 0;
+    margin: 0;
+    padding: 0 8px 0 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+  }
+
+  .asksav-analyse-credit-row-v020394 .asksav-analysis-credits-v02039 {
+    position: static !important;
+    margin: 0 !important;
+    pointer-events: auto;
+  }
+}
+
+/* At narrower desktop/tablet widths, reserve real space rather than float. */
+@media (min-width: 761px) and (max-width: 1000px) {
+  .asksav-analyse-credit-row-v020394 {
+    height: auto;
+    margin: 0 0 10px;
+    padding: 0;
+    transform: none;
+    justify-content: flex-end;
+  }
+}
+
+/* Mobile remains in normal flow. */
+@media (max-width: 760px) {
+  .asksav-analyse-credit-row-v020394 {
+    height: auto;
+    transform: none;
+    justify-content: flex-start;
+    margin: 0 0 14px;
+    padding: 0;
+  }
+}
