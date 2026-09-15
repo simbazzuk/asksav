@@ -142,6 +142,7 @@ export async function verifyFirebaseRequest(request: Request) {
   return {
     uid: String(user.localId),
     email: user.email ? String(user.email) : null,
+    emailVerified: user.emailVerified === true,
   };
 }
 
