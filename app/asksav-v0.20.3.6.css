@@ -532,3 +532,105 @@
 }
 
 /* AskSAV v0.20.3.7.4.3 optional market fullwidth END */
+
+/* AskSAV v0.20.3.8.1 market UI width + contrast */
+.asksav-market-optional-wide {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  grid-column: 1 / -1 !important;
+  justify-self: stretch !important;
+  box-sizing: border-box !important;
+}
+
+/* Expand any result container that owns the optional market panel. */
+.sf-commercial-layout:has(.asksav-market-optional-wide),
+.sf178-result-grid:has(.asksav-market-optional-wide),
+.sf176-result-grid:has(.asksav-market-optional-wide),
+.sf176-report-grid:has(.asksav-market-optional-wide),
+.sf176-page:has(.asksav-market-optional-wide) {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* Prevent a parent grid column from keeping the optional panel narrow. */
+.sf-commercial-layout > .asksav-market-optional-wide,
+.sf178-result-grid > .asksav-market-optional-wide,
+.sf176-result-grid > .asksav-market-optional-wide,
+.sf176-report-grid > .asksav-market-optional-wide {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* Completed Market Intelligence: improve contrast on pastel metric cards. */
+.asksav-market-wide {
+  color: #18324a !important;
+}
+
+.asksav-market-wide p {
+  color: #334e68 !important;
+}
+
+.asksav-market-wide .asksav-market-metrics *,
+.asksav-market-wide .market-metrics *,
+.asksav-market-wide .asksav-market-stats * {
+  opacity: 1 !important;
+}
+
+/* Labels stay readable rather than inheriting white text. */
+.asksav-market-wide .asksav-market-metrics small,
+.asksav-market-wide .market-metrics small,
+.asksav-market-wide .asksav-market-stats small,
+.asksav-market-wide .asksav-market-metrics span,
+.asksav-market-wide .market-metrics span,
+.asksav-market-wide .asksav-market-stats span {
+  color: #52637a !important;
+}
+
+/* Strong values: green / blue / purple against their pastel tiles. */
+.asksav-market-wide .asksav-market-metrics > :nth-child(1) strong,
+.asksav-market-wide .market-metrics > :nth-child(1) strong,
+.asksav-market-wide .asksav-market-stats > :nth-child(1) strong {
+  color: #087f5b !important;
+}
+
+.asksav-market-wide .asksav-market-metrics > :nth-child(2) strong,
+.asksav-market-wide .market-metrics > :nth-child(2) strong,
+.asksav-market-wide .asksav-market-stats > :nth-child(2) strong {
+  color: #1267d6 !important;
+}
+
+.asksav-market-wide .asksav-market-metrics > :nth-child(3) strong,
+.asksav-market-wide .market-metrics > :nth-child(3) strong,
+.asksav-market-wide .asksav-market-stats > :nth-child(3) strong {
+  color: #5b2bd1 !important;
+}
+
+/* Generic fallback for metric values if the component does not use strong. */
+.asksav-market-wide [class*="suggested"] {
+  color: #087f5b !important;
+}
+
+.asksav-market-wide [class*="quick"] {
+  color: #1267d6 !important;
+}
+
+.asksav-market-wide [class*="confidence"] {
+  color: #5b2bd1 !important;
+}
+
+/* Market-search row must also use dark, high-contrast text. */
+.asksav-market-wide [class*="search"],
+.asksav-market-wide [class*="search"] * {
+  color: #34206f !important;
+  opacity: 1 !important;
+}
+
+@media (max-width: 700px) {
+  .asksav-market-optional-wide,
+  .asksav-market-wide {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}
