@@ -79,7 +79,7 @@ export default function AskSAVPlansPanel() {
     {
       plan: "FREE" as Plan,
       name: "AskSAV Free",
-      price: "Â£0",
+      price: "\u00A3" + "0",
       suffix: "forever",
       features: ["5 analyses / month", "5 saved items"],
       locked: ["Market Intelligence"],
@@ -160,13 +160,13 @@ export default function AskSAVPlansPanel() {
               <div className="asksav-plan-features">
                 {card.features.map((feature) => (
                   <div className="asksav-plan-feature" key={feature}>
-                    <span className="asksav-feature-icon" aria-hidden="true">âœ“</span>
+                    <span className="asksav-feature-icon" aria-hidden="true">{"\u2713"}</span>
                     <span>{feature}</span>
                   </div>
                 ))}
                 {card.locked.map((feature) => (
                   <div className="asksav-plan-feature asksav-plan-feature--locked" key={feature}>
-                    <span className="asksav-feature-icon" aria-hidden="true">Ã—</span>
+                    <span className="asksav-feature-icon" aria-hidden="true">{"\u00D7"}</span>
                     <span>{feature} locked</span>
                   </div>
                 ))}
