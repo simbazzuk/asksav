@@ -255,7 +255,7 @@ export default function AskSAVMarketIntelligenceButton({ analysis }: Props) {
 
   return (
     <section className="asksav-market-demand" data-asksav-market-cta="true">
-      <div>
+      <div className="asksav-market-optional-wide asksav-market-banner-v382">
         <span className="asksav-market-demand__eyebrow asksav-market-optional-wide">
           OPTIONAL MARKET INTELLIGENCE
         </span>
@@ -274,6 +274,24 @@ export default function AskSAVMarketIntelligenceButton({ analysis }: Props) {
       >
         {working ? "Researching market..." : "Get Market Intelligence"}
       </button>
+
+        <div className="asksav-market-benefits" aria-label="Market Intelligence benefits">
+          <div className="asksav-market-benefit">
+            <span className="asksav-market-benefit-icon" aria-hidden="true">&#8981;</span>
+            <strong>UK market data</strong>
+            <span>See current marketplace listings</span>
+          </div>
+          <div className="asksav-market-benefit">
+            <span className="asksav-market-benefit-icon asksav-market-benefit-bars" aria-hidden="true">&#9645;</span>
+            <strong>Estimated value</strong>
+            <span>Indicative selling range and quick sale price</span>
+          </div>
+          <div className="asksav-market-benefit">
+            <span className="asksav-market-benefit-icon" aria-hidden="true">&#10003;</span>
+            <strong>Supporting evidence</strong>
+            <span>Comparable items and recent sales</span>
+          </div>
+        </div>
 
       {working && (
         <div className="asksav-market-demand__loading" aria-live="polite">

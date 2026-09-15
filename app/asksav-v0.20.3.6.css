@@ -634,3 +634,138 @@
     max-width: none !important;
   }
 }
+
+
+/* AskSAV v0.20.3.8.2 optional market banner */
+.asksav-market-banner-v382 {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.25fr) minmax(520px, 1fr) !important;
+  column-gap: 42px !important;
+  align-items: center !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 250px !important;
+  padding: 30px 34px !important;
+  overflow: hidden !important;
+}
+
+.asksav-market-banner-v382::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  background: linear-gradient(160deg, transparent 0 46%, rgba(113,72,255,.035) 46% 100%) !important;
+}
+
+.asksav-market-banner-v382 > * {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.asksav-market-banner-v382 h2,
+.asksav-market-banner-v382 h3 {
+  font-size: clamp(28px, 2.2vw, 42px) !important;
+  max-width: 820px !important;
+  margin-bottom: 10px !important;
+}
+
+.asksav-market-banner-v382 p {
+  max-width: 820px !important;
+  font-size: 16px !important;
+}
+
+.asksav-market-banner-v382 button {
+  width: fit-content !important;
+  min-width: 280px !important;
+  min-height: 58px !important;
+  margin-top: 8px !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+.asksav-market-benefits {
+  grid-column: 2 !important;
+  grid-row: 1 / span 8 !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0,1fr)) !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.asksav-market-benefit {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  min-width: 0 !important;
+  padding: 14px 22px !important;
+  border-left: 1px solid #d9d2f7 !important;
+}
+
+.asksav-market-benefit:first-child {
+  border-left: 0 !important;
+}
+
+.asksav-market-benefit-icon {
+  display: grid !important;
+  place-items: center !important;
+  width: 58px !important;
+  height: 58px !important;
+  margin-bottom: 14px !important;
+  border-radius: 999px !important;
+  background: #eee9ff !important;
+  color: #5b32e6 !important;
+  font-size: 28px !important;
+  font-weight: 800 !important;
+}
+
+.asksav-market-benefit strong {
+  display: block !important;
+  margin-bottom: 7px !important;
+  color: #10263f !important;
+  font-size: 16px !important;
+  line-height: 1.25 !important;
+}
+
+.asksav-market-benefit > span:last-child {
+  color: #536780 !important;
+  font-size: 14px !important;
+  line-height: 1.45 !important;
+  max-width: 190px !important;
+}
+
+@media (max-width: 1100px) {
+  .asksav-market-banner-v382 {
+    grid-template-columns: 1fr !important;
+    row-gap: 26px !important;
+  }
+  .asksav-market-benefits {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    margin-top: 8px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .asksav-market-banner-v382 {
+    padding: 24px 20px !important;
+  }
+  .asksav-market-banner-v382 button {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  .asksav-market-benefits {
+    grid-template-columns: 1fr !important;
+  }
+  .asksav-market-benefit {
+    border-left: 0 !important;
+    border-top: 1px solid #ddd7f5 !important;
+    padding: 18px 8px !important;
+  }
+  .asksav-market-benefit:first-child {
+    border-top: 0 !important;
+  }
+}
