@@ -1739,3 +1739,51 @@
     padding: 0;
   }
 }
+
+
+/* AskSAV v0.20.3.9.7 market result text contrast */
+
+/* Completed Market Intelligence card only. */
+.asksav-market-demand--result,
+.asksav-market-demand--result p {
+  color: #17385f;
+}
+
+.asksav-market-demand--result strong,
+.asksav-market-demand--result h2,
+.asksav-market-demand--result h3 {
+  color: #0f2f54;
+}
+
+/* Metric labels */
+.asksav-market-demand--result [class*="metric"] span:first-child,
+.asksav-market-demand--result [class*="stat"] span:first-child {
+  color: #5f5a78;
+}
+
+/*
+ * Values were inheriting very light/white text from earlier card styling.
+ * Give completed-result values readable colours while preserving the
+ * existing pastel tile backgrounds.
+ */
+.asksav-market-demand--result [class*="metric"] strong,
+.asksav-market-demand--result [class*="stat"] strong {
+  color: #24365a;
+  opacity: 1;
+}
+
+/* Existing result tiles are ordered Suggested value, Quick sale, Confidence. */
+.asksav-market-demand--result [class*="metric"]:nth-child(1) strong,
+.asksav-market-demand--result [class*="stat"]:nth-child(1) strong {
+  color: #159567;
+}
+
+.asksav-market-demand--result [class*="metric"]:nth-child(2) strong,
+.asksav-market-demand--result [class*="stat"]:nth-child(2) strong {
+  color: #1670c5;
+}
+
+.asksav-market-demand--result [class*="metric"]:nth-child(3) strong,
+.asksav-market-demand--result [class*="stat"]:nth-child(3) strong {
+  color: #6737c7;
+}

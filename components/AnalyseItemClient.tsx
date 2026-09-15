@@ -736,12 +736,7 @@ export default function AnalyseItemClient() {
                   <AskSAVActionLayer query={result?.market?.search_query || result.identification?.item_name || "similar item"} />
                 ) : (
                   <section className="sf-action-layer">
-                    <div className="sf-action-layer__notice">
-                      <span className="sf-action-layer__notice-icon" aria-hidden="true">i</span>
-                      <span>
-                        Selling and marketplace action tools are available on paid AskSAV plans.
-                      </span>
-                    </div>
+                    
                   </section>
                 )}
                 </div>
