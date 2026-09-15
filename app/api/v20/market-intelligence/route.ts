@@ -1,3 +1,4 @@
+import { getAskSAVAccountState, verifyFirebaseRequest } from "../../../../lib/v20-entitlements";
 import { generateAskSavOnDemandMarket } from "../../../../lib/item-intelligence";
 
 export const runtime = "nodejs";
@@ -34,7 +35,7 @@ async function verifyFirebaseBearer(request: Request) {
   return payload?.users?.[0] ?? null;
 }
 
-export async function POST(request: Request) {
+async function marketIntelligencePost(request: Request) {
   const started = Date.now();
 
   try {
@@ -89,5 +90,20 @@ export async function POST(request: Request) {
       },
       { status: 500 },
     );
+  }
+}
+export async function POST(request: Request) {
+  try {
+    const identity=await verifyFirebaseRequest(request);
+    const state=await getAskSAVAccountState(identity);
+    if(!state.entitlements.fullMarketEvidence) return Response.json({
+      error:"Market Intelligence is available with AskSAV Plus and AskSAV Pro.",
+      code:"MARKET_INTELLIGENCE_UPGRADE_REQUIRED", plan:state.plan
+    },{status:403});
+    return marketIntelligencePost(request);
+  } catch(error) {
+    const m=error instanceof Error?error.message:"UNKNOWN";
+    if(m==="AUTH_REQUIRED"||m==="AUTH_INVALID") return Response.json({error:"Sign in is required to run Market Intelligence."},{status:401});
+    throw error;
   }
 }

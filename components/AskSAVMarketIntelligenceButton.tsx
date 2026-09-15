@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getSiteFaceAuth } from "../lib/siteface-auth";
 
 type Props = {
@@ -114,10 +114,66 @@ function confidenceText(value: unknown) {
   return `${Math.round(percentage)}%`;
 }
 
+type AskSAVMarketEntitlementState = {
+  _asksav?: {
+    entitlements?: {
+      fullMarketEvidence?: boolean;
+    };
+  };
+};
+
 export default function AskSAVMarketIntelligenceButton({ analysis }: Props) {
   const [working, setWorking] = useState(false);
   const [market, setMarket] = useState<MarketRecord | null>(null);
   const [error, setError] = useState("");
+  const [plan,setPlan]=useState<"FREE"|"ASKSAV_PLUS"|"ASKSAV_PRO"|null>(null);
+  useEffect(()=>{let active=true;const auth=getSiteFaceAuth();return auth.onAuthStateChanged(async user=>{
+    if(!user)return;
+    try{const token=await user.getIdToken();const res=await fetch("/api/v20/entitlements",{headers:{Authorization:`Bearer ${token}`},cache:"no-store"});const data=await res.json().catch(()=>null);if(active&&res.ok)setPlan(data?.plan||"FREE");}catch{if(active)setPlan("FREE");}
+  });},[]);
+
+  const marketEvidenceAllowed =
+    (analysis as AskSAVMarketEntitlementState)?._asksav?.entitlements?.fullMarketEvidence === true;
+
+  // Fail closed. FREE and unresolved entitlement state must never expose the
+  // action that starts Market Intelligence.
+  if (!marketEvidenceAllowed) {
+    return (
+      <section
+        className="asksav-market-demand asksav-market-wide"
+        data-asksav-market-locked="true"
+      >
+        <div className="asksav-market-demand__header">
+          <div>
+            <span className="asksav-market-demand__eyebrow">
+              OPTIONAL MARKET INTELLIGENCE
+            </span>
+            <h3>Want to know what it may be worth?</h3>
+            <p>
+              Market Intelligence is available with AskSAV Plus and AskSAV Pro.
+              Upgrade to see indicative UK pricing, likely selling range and
+              supporting market evidence.
+            </p>
+          </div>
+        </div>
+        <a
+          href="/account#asksav-plans"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "44px",
+            padding: "0 22px",
+            borderRadius: "10px",
+            fontWeight: 700,
+            textDecoration: "none",
+          }}
+        >
+          View plans
+        </a>
+      </section>
+    );
+  }
 
   async function runMarketIntelligence() {
     if (working) return;
@@ -182,6 +238,17 @@ export default function AskSAVMarketIntelligenceButton({ analysis }: Props) {
     } finally {
       setWorking(false);
     }
+  }
+
+  if (plan === "FREE") {
+    return <section className="asksav-market-demand asksav-market-locked-v205">
+      <div className="asksav-market-optional-wide asksav-market-banner-v382 asksav-market-promo-v385">
+        <span className="asksav-market-demand__eyebrow">MARKET INTELLIGENCE</span>
+        <h3>Unlock Market Intelligence</h3>
+        <p>See estimated market value, likely selling range and supporting market evidence. Available with AskSAV Plus and AskSAV Pro.</p>
+      </div>
+      <a className="asksav-market-upgrade-v205" href="/account#asksav-plans">View plans</a>
+    </section>;
   }
 
   if (market) {
