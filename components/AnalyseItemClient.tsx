@@ -5,6 +5,7 @@ import SiteFaceAccountButton from "./SiteFaceAccountButton";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { firebaseConfigured, getSiteFaceAuth } from "../lib/siteface-auth";
 import AskSAVMarketIntelligenceButton from "./AskSAVMarketIntelligenceButton";
+import AskSAVAnalyseCredits from "./AskSAVAnalyseCredits";
 
 function askSavLegacyMarketIsOnDemand(result: any) {
   const market =
@@ -549,6 +550,7 @@ export default function AnalyseItemClient() {
       </header>
 
       <main className="sf178-main">
+        <AskSAVAnalyseCredits />
         <section className="sf178-hero">
           <div className="sf178-hero-copy">
             <span className="sf178-kicker">VISUAL INTELLIGENCE</span>

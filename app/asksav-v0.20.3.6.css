@@ -1512,3 +1512,99 @@
     border-top: 0;
   }
 }
+
+
+/* AskSAV v0.20.3.9 Analyse credit indicator */
+
+.sf178-page,
+.sf176-page {
+  position: relative;
+}
+
+.asksav-analysis-credits-v02039 {
+  position: absolute;
+  z-index: 12;
+  top: 28px;
+  right: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 8px 12px 8px 10px;
+  border: 1px solid #d8d2f7;
+  border-radius: 14px;
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 8px 22px rgba(48,38,94,.08);
+  color: #17385f;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+}
+
+.asksav-analysis-credits-v02039:hover {
+  border-color: #9d84f7;
+  box-shadow: 0 10px 26px rgba(80,55,170,.13);
+}
+
+.asksav-analysis-credits-v02039__icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border-radius: 10px;
+  background: #eee9ff;
+  color: #6d42ed;
+  font-size: 17px;
+}
+
+.asksav-analysis-credits-v02039 > span:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  white-space: nowrap;
+}
+
+.asksav-analysis-credits-v02039 strong {
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.asksav-analysis-credits-v02039 small {
+  color: #6a7b93;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.asksav-analysis-credits-v02039__arrow {
+  color: #8c78d7;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.asksav-analysis-credits-v02039.low {
+  border-color: #f0cf85;
+  background: #fffaf0;
+}
+
+.asksav-analysis-credits-v02039.low .asksav-analysis-credits-v02039__icon {
+  background: #fff0c9;
+  color: #a56a00;
+}
+
+.asksav-analysis-credits-v02039.empty {
+  border-color: #efb4b4;
+  background: #fff7f7;
+}
+
+.asksav-analysis-credits-v02039.empty .asksav-analysis-credits-v02039__icon {
+  background: #ffe4e4;
+  color: #b32626;
+}
+
+@media (max-width: 760px) {
+  .asksav-analysis-credits-v02039 {
+    position: static;
+    width: fit-content;
+    margin: 0 0 16px auto;
+  }
+}
