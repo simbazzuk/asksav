@@ -713,6 +713,65 @@ Rules:
   }
 }
 
+
+async function groundAndIdentifyObject(uri: string, hint: string, usage: UsageCollector) {
+  const prompt = `
+You are the first visual-grounding and identification pass for AskSAV.
+Inspect the photograph carefully and identify the PRIMARY consumer item.
+
+USER HINT:
+${hint ? JSON.stringify(hint) : "No hint supplied"}
+
+RULES:
+- Analyse the primary consumer item even when worn, held, carried, installed or surrounded by other objects.
+- Do not identify or describe a person.
+- If several candidate items are visible, choose the most visually prominent analysable consumer item unless the hint clearly names another.
+- Never invent brand, model, variant, material, specification, authenticity, purity, gemstone identity or certification.
+- Use visible text only when it can actually be read.
+- If exact brand/model cannot be supported, return a useful generic identity.
+- A separate independent verification pass will check this result.
+
+Return exactly one JSON object:
+{
+  "object_class":"short generic object class",
+  "broad_confidence":0.0,
+  "visible_evidence":["string"],
+  "hint_consistency":"CONSISTENT | CONFLICTING | NOT_PROVIDED",
+  "hint_note":"string or null",
+  "category":"consumer category",
+  "item_name":"best visually supported item name",
+  "brand":"string or null",
+  "model":"string or null",
+  "variant":"string or null",
+  "confidence":0.0,
+  "identifying_features":["string"],
+  "visible_text":["string"]
+}
+`.trim();
+
+  const parsed = await runVisualJson(uri, prompt, "Grounding + identification", {}, usage);
+  const objectClass = cleanString(parsed?.object_class) || cleanString(parsed?.item_name) || "unknown object";
+  const broad = {
+    object_class: objectClass,
+    confidence: clampConfidence(parsed?.broad_confidence ?? parsed?.confidence),
+    visible_evidence: cleanList(parsed?.visible_evidence ?? parsed?.identifying_features),
+    hint_consistency: cleanString(parsed?.hint_consistency) || (hint ? "UNKNOWN" : "NOT_PROVIDED"),
+    hint_note: cleanString(parsed?.hint_note),
+  };
+  const candidate = {
+    category: cleanString(parsed?.category) || "Other",
+    item_name: cleanString(parsed?.item_name) || objectClass,
+    brand: cleanString(parsed?.brand),
+    model: cleanString(parsed?.model),
+    variant: cleanString(parsed?.variant),
+    confidence: clampConfidence(parsed?.confidence),
+    identifying_features: cleanList(parsed?.identifying_features ?? parsed?.visible_evidence),
+    visible_text: cleanList(parsed?.visible_text),
+    fallback_used: false,
+  };
+  return { broad, candidate };
+}
+
 async function verifyIdentification(
   uri: string,
   hint: string,
@@ -1212,9 +1271,16 @@ export async function analyseItemPhoto(image: File, hint = "") {
 
   const uri = `gs://${bucketName}/${objectName}`;
 
-  const broad = await askSavVisionCall("classifyObject", async () => classifyObject(uri, hint, usage));
-  const candidate = await askSavVisionCall("identifyObject", async () => identifyObject(uri, hint, broad, usage));
-  const verification = await askSavVisionCall("verifyIdentification", async () => verifyIdentification(uri, hint, broad, candidate, usage));
+  const grounded = await askSavVisionCall(
+    "groundAndIdentifyObject",
+    async () => groundAndIdentifyObject(uri, hint, usage),
+  );
+  const broad = grounded.broad;
+  const candidate = grounded.candidate;
+  const verification = await askSavVisionCall(
+    "verifyIdentification",
+    async () => verifyIdentification(uri, hint, broad, candidate, usage),
+  );
 
   const identification = {
     category: candidate.category,
