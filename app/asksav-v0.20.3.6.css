@@ -1787,3 +1787,34 @@
 .asksav-market-demand--result [class*="stat"]:nth-child(3) strong {
   color: #6737c7;
 }
+
+
+/* AskSAV v0.20.3.9.8 exact market metric contrast */
+
+/* Exact completed Market Intelligence metric markup:
+   .asksav-market-demand__metrics > div > span/strong */
+.asksav-market-demand--result .asksav-market-demand__metrics > div > span {
+  color: #5b5674 !important;
+  opacity: 1 !important;
+}
+
+.asksav-market-demand--result .asksav-market-demand__metrics > div > strong {
+  color: #24365a !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: currentColor;
+}
+
+/* Suggested value */
+.asksav-market-demand--result .asksav-market-demand__metrics > div:nth-child(1) > strong {
+  color: #137a57 !important;
+}
+
+/* Quick sale */
+.asksav-market-demand--result .asksav-market-demand__metrics > div:nth-child(2) > strong {
+  color: #1769aa !important;
+}
+
+/* Confidence */
+.asksav-market-demand--result .asksav-market-demand__metrics > div:nth-child(3) > strong {
+  color: #6734b8 !important;
+}
