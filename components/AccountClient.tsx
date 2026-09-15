@@ -13,8 +13,10 @@ import {
   type SiteFaceUserRecord,
 } from "../lib/siteface-auth";
 
+type AskSAVServerPlan = SiteFacePlan | "ASKSAV_PLUS" | "ASKSAV_PRO";
+
 type ServerEntitlementState = {
-  plan: SiteFacePlan;
+  plan: AskSAVServerPlan;
   entitlements: SiteFaceEntitlements;
   usage: {
     analysesUsed: number;
@@ -32,8 +34,10 @@ function entitlement(value: unknown) {
   return String(value ?? "-");
 }
 
-function planName(plan: SiteFacePlan) {
-  return plan === "VIC_PLUS" ? "AskSAV+" : plan === "VIC_PRO" ? "AskSAV Pro" : "Free";
+function planName(plan: AskSAVServerPlan) {
+  if (plan === "ASKSAV_PLUS" || plan === "VIC_PLUS") return "AskSAV Plus";
+  if (plan === "ASKSAV_PRO" || plan === "VIC_PRO") return "AskSAV Pro";
+  return "Free";
 }
 
 function formatUsagePeriod(periodKey?: string) {
