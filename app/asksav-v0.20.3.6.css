@@ -1096,3 +1096,198 @@
     border-top: 0 !important;
   }
 }
+
+
+/* AskSAV v0.20.3.8.5 clean market promo */
+
+/*
+ * Clean reset for the optional Market Intelligence state.
+ * This deliberately overrides the accumulated v382/v383/v384 rules.
+ */
+.asksav-market-promo-v385 {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.35fr) minmax(500px, .9fr) !important;
+  grid-auto-flow: row !important;
+  column-gap: 44px !important;
+  align-items: center !important;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 32px 36px !important;
+  border: 1px solid #ddd5ff !important;
+  border-top: 5px solid #7547ff !important;
+  border-radius: 22px !important;
+  background: linear-gradient(135deg,#fff 0%,#faf8ff 48%,#f4f0ff 100%) !important;
+  box-shadow: 0 12px 30px rgba(67,45,119,.07) !important;
+  overflow: hidden !important;
+}
+
+/* Reset every legacy direct-child placement from earlier iterations. */
+.asksav-market-promo-v385 > :not(.asksav-market-benefits) {
+  position: static !important;
+  grid-column: 1 !important;
+  width: 100% !important;
+  max-width: 650px !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  transform: none !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Flatten the old nested visual shell. */
+.asksav-market-promo-v385 > :first-child:not(.asksav-market-benefits) {
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 10px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.asksav-market-promo-v385 h1,
+.asksav-market-promo-v385 h2,
+.asksav-market-promo-v385 h3 {
+  grid-column: 1 !important;
+  max-width: 650px !important;
+  margin: 4px 0 12px !important;
+  font-size: clamp(34px,3vw,46px) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.025em !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow: visible !important;
+}
+
+.asksav-market-promo-v385 p {
+  grid-column: 1 !important;
+  max-width: 610px !important;
+  margin: 0 0 4px !important;
+  line-height: 1.55 !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow: visible !important;
+}
+
+.asksav-market-promo-v385 button {
+  grid-column: 1 !important;
+  justify-self: start !important;
+  width: auto !important;
+  min-width: 240px !important;
+  max-width: 420px !important;
+  margin: 18px 0 0 !important;
+  position: static !important;
+  transform: none !important;
+}
+
+/* Right column is self-contained and no longer stretches the whole card. */
+.asksav-market-promo-v385 .asksav-market-benefits {
+  position: static !important;
+  grid-column: 2 !important;
+  grid-row: 1 / span 12 !important;
+  align-self: stretch !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 190px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(3,minmax(0,1fr)) !important;
+  align-items: stretch !important;
+  inset: auto !important;
+  border: 0 !important;
+  background: transparent !important;
+  transform: none !important;
+}
+
+.asksav-market-promo-v385 .asksav-market-benefit {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-width: 0 !important;
+  height: auto !important;
+  padding: 18px 20px !important;
+  text-align: center !important;
+  border: 0 !important;
+  border-left: 1px solid #ddd7f5 !important;
+  background: transparent !important;
+}
+
+.asksav-market-promo-v385 .asksav-market-benefit:first-child {
+  border-left: 0 !important;
+}
+
+.asksav-market-promo-v385 .asksav-market-benefit-icon {
+  margin: 0 auto 12px !important;
+}
+
+.asksav-market-promo-v385 .asksav-market-benefit strong {
+  margin: 0 0 7px !important;
+  font-size: 15px !important;
+  line-height: 1.25 !important;
+}
+
+.asksav-market-promo-v385 .asksav-market-benefit > span:last-child {
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+  max-width: 160px !important;
+}
+
+/* Tablet */
+@media (max-width: 1120px) {
+  .asksav-market-promo-v385 {
+    grid-template-columns: 1fr !important;
+    row-gap: 26px !important;
+    padding: 30px !important;
+  }
+  .asksav-market-promo-v385 .asksav-market-benefits {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    min-height: 0 !important;
+    margin-top: 18px !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 720px) {
+  .asksav-market-promo-v385 {
+    display: block !important;
+    padding: 24px 20px !important;
+    border-radius: 18px !important;
+  }
+  .asksav-market-promo-v385 h1,
+  .asksav-market-promo-v385 h2,
+  .asksav-market-promo-v385 h3 {
+    font-size: clamp(29px,9vw,38px) !important;
+  }
+  .asksav-market-promo-v385 button {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+  .asksav-market-promo-v385 .asksav-market-benefits {
+    grid-template-columns: 1fr !important;
+    margin-top: 26px !important;
+  }
+  .asksav-market-promo-v385 .asksav-market-benefit {
+    padding: 18px 8px !important;
+    border-left: 0 !important;
+    border-top: 1px solid #ddd7f5 !important;
+  }
+  .asksav-market-promo-v385 .asksav-market-benefit:first-child {
+    border-top: 0 !important;
+  }
+}

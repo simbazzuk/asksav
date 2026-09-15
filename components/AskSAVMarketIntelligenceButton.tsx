@@ -255,7 +255,7 @@ export default function AskSAVMarketIntelligenceButton({ analysis }: Props) {
 
   return (
     <section className="asksav-market-demand" data-asksav-market-cta="true">
-      <div className="asksav-market-optional-wide asksav-market-banner-v382">
+      <div className="asksav-market-optional-wide asksav-market-banner-v382 asksav-market-promo-v385">
         <span className="asksav-market-demand__eyebrow asksav-market-optional-wide">
           OPTIONAL MARKET INTELLIGENCE
         </span>
