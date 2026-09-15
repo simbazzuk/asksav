@@ -144,7 +144,7 @@ export default function AskSAVPlansPanel() {
           const current = state.plan === card.plan;
           return (
             <article
-              className={`asksav-plan-card${card.popular ? " asksav-plan-card--popular" : ""}${current ? " asksav-plan-card--current" : ""}`}
+              className={`asksav-plan-card${card.plan === "ASKSAV_PRO" ? " asksav-plan-card--pro" : ""}${card.popular ? " asksav-plan-card--popular" : ""}${current ? " asksav-plan-card--current" : ""}`}
               key={card.plan}
             >
               {card.popular && <span className="asksav-popular-badge">MOST POPULAR</span>}
