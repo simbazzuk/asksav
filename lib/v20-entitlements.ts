@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { bigquery, dataset, location, projectId } from "./google";
 
-export type AskSAVPlan = "FREE" | "VIC_PLUS" | "VIC_PRO";
+export type AskSAVPlan = "FREE" | "ASKSAV_PLUS" | "ASKSAV_PRO";
 
 export type AskSAVServerEntitlements = {
   monthlyAnalyses: number | "FAIR_USE";
@@ -34,7 +34,7 @@ export const ASKSAV_PLAN_ENTITLEMENTS: Record<AskSAVPlan, AskSAVServerEntitlemen
     valueAlerts: false,
     sellingTools: "NONE",
   },
-  VIC_PLUS: {
+  ASKSAV_PLUS: {
     monthlyAnalyses: 50,
     savedItems: 100,
     fullMarketEvidence: true,
@@ -42,7 +42,7 @@ export const ASKSAV_PLAN_ENTITLEMENTS: Record<AskSAVPlan, AskSAVServerEntitlemen
     valueAlerts: false,
     sellingTools: "LIMITED",
   },
-  VIC_PRO: {
+  ASKSAV_PRO: {
     monthlyAnalyses: "FAIR_USE",
     savedItems: "UNLIMITED",
     fullMarketEvidence: true,
@@ -147,7 +147,24 @@ export async function verifyFirebaseRequest(request: Request) {
 }
 
 function normalisePlan(value: unknown): AskSAVPlan {
-  return value === "VIC_PLUS" || value === "VIC_PRO" ? value : "FREE";
+  const plan = String(value || "FREE").toUpperCase();
+  if (plan === "ASKSAV_PLUS" || plan === "VIC_PLUS") return "ASKSAV_PLUS";
+  if (plan === "ASKSAV_PRO" || plan === "VIC_PRO") return "ASKSAV_PRO";
+  return "FREE";
+}
+
+
+export async function setAskSAVPlanForEmail(email: string, requestedPlan: AskSAVPlan) {
+  await ensureSchema();
+  const cleanEmail = String(email || "").trim().toLowerCase();
+  if (!cleanEmail) throw new Error("EMAIL_REQUIRED");
+  const plan = normalisePlan(requestedPlan);
+  await bigquery.query({
+    location,
+    query: `UPDATE ${table(ACCOUNTS_TABLE)} SET plan=@plan, updated_at=CURRENT_TIMESTAMP() WHERE LOWER(email)=@email`,
+    params: { email: cleanEmail, plan },
+  });
+  return { email: cleanEmail, plan };
 }
 
 export async function getAskSAVAccountState(
