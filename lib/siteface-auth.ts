@@ -167,9 +167,19 @@ export async function registerWithEmail(email: string, password: string) {
 }
 
 export async function loginWithEmail(email: string, password: string) {
+  try {
   const credential = await signInWithEmailAndPassword(getSiteFaceAuth(), email, password);
   await ensureSiteFaceUserRecord(credential.user);
   return credential.user;
+
+  } catch (error) {
+    console.error("[AskSAV] Email sign-in failed:", error);
+    const guidedError = new Error(
+      "We couldn't sign you in. If you're new to AskSAV, select Create account first. If you already have an account, check your email address and password and try again."
+    );
+    guidedError.name = "ASKSAV_SIGN_IN_GUIDANCE";
+    throw guidedError;
+  }
 }
 
 export async function logoutSiteFace() {
