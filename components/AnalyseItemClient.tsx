@@ -732,12 +732,8 @@ export default function AnalyseItemClient() {
                       <MarketEvidencePanel evidence={(result as any)?.market_evidence} />
                     </article>
 )}
-                {result?._asksav?.entitlements?.sellingTools !== "NONE" ? (
+                {result?._asksav?.entitlements?.sellingTools !== "NONE" && (
                   <AskSAVActionLayer query={result?.market?.search_query || result.identification?.item_name || "similar item"} />
-                ) : (
-                  <section className="sf-action-layer">
-                    
-                  </section>
                 )}
                 </div>
 <article className="sf178-result-card discover sf-commercial-discover">
