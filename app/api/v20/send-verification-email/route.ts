@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     if (!resendKey || !from) throw new Error("ASKSAV_EMAIL_CONFIGURATION_MISSING");
 
     const actionLink = await getAuth(firebaseAdminApp()).generateEmailVerificationLink(identity.email, {
-      url: `${appUrl.replace(/\/$/, "")}/analyse`,
+      url: `${appUrl.replace(/\/$/, "")}/verify-email`,
       handleCodeInApp: false,
     });
 

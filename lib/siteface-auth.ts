@@ -162,6 +162,7 @@ export async function registerWithEmail(email: string, password: string) {
   const credential = await createUserWithEmailAndPassword(getSiteFaceAuth(), email, password);
       await askSavSendBrandedVerificationEmail(credential.user);
   await ensureSiteFaceUserRecord(credential.user);
+  if (typeof window !== "undefined") window.location.assign("/verify-email");
   return credential.user;
 }
 
