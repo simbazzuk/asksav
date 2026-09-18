@@ -1,0 +1,74 @@
+/* SiteFace v0.12.6 - Inspection start page polish */
+
+.sf126-session-start {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+}
+
+.sf126-session-start .form-grid-2 {
+  width: 100% !important;
+}
+
+.sf126-session-start .session-ready {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.sf126-type-help {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 11px 12px;
+  border: 1px solid rgba(55, 211, 164, 0.22);
+  border-radius: 10px;
+  background: linear-gradient(
+    135deg,
+    rgba(14, 54, 61, 0.72),
+    rgba(15, 43, 55, 0.82)
+  );
+}
+
+.sf126-type-help-icon {
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(45, 212, 160, 0.14);
+  color: #53e2b3;
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.sf126-type-help > div:last-child {
+  min-width: 0;
+}
+
+.sf126-type-help strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #eafbf5;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.sf126-type-help span {
+  display: block;
+  color: #9fb5bd;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+@media (max-width: 760px) {
+  .sf126-session-start {
+    width: 100% !important;
+  }
+
+  .sf126-type-help {
+    margin-top: 8px;
+  }
+}

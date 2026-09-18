@@ -1,0 +1,102 @@
+/* SiteFace v0.17.14.4
+   Fix commercial results layout:
+   Row 1: Market Value | What would you like to do next?
+   Row 2: Discover (full width)
+*/
+
+/* The combined Value + Next Step wrapper must occupy the full parent grid width. */
+.sf-value-action-row{
+  grid-column:1 / -1!important;
+  width:100%!important;
+  max-width:none!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:18px!important;
+  align-items:stretch!important;
+  box-sizing:border-box!important;
+}
+
+/* Both top-row cards should be equal width and height. */
+.sf-value-action-row > article,
+.sf-value-action-row > .sf-action-layer{
+  min-width:0!important;
+  width:100%!important;
+  height:100%!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+
+/* Discover should always move onto its own full-width row. */
+.sf178-results > article:has(.sf178-market-links),
+.sf178-results > div:has(> article .sf178-market-links),
+.sf178-results article:has(> .sf178-market-links){
+  grid-column:1 / -1!important;
+  width:100%!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+}
+
+/* Keep the Discover marketplace cards horizontal across the full card. */
+.sf178-market-links{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+  width:100%!important;
+}
+
+.sf178-market-links > a{
+  min-width:0!important;
+  width:100%!important;
+}
+
+/* Keep action choices horizontal inside the right-hand top card. */
+.sf-value-action-row .sf-action-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+  width:100%!important;
+}
+
+.sf-value-action-row .sf-action-card{
+  min-width:0!important;
+  min-height:150px!important;
+  overflow:hidden!important;
+}
+
+/* Give the two main cards a little more breathing room. */
+.sf-value-action-row .sf-action-layer{
+  padding:22px!important;
+}
+
+.sf-value-action-row .sf-action-layer__title{
+  font-size:24px!important;
+  line-height:1.18!important;
+}
+
+.sf-value-action-row .sf-action-layer__intro{
+  font-size:14px!important;
+  line-height:1.5!important;
+}
+
+/* Tablet: stack Value and Next Step, but keep Discover full-width below. */
+@media(max-width:1100px){
+  .sf-value-action-row{
+    grid-template-columns:1fr!important;
+  }
+
+  .sf-value-action-row .sf-action-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+
+/* Mobile: stack action choices as well. */
+@media(max-width:760px){
+  .sf-value-action-row .sf-action-grid,
+  .sf178-market-links{
+    grid-template-columns:1fr!important;
+  }
+
+  .sf-value-action-row .sf-action-card{
+    min-height:auto!important;
+  }
+}

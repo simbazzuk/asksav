@@ -1,0 +1,139 @@
+/* AskSAV v0.20.2.3 — Analyse authentication gate
+   UI only. The user can explore/select an image while signed out,
+   but authentication is required before the AI analysis runs.
+*/
+
+.sf20-auth-gate-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 5000 !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 24px !important;
+  background: rgba(17, 29, 38, 0.42) !important;
+  backdrop-filter: blur(5px) !important;
+}
+
+.sf20-auth-gate {
+  width: min(520px, 100%) !important;
+  padding: 30px !important;
+  border: 1px solid #dfe9e5 !important;
+  border-radius: 24px !important;
+  background: #ffffff !important;
+  box-shadow: 0 30px 90px rgba(28, 55, 67, 0.22) !important;
+  text-align: center !important;
+}
+
+.sf20-auth-gate__icon {
+  display: grid !important;
+  place-items: center !important;
+  width: 58px !important;
+  height: 58px !important;
+  margin: 0 auto 16px !important;
+  border-radius: 18px !important;
+  background: linear-gradient(135deg, #19bf95, #3b8ff0 65%, #7258eb) !important;
+  color: #ffffff !important;
+  font-size: 25px !important;
+  font-weight: 900 !important;
+  box-shadow: 0 12px 28px rgba(53, 130, 215, 0.22) !important;
+}
+
+.sf20-auth-gate__eyebrow {
+  margin: 0 0 7px !important;
+  color: #15906d !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+.sf20-auth-gate h2 {
+  margin: 0 !important;
+  color: #182b34 !important;
+  font-size: 29px !important;
+  line-height: 1.12 !important;
+  letter-spacing: -0.025em !important;
+}
+
+.sf20-auth-gate__copy {
+  max-width: 420px !important;
+  margin: 12px auto 0 !important;
+  color: #667a82 !important;
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+}
+
+.sf20-auth-gate__allowance {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  margin: 18px auto 0 !important;
+  padding: 8px 12px !important;
+  border-radius: 999px !important;
+  background: #ecf9f4 !important;
+  color: #24735d !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+
+.sf20-auth-gate__actions {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+  margin-top: 22px !important;
+}
+
+.sf20-auth-gate__primary,
+.sf20-auth-gate__secondary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 48px !important;
+  padding: 0 16px !important;
+  border-radius: 13px !important;
+  text-decoration: none !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+}
+
+.sf20-auth-gate__primary {
+  border: 0 !important;
+  background: linear-gradient(90deg, #18bd90, #2c9fe0 58%, #6b55e7) !important;
+  color: #ffffff !important;
+  box-shadow: 0 12px 28px rgba(60, 117, 218, 0.18) !important;
+}
+
+.sf20-auth-gate__secondary {
+  border: 1px solid #d8e4e8 !important;
+  background: #ffffff !important;
+  color: #263a43 !important;
+}
+
+.sf20-auth-gate__later {
+  margin-top: 15px !important;
+  padding: 5px 10px !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #74858c !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+}
+
+.sf20-auth-gate__later:hover {
+  color: #2e444d !important;
+}
+
+@media (max-width: 600px) {
+  .sf20-auth-gate {
+    padding: 24px 20px !important;
+  }
+
+  .sf20-auth-gate h2 {
+    font-size: 25px !important;
+  }
+
+  .sf20-auth-gate__actions {
+    grid-template-columns: 1fr !important;
+  }
+}

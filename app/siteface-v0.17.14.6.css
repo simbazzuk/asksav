@@ -1,0 +1,135 @@
+/* SiteFace v0.17.14.6 - Commercial results reflow
+   Desktop:
+   [ Market Value ] [ Discover ]
+   [ Next Step    ] [ Discover ]
+*/
+
+.sf-commercial-layout{
+  grid-column:1 / -1!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1.55fr) minmax(340px,.9fr)!important;
+  gap:20px!important;
+  align-items:stretch!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+}
+
+.sf-commercial-left{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:18px!important;
+  min-width:0!important;
+}
+
+.sf-commercial-left > article,
+.sf-commercial-left > .sf-action-layer{
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+
+/* Market value gets breathing room instead of a narrow column */
+.sf-commercial-left > article{
+  min-height:230px!important;
+  padding:24px!important;
+  border-radius:22px!important;
+  box-shadow:0 10px 28px rgba(83,54,160,.06)!important;
+}
+
+/* Next Step sits directly below Market Value */
+.sf-commercial-left .sf-action-layer{
+  padding:22px!important;
+  border-radius:22px!important;
+}
+
+.sf-commercial-left .sf-action-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:14px!important;
+}
+
+.sf-commercial-left .sf-action-card{
+  min-height:232px!important;
+}
+
+/* Discover becomes the right-hand rail */
+.sf-commercial-discover{
+  min-width:0!important;
+  height:100%!important;
+  padding:22px!important;
+  border-radius:22px!important;
+  box-sizing:border-box!important;
+}
+
+.sf-commercial-discover .sf178-market-links{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:14px!important;
+  width:100%!important;
+}
+
+.sf-commercial-discover .sf178-market-links > a{
+  width:100%!important;
+  min-width:0!important;
+  min-height:86px!important;
+  padding:16px!important;
+  margin:0!important;
+  border-radius:16px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+}
+
+.sf-commercial-discover .sf178-market-links > a > div{
+  min-width:0!important;
+}
+
+.sf-commercial-discover .sf178-market-links > a strong{
+  font-size:15px!important;
+}
+
+.sf-commercial-discover .sf178-market-links > a small{
+  font-size:12px!important;
+  line-height:1.4!important;
+}
+
+/* Give the Discover card enough visual presence */
+.sf-commercial-discover .sf178-market-links{
+  margin-top:14px!important;
+}
+
+/* Keep older full-width Discover overrides from winning */
+.sf178-results > article:has(.sf178-market-links),
+.sf178-results article:has(> .sf178-market-links){
+  grid-column:auto!important;
+  width:auto!important;
+}
+
+/* Tablet */
+@media(max-width:1180px){
+  .sf-commercial-layout{
+    grid-template-columns:1fr!important;
+  }
+
+  .sf-commercial-discover .sf178-market-links{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+
+/* Mobile */
+@media(max-width:760px){
+  .sf-commercial-left .sf-action-grid,
+  .sf-commercial-discover .sf178-market-links{
+    grid-template-columns:1fr!important;
+  }
+
+  .sf-commercial-left .sf-action-card{
+    min-height:220px!important;
+  }
+
+  .sf-commercial-left > article,
+  .sf-commercial-left .sf-action-layer,
+  .sf-commercial-discover{
+    padding:18px!important;
+  }
+}

@@ -1,0 +1,303 @@
+/* SiteFace v0.12.6.9 - Inspection clarity */
+
+/* Checklist state system:
+   grey = not started
+   blue = current
+   green = completed
+*/
+.sf1269-checklist-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.sf1269-checklist-head strong {
+  color: #f3f9fc !important;
+  font-size: 14px !important;
+}
+
+.sf1269-checklist-head > span {
+  min-width: 42px;
+  padding: 5px 8px;
+  border: 1px solid rgba(83, 150, 166, 0.28);
+  border-radius: 999px;
+  background: rgba(11, 38, 49, 0.82);
+  color: #a9c0c9;
+  font-size: 10px;
+  font-weight: 850;
+  text-align: center;
+}
+
+.sf1269-eyebrow,
+.sf1269-result-eyebrow {
+  margin-bottom: 3px;
+  color: #32cfa1;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+
+.sf1269-legend {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 10px 0 16px;
+  color: #6f8b96;
+  font-size: 9px;
+}
+
+.sf1269-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sf1269-dot,
+.sf1269-check-dot {
+  border-radius: 50%;
+}
+
+.sf1269-dot {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+}
+
+.sf1269-dot.not-started {
+  background: #607780;
+}
+
+.sf1269-dot.active {
+  background: #4aa8ff;
+  box-shadow: 0 0 0 3px rgba(74,168,255,.11);
+}
+
+.sf1269-dot.done {
+  background: #35d2a0;
+  box-shadow: 0 0 0 3px rgba(53,210,160,.10);
+}
+
+.sf1269-checklist .check-item {
+  width: 100% !important;
+  min-height: 38px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 9px !important;
+  margin: 3px 0 !important;
+  padding: 7px 9px !important;
+  border: 1px solid transparent !important;
+  border-radius: 9px !important;
+  background: transparent !important;
+  color: #9db1b9 !important;
+  text-align: left !important;
+  cursor: pointer !important;
+}
+
+.sf1269-checklist .check-item:hover {
+  background: rgba(18, 49, 61, .68) !important;
+}
+
+.sf1269-check-dot {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #607780;
+  background: rgba(96,119,128,.08);
+  color: transparent;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.sf1269-checklist .check-item.sf1269-not-started {
+  color: #879ba3 !important;
+}
+
+.sf1269-checklist .check-item.sf1269-active {
+  border-color: rgba(74,168,255,.31) !important;
+  background: rgba(22, 62, 83, .68) !important;
+  color: #eef8ff !important;
+}
+
+.sf1269-checklist .check-item.sf1269-active .sf1269-check-dot {
+  border-color: #4aa8ff;
+  background: #4aa8ff;
+  box-shadow: 0 0 0 3px rgba(74,168,255,.10);
+}
+
+.sf1269-checklist .check-item.sf1269-done {
+  border-color: rgba(53,210,160,.18) !important;
+  background: rgba(13, 57, 54, .50) !important;
+  color: #d9f3eb !important;
+}
+
+.sf1269-checklist .check-item.sf1269-done .sf1269-check-dot {
+  border-color: #35d2a0;
+  background: #35d2a0;
+  color: #062f31;
+  box-shadow: 0 0 0 3px rgba(53,210,160,.08);
+}
+
+.sf1269-current-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 4px;
+}
+
+.sf1269-current-item .inspect-title {
+  margin: 0 !important;
+}
+
+.sf1269-current-pill {
+  flex: 0 0 auto;
+  padding: 6px 9px;
+  border: 1px solid rgba(74,168,255,.28);
+  border-radius: 999px;
+  background: rgba(19,58,77,.66);
+  color: #9bd1ff;
+  font-size: 9px;
+  font-weight: 850;
+}
+
+.sf1269-analysis-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 18px;
+  padding: 15px;
+  border: 1px solid rgba(123, 91, 255, .24);
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(125, 91, 255, .08), transparent 34%),
+    rgba(11, 36, 49, .76);
+}
+
+.sf1269-analysis-copy {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+.sf1269-analysis-icon {
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: rgba(125, 91, 255, .14);
+  color: #b6a5ff;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.sf1269-analysis-copy strong,
+.sf1269-analysis-copy span {
+  display: block;
+}
+
+.sf1269-analysis-copy strong {
+  margin-bottom: 3px;
+  color: #f2f7ff;
+  font-size: 12px;
+}
+
+.sf1269-analysis-copy span {
+  max-width: 650px;
+  color: #849ca7;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.sf1269-analyse-button {
+  flex: 0 0 auto;
+  min-width: 215px !important;
+  min-height: 44px !important;
+  border: 1px solid #31d2a0 !important;
+  background: linear-gradient(135deg, #30dda9, #17bc8d) !important;
+  color: #052f31 !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+}
+
+.sf1269-analyse-button:disabled {
+  opacity: .45 !important;
+  cursor: not-allowed !important;
+}
+
+.sf1269-result {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.sf1269-result.clear {
+  border: 1px solid rgba(53,210,160,.24);
+  background: rgba(13, 58, 54, .58);
+}
+
+.sf1269-result.issue {
+  border: 1px solid rgba(238, 177, 73, .30);
+  background: rgba(79, 55, 19, .42);
+}
+
+.sf1269-result-icon {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.sf1269-result.clear .sf1269-result-icon {
+  background: rgba(53,210,160,.15);
+  color: #61e1b7;
+}
+
+.sf1269-result.issue .sf1269-result-icon {
+  background: rgba(238,177,73,.15);
+  color: #f1c86f;
+}
+
+.sf1269-result h3 {
+  margin: 1px 0 5px !important;
+  color: #f2f8fb !important;
+  font-size: 14px !important;
+}
+
+.sf1269-result p {
+  margin: 0 0 6px !important;
+  color: #96acb5 !important;
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+}
+
+.sf1269-result > div:last-child > span {
+  color: #66838e;
+  font-size: 9px;
+}
+
+@media (max-width: 820px) {
+  .sf1269-analysis-panel {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .sf1269-analyse-button {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+}

@@ -1,0 +1,142 @@
+/* SiteFace v0.17.14.7 - Full-width commercial sections
+   Market Value, Next Step and Discover each span the full content width.
+*/
+
+.sf-commercial-layout{
+  grid-column:1 / -1!important;
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  box-sizing:border-box!important;
+}
+
+.sf-commercial-left{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:18px!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+}
+
+.sf-commercial-left > article,
+.sf-commercial-left > .sf-action-layer{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+
+/* Market Value should feel like a major full-width section */
+.sf-commercial-left > article{
+  min-height:230px!important;
+  padding:26px!important;
+  border-radius:22px!important;
+  box-shadow:0 10px 28px rgba(83,54,160,.06)!important;
+}
+
+/* Give Market Value content more horizontal breathing room */
+.sf-commercial-left > article > *{
+  max-width:none!important;
+}
+
+.sf-commercial-left .sf-action-layer{
+  padding:24px!important;
+  border-radius:22px!important;
+  width:100%!important;
+}
+
+.sf-commercial-left .sf-action-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:16px!important;
+  width:100%!important;
+}
+
+.sf-commercial-left .sf-action-card{
+  min-height:240px!important;
+  width:100%!important;
+  min-width:0!important;
+}
+
+/* Discover is now a full-width section below Next Step */
+.sf-commercial-discover{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin-top:18px!important;
+  padding:22px!important;
+  border-radius:22px!important;
+  box-sizing:border-box!important;
+}
+
+.sf-commercial-discover .sf178-market-links{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:14px!important;
+  width:100%!important;
+  max-width:none!important;
+}
+
+.sf-commercial-discover .sf178-market-links > a{
+  width:100%!important;
+  min-width:0!important;
+  min-height:86px!important;
+  margin:0!important;
+  padding:16px!important;
+  border-radius:16px!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+}
+
+.sf-commercial-discover .sf178-market-links > a > div{
+  min-width:0!important;
+}
+
+.sf-commercial-discover .sf178-market-links > a strong{
+  font-size:15px!important;
+}
+
+.sf-commercial-discover .sf178-market-links > a small{
+  font-size:12px!important;
+  line-height:1.4!important;
+}
+
+/* Neutralise older constrained layout rules */
+.sf-value-action-row{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+}
+
+.sf178-results > article:has(.sf178-market-links),
+.sf178-results article:has(> .sf178-market-links){
+  grid-column:1 / -1!important;
+  width:100%!important;
+  max-width:none!important;
+}
+
+/* Ensure the parent results area itself is not restricting these sections */
+.sf178-results{
+  width:100%!important;
+  max-width:none!important;
+}
+
+@media(max-width:900px){
+  .sf-commercial-left .sf-action-grid,
+  .sf-commercial-discover .sf178-market-links{
+    grid-template-columns:1fr!important;
+  }
+
+  .sf-commercial-left > article,
+  .sf-commercial-left .sf-action-layer,
+  .sf-commercial-discover{
+    padding:18px!important;
+  }
+
+  .sf-commercial-left .sf-action-card{
+    min-height:220px!important;
+  }
+}

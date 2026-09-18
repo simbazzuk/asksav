@@ -1,0 +1,79 @@
+/* SiteFace v0.12.5.1 - Inspection upload hotfix */
+
+.sf1251-browse-picture {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  min-height: 48px !important;
+  margin-top: 10px !important;
+  padding: 0 16px !important;
+  box-sizing: border-box !important;
+  border: 1px solid #2f5a66 !important;
+  border-radius: 9px !important;
+  background: linear-gradient(135deg,#113541,#0d2933) !important;
+  color: #ffffff !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  cursor: pointer !important;
+  user-select: none !important;
+}
+
+.sf1251-browse-picture:hover {
+  background: linear-gradient(135deg,#16424f,#10333e) !important;
+  border-color: #3d7481 !important;
+}
+
+.sf1251-browse-picture input[type="file"] {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.sf1251-browse-icon {
+  width: 22px !important;
+  height: 22px !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 6px !important;
+  background: rgba(34,201,145,.14) !important;
+  color: #62dfb7 !important;
+  line-height: 1 !important;
+  font-size: 16px !important;
+}
+
+.sf1251-browse-text {
+  color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
+[class*="inspection"] [class*="photo-card"] > label,
+[class*="inspection"] [class*="image-card"] > label,
+[class*="inspection"] [class*="capture-card"] > label,
+[class*="inspection"] [class*="upload-card"] > label {
+  color: #3f5961 !important;
+  font-weight: 850 !important;
+  opacity: 1 !important;
+}
+
+[class*="inspection"] [class*="photo-card"] p,
+[class*="inspection"] [class*="image-card"] p,
+[class*="inspection"] [class*="capture-card"] p,
+[class*="inspection"] [class*="upload-card"] p {
+  color: #748991 !important;
+  opacity: 1 !important;
+}
+
+@media(max-width:760px) {
+  .sf1251-browse-picture {
+    min-height: 52px !important;
+    font-size: 14px !important;
+  }
+}

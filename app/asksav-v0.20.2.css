@@ -1,0 +1,126 @@
+/* AskSAV v0.20.2 - simplified global header */
+
+/*
+  The account control is the only element on the right side of the topbar.
+  The repeated "See it. Know it. Value it." pill has been removed from the
+  header because the message is already present in the sidebar / product UI
+  and was competing with the authentication control for width.
+*/
+
+.sf176-topbar {
+  grid-template-columns: 1fr auto !important;
+  align-items: center !important;
+  overflow: visible !important;
+}
+
+.sf176-topbar > nav {
+  justify-self: center !important;
+  min-width: max-content !important;
+}
+
+.sf176-top-right {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  justify-self: end !important;
+  min-width: max-content !important;
+  width: auto !important;
+  max-width: none !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+}
+
+/* Neutralise the older fixed-position account-chip rules. */
+.sf176-top-right .sf19-account-chip,
+.sf176-top-right a.sf19-account-chip {
+  position: static !important;
+  inset: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: none !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  width: auto !important;
+  min-width: max-content !important;
+  max-width: none !important;
+  min-height: 38px !important;
+  padding: 5px 12px 5px 6px !important;
+
+  border: 1px solid #d8e4e8 !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  color: #263746 !important;
+  opacity: 1 !important;
+  overflow: visible !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  flex: 0 0 auto !important;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.06) !important;
+}
+
+.sf176-top-right .sf19-account-chip__icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  flex: 0 0 28px !important;
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, #18b99c, #5278f3) !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+}
+
+.sf176-top-right .sf19-account-chip > span:last-child {
+  display: inline-block !important;
+  width: auto !important;
+  max-width: none !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: nowrap !important;
+  color: #263746 !important;
+  opacity: 1 !important;
+}
+
+.sf176-top-right .sf20-auth-controls {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  min-width: max-content !important;
+  width: auto !important;
+  max-width: none !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+}
+
+.sf176-top-right .sf20-signout-button {
+  position: static !important;
+  min-height: 38px !important;
+  min-width: max-content !important;
+  padding: 0 14px !important;
+  white-space: nowrap !important;
+}
+
+/* Keep the sidebar icons readable and avoid mojibake-like fallback layout. */
+.sf20-nav-symbol {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 18px !important;
+  min-width: 18px !important;
+  color: inherit !important;
+  opacity: 1 !important;
+}
+
+@media (max-width: 700px) {
+  .sf176-topbar {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}

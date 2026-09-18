@@ -1,0 +1,260 @@
+/* SiteFace v0.11.3 — Inspection Dark Theme Contrast Fix
+   Fixes light/white legacy surfaces on the Inspection page and improves contrast. */
+
+:root{
+  --sf113-bg:#07151c;
+  --sf113-panel:#10242d;
+  --sf113-panel2:#132b35;
+  --sf113-input:#0b1d25;
+  --sf113-line:#294852;
+  --sf113-text:#f4fbf8;
+  --sf113-muted:#9fb2b9;
+  --sf113-green:#22c991;
+  --sf113-green2:#55dfb2;
+  --sf113-blue:#55a8ff;
+  --sf113-purple:#9a86ff;
+  --sf113-amber:#f2bd55;
+}
+
+/* Main inspection setup surfaces */
+.session-start-card,
+.inspection-session-card,
+.sf-inspection-card{
+  background:
+    radial-gradient(circle at 92% 0%,rgba(85,168,255,.05),transparent 24%),
+    linear-gradient(145deg,#102631,#0d2029)!important;
+  border:1px solid var(--sf113-line)!important;
+  color:var(--sf113-text)!important;
+  box-shadow:0 16px 38px rgba(0,0,0,.18)!important;
+}
+
+/* All labels/headings in the form */
+.session-start-card h1,
+.session-start-card h2,
+.session-start-card h3,
+.inspection-session-card h1,
+.inspection-session-card h2,
+.inspection-session-card h3,
+.sf-inspection-card h1,
+.sf-inspection-card h2,
+.sf-inspection-card h3{
+  color:#fff!important;
+}
+
+.session-start-card label,
+.inspection-session-card label,
+.sf-inspection-card label{
+  color:#a9c0c6!important;
+  font-weight:600;
+}
+
+/* Inputs/selects must be dark — this is the key fix from the screenshot */
+.session-start-card input,
+.session-start-card select,
+.session-start-card textarea,
+.inspection-session-card input,
+.inspection-session-card select,
+.inspection-session-card textarea,
+.sf-inspection-card input,
+.sf-inspection-card select,
+.sf-inspection-card textarea{
+  background:linear-gradient(180deg,#0d222b,#0a1c24)!important;
+  border:1px solid #31515c!important;
+  color:#f4fbf8!important;
+  -webkit-text-fill-color:#f4fbf8!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.015)!important;
+  color-scheme:dark!important;
+}
+
+.session-start-card input::placeholder,
+.session-start-card textarea::placeholder,
+.inspection-session-card input::placeholder,
+.inspection-session-card textarea::placeholder{
+  color:#6f878f!important;
+  -webkit-text-fill-color:#6f878f!important;
+}
+
+.session-start-card input:focus,
+.session-start-card select:focus,
+.inspection-session-card input:focus,
+.inspection-session-card select:focus{
+  outline:none!important;
+  border-color:#3aa985!important;
+  box-shadow:0 0 0 3px rgba(34,201,145,.10)!important;
+}
+
+.session-start-card select option,
+.inspection-session-card select option{
+  background:#0b1d25!important;
+  color:#f4fbf8!important;
+}
+
+/* Safari/Chrome autofill compatibility */
+.session-start-card input:-webkit-autofill,
+.inspection-session-card input:-webkit-autofill{
+  -webkit-box-shadow:0 0 0 1000px #0b1d25 inset!important;
+  -webkit-text-fill-color:#f4fbf8!important;
+}
+
+/* Existing "items configured" box — remove old white/green legacy panel */
+.session-ready,
+.session-ready.sf1031-not-ready{
+  background:linear-gradient(90deg,rgba(242,189,85,.10),rgba(242,189,85,.04))!important;
+  border:1px solid rgba(242,189,85,.28)!important;
+  border-radius:10px!important;
+  color:#f4fbf8!important;
+}
+
+.session-ready strong{
+  color:#f7ca68!important;
+}
+
+.session-ready p,
+.session-ready span{
+  color:#c7d2d3!important;
+}
+
+/* If a legacy child surface inside session-ready was white */
+.session-ready > div,
+.session-ready [class*="surface"],
+.session-ready [class*="panel"],
+.session-ready [class*="card"],
+.session-ready .bg-white,
+.session-ready .light-card,
+.session-ready [style*="background: white"],
+.session-ready [style*="background:white"],
+.session-ready [style*="background-color: white"],
+.session-ready [style*="background-color:white"]{
+  background:transparent!important;
+  color:inherit!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+}
+
+/* Zero-item setup warning */
+.sf1031-no-items{
+  background:linear-gradient(90deg,rgba(255,113,106,.11),rgba(255,113,106,.04))!important;
+  border:1px solid rgba(255,113,106,.30)!important;
+  color:#dce8e7!important;
+}
+
+.sf1031-no-items strong{color:#ff938d!important}
+.sf1031-no-items p{color:#c9b5b3!important}
+
+/* Begin inspection button */
+.session-start-card button.btn:not(:disabled),
+.inspection-session-card button.btn:not(:disabled),
+.sf-inspection-card button.btn:not(:disabled){
+  background:linear-gradient(135deg,#26d29a,#149c70)!important;
+  border:1px solid rgba(85,223,178,.18)!important;
+  color:#042219!important;
+  box-shadow:0 8px 20px rgba(34,201,145,.18)!important;
+  font-weight:800!important;
+}
+
+.session-start-card button.btn:disabled,
+.inspection-session-card button.btn:disabled{
+  background:#263b43!important;
+  border:1px solid #34515b!important;
+  color:#7f969d!important;
+  box-shadow:none!important;
+}
+
+/* Guidance cards */
+.sf1032-guidance{
+  gap:14px!important;
+}
+
+.sf1032-guide{
+  background:#10242d!important;
+  border:1px solid var(--sf113-line)!important;
+  color:#f4fbf8!important;
+  box-shadow:none!important;
+}
+
+.sf1032-guide.blue{
+  background:linear-gradient(135deg,rgba(85,168,255,.11),#10242d)!important;
+  border-color:rgba(85,168,255,.28)!important;
+}
+
+.sf1032-guide.purple{
+  background:linear-gradient(135deg,rgba(154,134,255,.12),#10242d)!important;
+  border-color:rgba(154,134,255,.29)!important;
+}
+
+.sf1032-guide.green{
+  background:linear-gradient(135deg,rgba(34,201,145,.11),#10242d)!important;
+  border-color:rgba(34,201,145,.27)!important;
+}
+
+.sf1032-guide-icon{
+  background:#0a1d25!important;
+  border:1px solid rgba(255,255,255,.025)!important;
+}
+
+.sf1032-guide strong{color:#fff!important}
+.sf1032-guide p{color:#a8babf!important}
+
+/* Inline helper */
+.sf1032-inline-help{
+  background:rgba(34,201,145,.06)!important;
+  border-color:rgba(34,201,145,.20)!important;
+  color:#88d9bf!important;
+}
+
+/* Inspection hero */
+.sf1032-inspection-hero{
+  background:
+    radial-gradient(circle at 84% 28%,rgba(85,168,255,.11),transparent 27%),
+    radial-gradient(circle at 72% 110%,rgba(34,201,145,.15),transparent 35%),
+    linear-gradient(135deg,#102b2a,#0d222b 60%,#102438)!important;
+  border:1px solid #28504d!important;
+  color:#fff!important;
+}
+
+.sf1032-inspection-copy h2{color:#fff!important}
+.sf1032-inspection-copy h2 span{color:#55dfb2!important}
+.sf1032-inspection-copy p{color:#aac0c4!important}
+.sf1032-eyebrow{color:#55dfb2!important}
+.sf1032-inspection-tagline{
+  background:rgba(11,30,38,.72)!important;
+  border:1px solid rgba(85,223,178,.12)!important;
+  color:#a9c2c1!important;
+}
+.sf1032-inspection-tagline strong{color:#fff!important}
+
+/* Defensive override for any residual light utility class on this page */
+.session-start-card .bg-white,
+.session-start-card .surface-light,
+.session-start-card .light-card,
+.inspection-session-card .bg-white,
+.inspection-session-card .surface-light,
+.inspection-session-card .light-card{
+  background:#10242d!important;
+  color:#f4fbf8!important;
+  border-color:#294852!important;
+}
+
+.session-start-card .bg-white *,
+.session-start-card .surface-light *,
+.session-start-card .light-card *,
+.inspection-session-card .bg-white *,
+.inspection-session-card .surface-light *,
+.inspection-session-card .light-card *{
+  color:inherit!important;
+}
+
+/* Keep printed pages light */
+@media print{
+  .session-start-card,
+  .inspection-session-card,
+  .sf-inspection-card,
+  .session-ready,
+  .sf1031-no-items,
+  .sf1032-guide{
+    background:#fff!important;
+    color:#172126!important;
+    border-color:#d8e0e3!important;
+    box-shadow:none!important;
+  }
+}

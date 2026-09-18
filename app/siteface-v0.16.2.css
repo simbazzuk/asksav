@@ -1,0 +1,20 @@
+/* SiteFace v0.16.2 - Visual grounding and anti-hallucination */
+.sf162-classification{display:grid;grid-template-columns:1fr auto;gap:12px;margin-top:13px;padding:10px 12px;border:1px solid rgba(57,151,255,.16);border-radius:9px;background:rgba(24,87,144,.08)}
+.sf162-classification small{display:block;color:#6f8e99;font-size:7px;font-weight:900;letter-spacing:.08em}
+.sf162-classification strong{display:block;margin-top:3px;color:#cae2e8;font-size:10px}
+.sf162-classification>div:last-child{text-align:right}
+.sf162-verify-card{padding:18px;border:1px solid rgba(70,139,151,.24);border-left:3px solid #e4ad4f;border-radius:14px;background:rgba(7,28,37,.72)}
+.sf162-verify-card.verified{border-left-color:#35d0a2}
+.sf162-verify-card.rejected{border-left-color:#e96767}
+.sf162-verify-main{display:flex;justify-content:space-between;gap:20px;margin-top:12px}
+.sf162-verify-main small,.sf162-hint-check small{color:#708d96;font-size:7px;font-weight:900;letter-spacing:.08em}
+.sf162-verify-main h2{margin:3px 0 4px;color:#eef7f8;font-size:20px}
+.sf162-verify-main p{max-width:720px;margin:0;color:#839ea7;font-size:10px;line-height:1.55}
+.sf162-verify-score{text-align:right}
+.sf162-verify-score strong{display:block;color:#55dcb6;font-size:18px}
+.sf162-verify-card.rejected .sf162-verify-score strong{color:#ef8c8c}
+.sf162-verify-score span{display:inline-block;margin-top:3px;padding:4px 7px;border-radius:999px;background:rgba(255,255,255,.05);color:#8fa9b0;font-size:7px;font-weight:900}
+.sf162-hint-check{display:grid;grid-template-columns:auto auto 1fr;gap:10px;align-items:center;margin-top:11px;padding:9px 10px;border:1px solid rgba(73,135,148,.16);border-radius:8px;background:rgba(4,20,27,.4)}
+.sf162-hint-check strong{color:#b7cbd0;font-size:8px}
+.sf162-hint-check span{color:#76939c;font-size:8px}
+@media(max-width:650px){.sf162-verify-main{flex-direction:column}.sf162-verify-score{text-align:left}.sf162-hint-check{grid-template-columns:1fr}.sf162-classification{grid-template-columns:1fr}.sf162-classification>div:last-child{text-align:left}}

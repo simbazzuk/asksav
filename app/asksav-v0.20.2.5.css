@@ -1,0 +1,120 @@
+/* AskSAV v0.20.2.5
+   Mobile top navigation / sign-in overlap fix.
+   UI only.
+*/
+
+/* Desktop stays unchanged. */
+
+@media (max-width: 700px) {
+  .sf176-topbar {
+    left: 0 !important;
+    right: 0 !important;
+    height: auto !important;
+    min-height: 76px !important;
+    padding: 10px 12px !important;
+
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    column-gap: 10px !important;
+
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+
+  .sf176-topbar > nav {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 14px !important;
+
+    min-width: 0 !important;
+    width: auto !important;
+    overflow: visible !important;
+    white-space: nowrap !important;
+  }
+
+  .sf176-topbar > nav a {
+    flex: 0 0 auto !important;
+    font-size: 12px !important;
+    padding: 10px 0 !important;
+    margin: 0 !important;
+    border-bottom-width: 2px !important;
+  }
+
+  .sf176-topbar > nav a.active {
+    padding-bottom: 10px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .sf176-top-right {
+    justify-self: end !important;
+    display: flex !important;
+    align-items: center !important;
+    min-width: max-content !important;
+    width: auto !important;
+    overflow: visible !important;
+  }
+
+  .sf176-top-right .sf19-account-chip,
+  .sf176-top-right a.sf19-account-chip {
+    min-width: auto !important;
+    min-height: 42px !important;
+    padding: 5px 11px 5px 5px !important;
+    gap: 7px !important;
+    font-size: 12px !important;
+    border-radius: 999px !important;
+  }
+
+  .sf176-top-right .sf19-account-chip__icon {
+    width: 31px !important;
+    height: 31px !important;
+    min-width: 31px !important;
+    flex-basis: 31px !important;
+  }
+
+  /* The page starts below the taller mobile topbar. */
+  .sf176-page {
+    padding-top: 100px !important;
+  }
+}
+
+/* On narrower phones, reduce menu spacing and button footprint. */
+@media (max-width: 560px) {
+  .sf176-topbar {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    column-gap: 8px !important;
+  }
+
+  .sf176-topbar > nav {
+    gap: 11px !important;
+  }
+
+  .sf176-topbar > nav a {
+    font-size: 11px !important;
+  }
+
+  .sf176-top-right .sf19-account-chip,
+  .sf176-top-right a.sf19-account-chip {
+    padding-right: 9px !important;
+    font-size: 11px !important;
+  }
+}
+
+/* On very small widths, keep Sign in visible by hiding History first.
+   History remains available from the sidebar/desktop and can be added
+   to a future mobile menu. */
+@media (max-width: 430px) {
+  .sf176-topbar > nav a[href="/history"] {
+    display: none !important;
+  }
+
+  .sf176-topbar > nav {
+    gap: 12px !important;
+  }
+
+  .sf176-topbar > nav a {
+    font-size: 12px !important;
+  }
+}

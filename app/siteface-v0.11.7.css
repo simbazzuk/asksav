@@ -1,0 +1,59 @@
+/* SiteFace v0.11.7 — Brand Icon Integration */
+
+.sf117-brand-icon {
+  display:block;
+  width:36px;
+  height:36px;
+  flex:0 0 36px;
+  border-radius:10px;
+  object-fit:cover;
+  box-shadow:0 5px 14px rgba(0,0,0,.20);
+}
+
+/* Common SiteFace shell logo-mark class names */
+.brand-mark,
+.logo-mark,
+.app-brand-mark,
+.sidebar-brand-mark,
+.siteface-brand-mark,
+[class*="brand-mark"],
+[class*="logo-mark"] {
+  background-image:url("/siteface-icon-64.png") !important;
+  background-position:center !important;
+  background-repeat:no-repeat !important;
+  background-size:cover !important;
+  color:transparent !important;
+  text-shadow:none !important;
+  overflow:hidden !important;
+}
+
+/* The current square SF mark is roughly this size. */
+.brand-mark,
+.logo-mark,
+.app-brand-mark,
+.sidebar-brand-mark,
+.siteface-brand-mark {
+  width:36px !important;
+  height:36px !important;
+  min-width:36px !important;
+  border-radius:10px !important;
+  padding:0 !important;
+  border:1px solid rgba(85,223,178,.16) !important;
+  box-shadow:0 5px 14px rgba(0,0,0,.18) !important;
+}
+
+/* If the brand mark contains a text node wrapped in an element, hide it. */
+.brand-mark *,
+.logo-mark *,
+.app-brand-mark *,
+.sidebar-brand-mark *,
+.siteface-brand-mark * {
+  opacity:0 !important;
+}
+
+/* Preserve print readability by keeping the brand asset compact. */
+@media print {
+  .sf117-brand-icon {
+    box-shadow:none;
+  }
+}

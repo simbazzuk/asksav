@@ -1,0 +1,38 @@
+/* AskSAV v0.20.2.1
+   Remove duplicate page-level mantra pills from Home, Analyse and History.
+   Authentication controls remain visible.
+*/
+
+.sf179-mantra,
+.sf178-mantra,
+.sf1710-mantra {
+  display: none !important;
+}
+
+/* Give page-level header actions only the space required by their controls. */
+.sf179-header-actions,
+.sf178-header-actions,
+.sf1710-header-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 10px !important;
+  width: auto !important;
+  min-width: max-content !important;
+  max-width: none !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+}
+
+.sf179-header-actions .sf19-account-chip,
+.sf178-header-actions .sf19-account-chip,
+.sf1710-header-actions .sf19-account-chip,
+.sf179-header-actions .sf20-auth-controls,
+.sf178-header-actions .sf20-auth-controls,
+.sf1710-header-actions .sf20-auth-controls {
+  flex: 0 0 auto !important;
+  min-width: max-content !important;
+  max-width: none !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+}

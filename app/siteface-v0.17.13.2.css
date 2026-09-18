@@ -1,0 +1,76 @@
+/* SiteFace v0.17.13.2 - Larger workflow typography */
+
+.sf178-flow-card strong,
+.sf179-step strong{
+  font-size:18px!important;
+  line-height:1.15!important;
+  font-weight:800!important;
+  color:#162734!important;
+  letter-spacing:-0.01em!important;
+}
+
+.sf178-flow-card small,
+.sf179-step small{
+  font-size:13px!important;
+  line-height:1.35!important;
+  color:#526873!important;
+  opacity:1!important;
+}
+
+.sf178-flow-card,
+.sf179-step{
+  min-height:86px!important;
+  padding:14px 16px!important;
+}
+
+.sf178-flow-card .sf178-flow-icon,
+.sf179-step .sf179-step-icon{
+  width:44px!important;
+  height:44px!important;
+  min-width:44px!important;
+}
+
+.sf178-flow-card .sf178-flow-icon,
+.sf179-step .sf179-step-icon,
+.sf178-flow-card > span:first-child,
+.sf179-step > span:first-child{
+  font-size:20px!important;
+}
+
+/* Slightly larger arrows / separators */
+.sf178-flow-arrow,
+.sf179-step-arrow{
+  font-size:18px!important;
+  color:#5f7480!important;
+}
+
+/* Keep mobile usable */
+@media(max-width:900px){
+  .sf178-flow-card strong,
+  .sf179-step strong{
+    font-size:16px!important;
+  }
+
+  .sf178-flow-card small,
+  .sf179-step small{
+    font-size:12px!important;
+  }
+
+  .sf178-flow-card,
+  .sf179-step{
+    min-height:78px!important;
+    padding:12px 14px!important;
+  }
+}
+
+@media(max-width:650px){
+  .sf178-flow-card strong,
+  .sf179-step strong{
+    font-size:15px!important;
+  }
+
+  .sf178-flow-card small,
+  .sf179-step small{
+    font-size:11.5px!important;
+  }
+}

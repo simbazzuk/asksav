@@ -1,0 +1,252 @@
+/* SiteFace v0.12.6.6 - Configure Property redesign */
+
+/* Page heading / property summary */
+.sf1266-configure-page {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.sf1266-configure-page .page-head,
+.sf1266-configure-page > .page-head {
+  margin-bottom: 20px !important;
+}
+
+.sf1266-configure-page h1 {
+  color: #f6fbff !important;
+  letter-spacing: -0.025em !important;
+}
+
+.sf1266-configure-page .sf1266-progress-strip {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  margin: 18px 0 24px !important;
+}
+
+.sf1266-configure-page .sf1266-progress-step {
+  min-height: 54px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 10px 13px !important;
+  border: 1px solid rgba(86, 147, 160, 0.30) !important;
+  border-radius: 11px !important;
+  background: rgba(10, 37, 48, 0.70) !important;
+}
+
+.sf1266-configure-page .sf1266-progress-step.done {
+  border-color: rgba(45, 213, 160, 0.30) !important;
+  background: rgba(15, 62, 58, 0.72) !important;
+}
+
+.sf1266-configure-page .sf1266-progress-step.active {
+  border-color: rgba(72, 169, 255, 0.42) !important;
+  background: rgba(16, 51, 70, 0.88) !important;
+  box-shadow: inset 0 0 0 1px rgba(72, 169, 255, 0.08) !important;
+}
+
+.sf1266-configure-page .sf1266-step-number {
+  flex: 0 0 28px !important;
+  width: 28px !important;
+  height: 28px !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 50% !important;
+  background: rgba(114, 154, 166, 0.12) !important;
+  color: #b8ccd4 !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+}
+
+.sf1266-configure-page .sf1266-progress-step.done .sf1266-step-number {
+  background: rgba(43, 213, 160, 0.15) !important;
+  color: #5ce0b7 !important;
+}
+
+.sf1266-configure-page .sf1266-progress-step.active .sf1266-step-number {
+  background: rgba(72, 169, 255, 0.15) !important;
+  color: #81c2ff !important;
+}
+
+.sf1266-configure-page .sf1266-progress-step strong {
+  display: block !important;
+  color: #eef8fb !important;
+  font-size: 12px !important;
+}
+
+.sf1266-configure-page .sf1266-progress-step span {
+  display: block !important;
+  margin-top: 2px !important;
+  color: #78949f !important;
+  font-size: 10px !important;
+}
+
+/* Existing configure client */
+.sf1266-configure-client {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.sf1266-configure-client .card {
+  border: 1px solid rgba(80, 151, 165, 0.34) !important;
+  border-radius: 16px !important;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(31, 199, 150, 0.05), transparent 28%),
+    linear-gradient(135deg, rgba(15, 47, 59, 0.98), rgba(11, 36, 47, 0.99)) !important;
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.18) !important;
+}
+
+/* Main two-column layout */
+.sf1266-configure-client > div,
+.sf1266-configure-client [class*="configure"],
+.sf1266-configure-client [class*="property-config"] {
+  box-sizing: border-box !important;
+}
+
+.sf1266-configure-client .sf1266-configure-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.8fr) minmax(320px, 0.8fr) !important;
+  gap: 18px !important;
+  align-items: stretch !important;
+}
+
+/* Card headings */
+.sf1266-configure-client .card h2,
+.sf1266-configure-client .card h3 {
+  margin-top: 0 !important;
+  color: #f5fbff !important;
+}
+
+.sf1266-configure-client .card > p,
+.sf1266-configure-client .card h2 + p,
+.sf1266-configure-client .card h3 + p {
+  color: #8ca8b4 !important;
+}
+
+/* Empty state */
+.sf1266-configure-client .empty-state,
+.sf1266-configure-client [class*="empty"] {
+  min-height: 150px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 24px !important;
+  border: 1px dashed rgba(92, 151, 164, 0.42) !important;
+  border-radius: 12px !important;
+  background: rgba(8, 31, 41, 0.45) !important;
+  color: #d9e8ee !important;
+  text-align: center !important;
+}
+
+.sf1266-configure-client .sf1266-empty-title {
+  color: #f1f8fb !important;
+  font-weight: 850 !important;
+}
+
+.sf1266-configure-client .sf1266-empty-copy {
+  max-width: 520px !important;
+  color: #78939e !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+/* Form controls */
+.sf1266-configure-client label {
+  display: block !important;
+  margin-bottom: 6px !important;
+  color: #e7f2f6 !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+}
+
+.sf1266-configure-client input,
+.sf1266-configure-client select {
+  width: 100% !important;
+  min-height: 44px !important;
+  box-sizing: border-box !important;
+  padding: 0 12px !important;
+  border: 1px solid rgba(87, 151, 165, 0.46) !important;
+  border-radius: 9px !important;
+  background: #0a2732 !important;
+  color: #f4fbff !important;
+  font-size: 13px !important;
+  outline: none !important;
+}
+
+.sf1266-configure-client input::placeholder {
+  color: #66818c !important;
+  opacity: 1 !important;
+}
+
+.sf1266-configure-client input:focus,
+.sf1266-configure-client select:focus {
+  border-color: #34d0a1 !important;
+  box-shadow: 0 0 0 3px rgba(52, 208, 161, 0.10) !important;
+}
+
+.sf1266-configure-client .sf1266-field-help {
+  display: block !important;
+  margin: 5px 0 13px !important;
+  color: #708a95 !important;
+  font-size: 10px !important;
+  line-height: 1.4 !important;
+}
+
+/* Buttons */
+.sf1266-configure-client .btn,
+.sf1266-configure-client button {
+  min-height: 42px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 15px !important;
+  border-radius: 9px !important;
+  font-weight: 850 !important;
+}
+
+.sf1266-configure-client .sf1266-add-btn {
+  width: 100% !important;
+  margin-top: 2px !important;
+  background: linear-gradient(135deg, #2adeaa, #18bd8e) !important;
+  color: #052e31 !important;
+}
+
+.sf1266-configure-client .sf1266-start-area {
+  margin-top: 20px !important;
+  padding-top: 18px !important;
+  border-top: 1px solid rgba(93, 145, 158, 0.24) !important;
+}
+
+.sf1266-configure-client .sf1266-start-copy {
+  margin: 0 0 10px !important;
+  color: #7e99a4 !important;
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+}
+
+.sf1266-configure-client .sf1266-start-btn {
+  width: 100% !important;
+  border: 1px solid rgba(72, 169, 255, 0.38) !important;
+  background: rgba(18, 52, 68, 0.90) !important;
+  color: #eef8ff !important;
+}
+
+/* Configured item presentation */
+.sf1266-configure-client [class*="asset"],
+.sf1266-configure-client [class*="room"] {
+  border-radius: 10px !important;
+}
+
+@media (max-width: 900px) {
+  .sf1266-configure-client .sf1266-configure-layout {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .sf1266-configure-page .sf1266-progress-strip {
+    grid-template-columns: 1fr !important;
+  }
+}

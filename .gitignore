@@ -1,0 +1,9 @@
+node_modules/
+.next/
+.env
+.env.local
+.env*.local
+.asksav-backups/
+.siteface-backups/
+*.log
+.DS_Store

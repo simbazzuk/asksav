@@ -1,0 +1,282 @@
+/* SiteFace v0.17.14.5 - Commercial action redesign */
+
+/* Two key commercial cards */
+.sf-value-action-row{
+  grid-column:1 / -1!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,.9fr) minmax(0,1.35fr)!important;
+  gap:20px!important;
+  width:100%!important;
+  align-items:stretch!important;
+}
+
+.sf-value-action-row > article,
+.sf-value-action-row > .sf-action-layer{
+  min-width:0!important;
+  width:100%!important;
+  height:100%!important;
+  box-sizing:border-box!important;
+}
+
+/* Strengthen Market Value */
+.sf-value-action-row > article{
+  border-radius:22px!important;
+  box-shadow:0 10px 28px rgba(83,54,160,.06)!important;
+}
+
+/* Next Step hero card */
+.sf-action-layer{
+  margin:0!important;
+  padding:24px!important;
+  border:1px solid #c7e1f2!important;
+  border-radius:22px!important;
+  background:linear-gradient(135deg,#ffffff 0%,#eef8ff 100%)!important;
+  box-shadow:0 10px 30px rgba(35,115,170,.08)!important;
+}
+
+.sf-action-layer__header{
+  display:flex!important;
+  align-items:flex-start!important;
+  gap:14px!important;
+  margin-bottom:18px!important;
+}
+
+.sf-action-layer__hero-icon{
+  width:52px!important;
+  height:52px!important;
+  min-width:52px!important;
+  border-radius:16px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#dff2ff!important;
+  color:#1487e8!important;
+  font-size:25px!important;
+  font-weight:900!important;
+}
+
+.sf-action-layer__eyebrow{
+  margin:1px 0 5px!important;
+  font-size:12px!important;
+  line-height:1.2!important;
+  font-weight:900!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
+  color:#176da7!important;
+}
+
+.sf-action-layer__title{
+  margin:0!important;
+  font-size:27px!important;
+  line-height:1.12!important;
+  font-weight:900!important;
+  letter-spacing:-.025em!important;
+  color:#10253a!important;
+}
+
+.sf-action-layer__intro{
+  margin:7px 0 0!important;
+  font-size:14px!important;
+  line-height:1.5!important;
+  color:#526a7a!important;
+}
+
+/* Three large action choices */
+.sf-action-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:14px!important;
+  width:100%!important;
+}
+
+.sf-action-card{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  min-width:0!important;
+  min-height:250px!important;
+  padding:18px!important;
+  border-radius:18px!important;
+  text-decoration:none!important;
+  overflow:hidden!important;
+  position:relative!important;
+  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease!important;
+}
+
+.sf-action-card:hover{
+  transform:translateY(-3px)!important;
+  box-shadow:0 12px 26px rgba(25,59,80,.12)!important;
+}
+
+.sf-action-card--sell{
+  background:linear-gradient(160deg,#f1fff9 0%,#e2f9ee 100%)!important;
+  border:1px solid #bdebd5!important;
+}
+
+.sf-action-card--replace{
+  background:linear-gradient(160deg,#f3f9ff 0%,#e3f2ff 100%)!important;
+  border:1px solid #c4e0f7!important;
+}
+
+.sf-action-card--similar{
+  background:linear-gradient(160deg,#faf6ff 0%,#eee6ff 100%)!important;
+  border:1px solid #d9c9fa!important;
+}
+
+.sf-action-card__icon{
+  width:52px!important;
+  height:52px!important;
+  min-width:52px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:15px!important;
+  font-size:24px!important;
+  font-weight:900!important;
+  margin-bottom:16px!important;
+}
+
+.sf-action-card--sell .sf-action-card__icon{
+  background:#d9f7e9!important;
+  color:#00a86b!important;
+}
+
+.sf-action-card--replace .sf-action-card__icon{
+  background:#dceeff!important;
+  color:#1487e8!important;
+}
+
+.sf-action-card--similar .sf-action-card__icon{
+  background:#eadfff!important;
+  color:#6c42df!important;
+}
+
+.sf-action-card__copy{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+}
+
+.sf-action-card__title{
+  display:block!important;
+  margin:0!important;
+  font-size:18px!important;
+  line-height:1.22!important;
+  font-weight:900!important;
+  color:#10253a!important;
+  white-space:normal!important;
+}
+
+.sf-action-card__description{
+  display:block!important;
+  margin-top:8px!important;
+  padding-bottom:66px!important;
+  font-size:13.5px!important;
+  line-height:1.5!important;
+  color:#486273!important;
+  white-space:normal!important;
+}
+
+/* The missing/weak "button" becomes a real high-contrast CTA */
+.sf-action-card__cta{
+  position:absolute!important;
+  left:16px!important;
+  right:16px!important;
+  bottom:16px!important;
+  min-height:44px!important;
+  padding:11px 12px!important;
+  border-radius:12px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  font-size:13px!important;
+  line-height:1.2!important;
+  font-weight:900!important;
+  color:#fff!important;
+  box-shadow:0 6px 16px rgba(20,55,75,.14)!important;
+}
+
+.sf-action-card--sell .sf-action-card__cta{
+  background:#08b878!important;
+}
+
+.sf-action-card--replace .sf-action-card__cta{
+  background:#168bea!important;
+}
+
+.sf-action-card--similar .sf-action-card__cta{
+  background:#6d42e5!important;
+}
+
+.sf-action-card:hover .sf-action-card__cta{
+  filter:brightness(.97)!important;
+}
+
+.sf-action-layer__notice{
+  margin-top:16px!important;
+  padding:11px 13px!important;
+  border-radius:12px!important;
+  display:flex!important;
+  align-items:flex-start!important;
+  gap:8px!important;
+  background:#e7f5ff!important;
+  color:#49697d!important;
+  font-size:11.5px!important;
+  line-height:1.45!important;
+}
+
+.sf-action-layer__notice-icon{
+  width:20px!important;
+  height:20px!important;
+  min-width:20px!important;
+  border-radius:50%!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#168bea!important;
+  color:white!important;
+  font-weight:900!important;
+  font-size:12px!important;
+}
+
+/* Discover remains full-width underneath */
+.sf178-results > article:has(.sf178-market-links),
+.sf178-results article:has(> .sf178-market-links){
+  grid-column:1 / -1!important;
+  width:100%!important;
+}
+
+.sf178-market-links{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+  width:100%!important;
+}
+
+.sf178-market-links > a{
+  min-width:0!important;
+  width:100%!important;
+}
+
+/* Tablet/mobile */
+@media(max-width:1180px){
+  .sf-value-action-row{
+    grid-template-columns:1fr!important;
+  }
+}
+
+@media(max-width:760px){
+  .sf-action-grid,
+  .sf178-market-links{
+    grid-template-columns:1fr!important;
+  }
+
+  .sf-action-card{
+    min-height:220px!important;
+  }
+
+  .sf-action-layer__title{
+    font-size:23px!important;
+  }
+}

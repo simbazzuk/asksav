@@ -1,0 +1,135 @@
+/* SiteFace v0.17.14.8 - Move commercial sections outside report column */
+
+/* The workspace remains two-column for upload + analysis summary. */
+.sf178-workspace,
+.sf178-work{
+  align-items:start!important;
+}
+
+/* Commercial sections are now a sibling of the upload/report columns. */
+.sf-commercial-layout{
+  grid-column:1 / -1!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:20px!important;
+  margin-top:4px!important;
+  box-sizing:border-box!important;
+}
+
+/* Full-width Market Value + Next Step stack */
+.sf-commercial-left{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:20px!important;
+}
+
+.sf-commercial-left > article,
+.sf-commercial-left > .sf-action-layer{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+
+/* Market Value becomes a major full-width panel */
+.sf-commercial-left > article{
+  min-height:220px!important;
+  padding:28px!important;
+  border-radius:22px!important;
+  box-shadow:0 10px 28px rgba(83,54,160,.06)!important;
+}
+
+/* Let its copy use the available width */
+.sf-commercial-left > article p{
+  max-width:1100px!important;
+}
+
+/* Next Step full width */
+.sf-commercial-left .sf-action-layer{
+  padding:26px!important;
+  border-radius:22px!important;
+}
+
+.sf-commercial-left .sf-action-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:18px!important;
+  width:100%!important;
+}
+
+.sf-commercial-left .sf-action-card{
+  min-width:0!important;
+  width:100%!important;
+  min-height:230px!important;
+}
+
+/* Discover full width underneath */
+.sf-commercial-discover{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:24px!important;
+  border-radius:22px!important;
+  box-sizing:border-box!important;
+}
+
+.sf-commercial-discover .sf178-market-links{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:16px!important;
+  width:100%!important;
+  max-width:none!important;
+}
+
+.sf-commercial-discover .sf178-market-links > a{
+  min-width:0!important;
+  width:100%!important;
+  min-height:88px!important;
+  margin:0!important;
+  padding:16px!important;
+  border-radius:16px!important;
+  box-sizing:border-box!important;
+}
+
+/* Neutralise earlier right-column / rail experiments. */
+.sf-value-action-row{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+}
+
+.sf178-results > article:has(.sf178-market-links),
+.sf178-results article:has(> .sf178-market-links){
+  grid-column:auto!important;
+  width:auto!important;
+}
+
+/* The result summary above commercial sections can keep its own layout. */
+.sf178-report{
+  min-width:0!important;
+}
+
+@media(max-width:900px){
+  .sf-commercial-left .sf-action-grid,
+  .sf-commercial-discover .sf178-market-links{
+    grid-template-columns:1fr!important;
+  }
+
+  .sf-commercial-left > article,
+  .sf-commercial-left .sf-action-layer,
+  .sf-commercial-discover{
+    padding:18px!important;
+  }
+
+  .sf-commercial-left .sf-action-card{
+    min-height:auto!important;
+  }
+}

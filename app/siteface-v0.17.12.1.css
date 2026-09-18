@@ -1,0 +1,30 @@
+/* SiteFace v0.17.12.1 - Analyse CTA contrast hotfix */
+
+/* Force the sidebar Analyse CTA label and any nested icon/text to white. */
+.sf178-side-cta,
+.sf178-side-cta *,
+.sf179-side-cta,
+.sf179-side-cta *,
+.sf1710-side-cta,
+.sf1710-side-cta * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.sf178-side-cta,
+.sf179-side-cta,
+.sf1710-side-cta {
+  font-weight: 800 !important;
+  text-shadow: 0 1px 1px rgba(0,0,0,.08) !important;
+}
+
+/* Fallback for the shared sidebar CTA if version-specific classes are absent. */
+aside a[href="/analyse"],
+aside a[href="/analyse"] *,
+nav a[href="/analyse"].sidebar-cta,
+nav a[href="/analyse"].sidebar-cta * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  opacity: 1 !important;
+}

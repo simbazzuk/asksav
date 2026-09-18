@@ -1,0 +1,192 @@
+/* SiteFace v0.10.1 - Dashboard Color Polish */
+
+.sf10-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 88% 10%, rgba(90, 205, 175, .18), transparent 25%),
+    radial-gradient(circle at 72% 85%, rgba(84, 161, 255, .12), transparent 28%),
+    linear-gradient(135deg, #eefaf6 0%, #f5fbff 52%, #faf7ff 100%);
+  border-color: #cfe8de;
+  box-shadow: 0 8px 24px rgba(31, 60, 49, .07);
+}
+
+.sf10-hero::after {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  right: -70px;
+  bottom: -115px;
+  border-radius: 50%;
+  background: rgba(20, 143, 107, .08);
+  pointer-events: none;
+}
+
+.sf10-get-started {
+  background:
+    linear-gradient(90deg, rgba(226, 247, 239, .72), rgba(255, 255, 255, .92));
+  border-color: #d8e8e2;
+  box-shadow: 0 5px 15px rgba(31, 60, 49, .04);
+}
+
+.sf10-flow-card {
+  background:
+    linear-gradient(180deg, #ffffff 0%, #fbfcfd 100%);
+  border-color: #dde4e8;
+  box-shadow: 0 7px 20px rgba(45, 56, 66, .05);
+}
+
+.sf10-flow {
+  gap: 9px;
+}
+
+/* Individual workflow step palettes */
+.sf10-step:nth-child(1) {
+  background: linear-gradient(180deg, #effbf5 0%, #f8fdfb 100%);
+  border-color: #cfe9dc;
+}
+.sf10-step:nth-child(1) .sf10-step-number {
+  background: #d7f4e6;
+  color: #0b7252;
+}
+
+.sf10-step:nth-child(2) {
+  background: linear-gradient(180deg, #eef7ff 0%, #f8fbff 100%);
+  border-color: #cfe2f5;
+}
+.sf10-step:nth-child(2) .sf10-step-number {
+  background: #dceeff;
+  color: #1768b3;
+}
+
+.sf10-step:nth-child(3) {
+  background: linear-gradient(180deg, #f5f0ff 0%, #fbf9ff 100%);
+  border-color: #ded1f7;
+}
+.sf10-step:nth-child(3) .sf10-step-number {
+  background: #e9dcff;
+  color: #7040c4;
+}
+
+.sf10-step:nth-child(4) {
+  background: linear-gradient(180deg, #fff3eb 0%, #fffaf6 100%);
+  border-color: #f3d5bf;
+}
+.sf10-step:nth-child(4) .sf10-step-number {
+  background: #ffe0cc;
+  color: #bd5b1f;
+}
+
+.sf10-step:nth-child(5) {
+  background: linear-gradient(180deg, #eafafa 0%, #f8ffff 100%);
+  border-color: #c7e6e6;
+}
+.sf10-step:nth-child(5) .sf10-step-number {
+  background: #d1eeee;
+  color: #16787a;
+}
+
+.sf10-step:nth-child(6) {
+  background: linear-gradient(180deg, #fff0f4 0%, #fff9fb 100%);
+  border-color: #f0d1da;
+}
+.sf10-step:nth-child(6) .sf10-step-number {
+  background: #ffdce6;
+  color: #b12f58;
+}
+
+.sf10-step:nth-child(7) {
+  background: linear-gradient(180deg, #effaf4 0%, #f8fdfb 100%);
+  border-color: #cce5d8;
+}
+.sf10-step:nth-child(7) .sf10-step-number {
+  background: #d7f2e3;
+  color: #0d7552;
+}
+
+.sf10-step {
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.sf10-step:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(32, 47, 43, .08);
+}
+
+/* Benefit cards */
+.sf10-benefit {
+  border-width: 1px;
+  box-shadow: 0 6px 15px rgba(45, 56, 66, .045);
+}
+
+.sf10-benefit:nth-child(1) {
+  background: linear-gradient(180deg, #f3fcf7 0%, #ffffff 100%);
+  border-color: #cfe9dc;
+}
+.sf10-benefit:nth-child(1) .sf10-benefit-icon {
+  background: #d8f4e7;
+  color: #0b7452;
+}
+
+.sf10-benefit:nth-child(2) {
+  background: linear-gradient(180deg, #f2f8ff 0%, #ffffff 100%);
+  border-color: #cfe0f4;
+}
+.sf10-benefit:nth-child(2) .sf10-benefit-icon {
+  background: #dcecff;
+  color: #1a66b0;
+}
+
+.sf10-benefit:nth-child(3) {
+  background: linear-gradient(180deg, #fff8eb 0%, #ffffff 100%);
+  border-color: #eed8ad;
+}
+.sf10-benefit:nth-child(3) .sf10-benefit-icon {
+  background: #ffeac2;
+  color: #b96a08;
+}
+
+.sf10-benefit:nth-child(4) {
+  background: linear-gradient(180deg, #f7f2ff 0%, #ffffff 100%);
+  border-color: #ded1f3;
+}
+.sf10-benefit:nth-child(4) .sf10-benefit-icon {
+  background: #ebddff;
+  color: #6c42b3;
+}
+
+.sf10-benefit strong {
+  font-size: 14px;
+}
+
+/* Give page background slightly more warmth/contrast when supported */
+body {
+  background: #f5f7f8;
+}
+
+/* Learn page visual enhancement */
+.sf10-principle {
+  background:
+    linear-gradient(90deg, #ffffff 0%, #f7fcfa 100%);
+  border-color: #d4e7df;
+}
+
+.sf10-timeline-step:nth-child(odd) {
+  background: #fbfdfc;
+}
+
+.sf10-timeline-step:nth-child(even) {
+  background: #f8fbff;
+}
+
+.sf10-intelligence {
+  background:
+    linear-gradient(135deg, #eef8f4 0%, #f3f9ff 100%);
+}
+
+@media (max-width: 760px) {
+  .sf10-step:hover {
+    transform: none;
+  }
+}

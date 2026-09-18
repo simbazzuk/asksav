@@ -1,0 +1,164 @@
+/* SiteFace v0.11.8 — How It Works Dark Theme Polish */
+
+.how-it-works-page,
+[class*="how-it-works"]{
+  color:#f4fbf8!important;
+}
+
+/* Hero */
+.how-it-works-page .hero,
+[class*="how-it-works"] .hero,
+.how-it-works-page [class*="hero"],
+[class*="how-it-works"] [class*="hero"]{
+  background:
+    radial-gradient(circle at 86% 15%,rgba(85,168,255,.12),transparent 26%),
+    radial-gradient(circle at 20% 100%,rgba(34,201,145,.14),transparent 35%),
+    linear-gradient(135deg,#0f2b29,#0d222b 62%,#102438)!important;
+  border:1px solid #28504d!important;
+  color:#fff!important;
+  box-shadow:0 18px 42px rgba(0,0,0,.18)!important;
+}
+
+.how-it-works-page .hero h1,
+[class*="how-it-works"] .hero h1,
+.how-it-works-page [class*="hero"] h1{
+  color:#fff!important;
+}
+
+.how-it-works-page .hero p,
+[class*="how-it-works"] .hero p,
+.how-it-works-page [class*="hero"] p{
+  color:#b4c6ca!important;
+}
+
+.how-it-works-page .hero .eyebrow,
+[class*="how-it-works"] .hero .eyebrow,
+.how-it-works-page [class*="hero"] [class*="eyebrow"]{
+  color:#55dfb2!important;
+}
+
+/* Core principle panel */
+.how-it-works-page [class*="principle"],
+[class*="how-it-works"] [class*="principle"]{
+  background:linear-gradient(145deg,#102631,#0d2029)!important;
+  border:1px solid #2a4a55!important;
+  color:#f4fbf8!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.14)!important;
+}
+
+.how-it-works-page [class*="principle"] h2,
+.how-it-works-page [class*="principle"] h3,
+[class*="how-it-works"] [class*="principle"] h2,
+[class*="how-it-works"] [class*="principle"] h3{
+  color:#fff!important;
+}
+
+.how-it-works-page [class*="principle"] p,
+[class*="how-it-works"] [class*="principle"] p{
+  color:#b4c6ca!important;
+}
+
+/* Fix any legacy white principle box */
+.how-it-works-page .bg-white,
+.how-it-works-page .surface-light,
+.how-it-works-page .light-card,
+[class*="how-it-works"] .bg-white,
+[class*="how-it-works"] .surface-light,
+[class*="how-it-works"] .light-card{
+  background:linear-gradient(145deg,#102631,#0d2029)!important;
+  border-color:#2a4a55!important;
+  color:#f4fbf8!important;
+}
+
+/* Flow heading */
+.how-it-works-page [class*="flow"] h2,
+.how-it-works-page [class*="flow"] h3,
+[class*="how-it-works"] [class*="flow"] h2,
+[class*="how-it-works"] [class*="flow"] h3{
+  color:#fff!important;
+}
+
+.how-it-works-page [class*="flow"] [class*="eyebrow"],
+[class*="how-it-works"] [class*="flow"] [class*="eyebrow"]{
+  color:#55dfb2!important;
+}
+
+/* Step cards */
+.how-it-works-page [class*="step"],
+[class*="how-it-works"] [class*="step"]{
+  background:linear-gradient(145deg,#102631,#0d2029)!important;
+  border:1px solid #294852!important;
+  color:#f4fbf8!important;
+  box-shadow:none!important;
+}
+
+.how-it-works-page [class*="step"] h3,
+.how-it-works-page [class*="step"] h4,
+[class*="how-it-works"] [class*="step"] h3,
+[class*="how-it-works"] [class*="step"] h4{
+  color:#fff!important;
+}
+
+.how-it-works-page [class*="step"] p,
+[class*="how-it-works"] [class*="step"] p{
+  color:#a9bcc1!important;
+}
+
+/* Step number badges */
+.how-it-works-page [class*="step"] [class*="number"],
+.how-it-works-page [class*="step"] [class*="index"],
+[class*="how-it-works"] [class*="step"] [class*="number"],
+[class*="how-it-works"] [class*="step"] [class*="index"]{
+  background:rgba(34,201,145,.13)!important;
+  border:1px solid rgba(34,201,145,.26)!important;
+  color:#67e5bb!important;
+}
+
+/* Defensive fallback for numbered boxes like 01/02/03 */
+.how-it-works-page [class*="step"] > div:first-child,
+[class*="how-it-works"] [class*="step"] > div:first-child{
+  color:#67e5bb!important;
+}
+
+/* CTA buttons */
+.how-it-works-page .btn,
+[class*="how-it-works"] .btn{
+  border-radius:9px!important;
+}
+
+.how-it-works-page .btn.secondary,
+[class*="how-it-works"] .btn.secondary{
+  background:#122d37!important;
+  border:1px solid #315762!important;
+  color:#f1f8f6!important;
+}
+
+/* Body width/spacing */
+.how-it-works-page,
+[class*="how-it-works"]{
+  max-width:1180px;
+  margin:0 auto;
+}
+
+.how-it-works-page section,
+[class*="how-it-works"] section{
+  margin-bottom:20px;
+}
+
+/* Improve spacing inside cards */
+.how-it-works-page [class*="principle"],
+.how-it-works-page [class*="step"],
+[class*="how-it-works"] [class*="principle"],
+[class*="how-it-works"] [class*="step"]{
+  padding:20px!important;
+  border-radius:14px!important;
+}
+
+/* Mobile */
+@media(max-width:720px){
+  .how-it-works-page,
+  [class*="how-it-works"]{
+    padding-left:14px;
+    padding-right:14px;
+  }
+}

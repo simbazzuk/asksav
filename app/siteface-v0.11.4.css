@@ -1,0 +1,256 @@
+/* SiteFace v0.11.4 — Findings Page Dark Theme Fix
+   Fixes remaining legacy light surfaces and awkward status layout. */
+
+:root{
+  --sf114-panel:#10242d;
+  --sf114-panel2:#132b35;
+  --sf114-line:#294852;
+  --sf114-text:#f4fbf8;
+  --sf114-muted:#9fb2b9;
+  --sf114-green:#22c991;
+  --sf114-green2:#55dfb2;
+  --sf114-amber:#f2bd55;
+  --sf114-red:#ff716a;
+  --sf114-purple:#9a86ff;
+}
+
+/* Findings page */
+.findings-page,
+.findings-shell,
+[class*="findings-page"]{
+  color:var(--sf114-text)!important;
+}
+
+.findings-page h1,
+.findings-shell h1,
+[class*="findings-page"] h1{
+  color:#fff!important;
+}
+
+.findings-page > p,
+.findings-shell > p,
+[class*="findings-page"] > p{
+  color:#90a8b0!important;
+}
+
+/* Filter strip and chips */
+.findings-page [class*="filter"],
+.findings-shell [class*="filter"],
+[class*="findings-page"] [class*="filter"]{
+  background:linear-gradient(145deg,#102631,#0d2029)!important;
+  border:1px solid var(--sf114-line)!important;
+  color:#dfecea!important;
+}
+
+.findings-page [class*="filter"] button,
+.findings-shell [class*="filter"] button,
+[class*="findings-page"] [class*="filter"] button{
+  background:#15313b!important;
+  border:1px solid #315461!important;
+  color:#dcebea!important;
+  border-radius:999px!important;
+}
+
+.findings-page [class*="filter"] button:hover,
+.findings-shell [class*="filter"] button:hover{
+  background:#1b3a45!important;
+}
+
+.findings-page [class*="filter"] button[aria-pressed="true"],
+.findings-shell [class*="filter"] button[aria-pressed="true"],
+.findings-page [class*="filter"] .active,
+.findings-shell [class*="filter"] .active{
+  background:rgba(34,201,145,.15)!important;
+  border-color:rgba(34,201,145,.35)!important;
+  color:#65e6b9!important;
+}
+
+/* Finding cards */
+.finding-card,
+[class*="finding-card"]{
+  position:relative;
+  background:
+    radial-gradient(circle at 100% 0%,rgba(85,168,255,.045),transparent 25%),
+    linear-gradient(145deg,#102631,#0d2029)!important;
+  border:1px solid #2a4a55!important;
+  border-radius:14px!important;
+  color:var(--sf114-text)!important;
+  box-shadow:0 14px 34px rgba(0,0,0,.16)!important;
+}
+
+.finding-card h2,
+.finding-card h3,
+[class*="finding-card"] h2,
+[class*="finding-card"] h3{
+  color:#fff!important;
+}
+
+.finding-card p,
+.finding-card small,
+.finding-card [class*="meta"],
+[class*="finding-card"] p,
+[class*="finding-card"] small,
+[class*="finding-card"] [class*="meta"]{
+  color:#90a8b0!important;
+}
+
+.finding-card [class*="property"],
+[class*="finding-card"] [class*="property"]{
+  color:#58dbaa!important;
+  font-weight:800!important;
+}
+
+/* Recommended action panel — key screenshot fix */
+.finding-card [class*="recommend"],
+.finding-card [class*="recommended"],
+.finding-card [class*="action-panel"],
+.finding-card [class*="advice"],
+[class*="finding-card"] [class*="recommend"],
+[class*="finding-card"] [class*="recommended"],
+[class*="finding-card"] [class*="action-panel"],
+[class*="finding-card"] [class*="advice"]{
+  background:
+    linear-gradient(135deg,rgba(34,201,145,.085),rgba(85,168,255,.045))!important;
+  border:1px solid #2d5059!important;
+  border-left:3px solid var(--sf114-green)!important;
+  border-radius:10px!important;
+  color:#dce9e7!important;
+  box-shadow:none!important;
+}
+
+.finding-card [class*="recommend"] *,
+.finding-card [class*="recommended"] *,
+.finding-card [class*="action-panel"] *,
+.finding-card [class*="advice"] *,
+[class*="finding-card"] [class*="recommend"] *,
+[class*="finding-card"] [class*="recommended"] *,
+[class*="finding-card"] [class*="action-panel"] *,
+[class*="finding-card"] [class*="advice"] *{
+  color:inherit!important;
+}
+
+/* Defensive overrides for old white utility surfaces */
+.finding-card .bg-white,
+.finding-card .surface-light,
+.finding-card .light-card,
+.finding-card .recommendation,
+.finding-card .recommended-action,
+.finding-card [style*="background: white"],
+.finding-card [style*="background:white"],
+.finding-card [style*="background-color: white"],
+.finding-card [style*="background-color:white"],
+[class*="finding-card"] .bg-white,
+[class*="finding-card"] .surface-light,
+[class*="finding-card"] .light-card{
+  background:
+    linear-gradient(135deg,rgba(34,201,145,.085),rgba(85,168,255,.045))!important;
+  border:1px solid #2d5059!important;
+  color:#dce9e7!important;
+  box-shadow:none!important;
+}
+
+.finding-card .bg-white *,
+.finding-card .surface-light *,
+.finding-card .light-card *,
+.finding-card .recommendation *,
+.finding-card .recommended-action *{
+  color:inherit!important;
+}
+
+/* Remove the awkward dark rectangle behind the status pills */
+.finding-card [class*="badge-group"],
+.finding-card [class*="status-group"],
+.finding-card [class*="badges"],
+.finding-card [class*="status-wrap"],
+[class*="finding-card"] [class*="badge-group"],
+[class*="finding-card"] [class*="status-group"],
+[class*="finding-card"] [class*="badges"],
+[class*="finding-card"] [class*="status-wrap"]{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+
+/* Pills */
+.finding-card [class*="moderate"],
+[class*="finding-card"] [class*="moderate"]{
+  background:rgba(242,189,85,.13)!important;
+  border:1px solid rgba(242,189,85,.30)!important;
+  color:#f7c969!important;
+}
+
+.finding-card [class*="resolved"],
+[class*="finding-card"] [class*="resolved"]{
+  background:rgba(34,201,145,.13)!important;
+  border:1px solid rgba(34,201,145,.28)!important;
+  color:#62e4b8!important;
+}
+
+.finding-card [class*="acknowledged"],
+[class*="finding-card"] [class*="acknowledged"]{
+  background:rgba(154,134,255,.13)!important;
+  border:1px solid rgba(154,134,255,.28)!important;
+  color:#b7a9ff!important;
+}
+
+.finding-card [class*="open"],
+[class*="finding-card"] [class*="open"]{
+  background:rgba(255,113,106,.11)!important;
+  border:1px solid rgba(255,113,106,.25)!important;
+  color:#ff938d!important;
+}
+
+/* Buttons */
+.finding-card .btn.secondary,
+[class*="finding-card"] .btn.secondary{
+  background:#122d37!important;
+  border:1px solid #315762!important;
+  color:#f1f8f6!important;
+}
+
+.finding-card .btn.secondary:hover,
+[class*="finding-card"] .btn.secondary:hover{
+  background:#183944!important;
+  border-color:#3f6d79!important;
+}
+
+/* Better breathing room */
+.finding-card > * + *{
+  margin-top:10px;
+}
+
+/* Evidence/detail pages */
+[class*="evidence"] [class*="card"],
+[class*="finding-detail"] [class*="card"]{
+  background:linear-gradient(145deg,#102631,#0d2029)!important;
+  border-color:#294752!important;
+  color:#f4fbf8!important;
+}
+
+[class*="evidence"] h1,
+[class*="evidence"] h2,
+[class*="finding-detail"] h1,
+[class*="finding-detail"] h2{
+  color:#fff!important;
+}
+
+[class*="evidence"] p,
+[class*="evidence"] small,
+[class*="finding-detail"] p,
+[class*="finding-detail"] small{
+  color:#9fb2b9!important;
+}
+
+@media print{
+  .finding-card,
+  [class*="finding-card"],
+  .finding-card [class*="recommend"],
+  .finding-card [class*="recommended"],
+  .finding-card [class*="action-panel"],
+  .finding-card [class*="advice"]{
+    background:#fff!important;
+    color:#172126!important;
+    border-color:#d8e0e3!important;
+    box-shadow:none!important;
+  }
+}

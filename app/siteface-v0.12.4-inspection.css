@@ -1,0 +1,197 @@
+/* SiteFace v0.12.4 — Inspection Page Contrast & Controls */
+
+/* Inspection workspace headings */
+.sf-inspection-card h1,
+.sf-inspection-card h2,
+.sf-inspection-card h3,
+.inspection-session-card h1,
+.inspection-session-card h2,
+.inspection-session-card h3,
+[class*="inspection"] h1,
+[class*="inspection"] h2,
+[class*="inspection"] h3{
+  color:#ffffff!important;
+}
+
+/* Left-hand checklist readability */
+[class*="inspection"] [class*="checklist"]{
+  color:#e8f3f1!important;
+}
+
+[class*="inspection"] [class*="checklist"] strong,
+[class*="inspection"] [class*="checklist"] h3,
+[class*="inspection"] [class*="checklist"] h4{
+  color:#ffffff!important;
+}
+
+[class*="inspection"] [class*="checklist"] button,
+[class*="inspection"] [class*="checklist"] a,
+[class*="inspection"] [class*="checklist"] [role="button"]{
+  color:#b7c9ce!important;
+  opacity:1!important;
+}
+
+[class*="inspection"] [class*="checklist"] button:hover,
+[class*="inspection"] [class*="checklist"] a:hover{
+  color:#ffffff!important;
+}
+
+[class*="inspection"] [class*="checklist"] .active,
+[class*="inspection"] [class*="checklist"] [aria-current="true"],
+[class*="inspection"] [class*="checklist"] [data-active="true"]{
+  background:#e8f5f1!important;
+  color:#285f4d!important;
+  font-weight:850!important;
+}
+
+[class*="inspection"] [class*="checklist"] .active *,
+[class*="inspection"] [class*="checklist"] [aria-current="true"] *,
+[class*="inspection"] [class*="checklist"] [data-active="true"] *{
+  color:inherit!important;
+}
+
+/* Room names were too grey */
+[class*="inspection"] [class*="room"] > strong,
+[class*="inspection"] [class*="room-title"],
+[class*="inspection"] [class*="section-label"]{
+  color:#9eb3ba!important;
+  font-weight:800!important;
+}
+
+/* Main asset title */
+[class*="inspection"] [class*="asset-title"],
+[class*="inspection"] [class*="item-title"]{
+  color:#ffffff!important;
+}
+
+/* Guidance text under asset title */
+[class*="inspection"] [class*="subtitle"],
+[class*="inspection"] [class*="helper"],
+[class*="inspection"] [class*="guidance"]{
+  color:#8fa8b0!important;
+}
+
+/* Light previous/current image panels */
+[class*="inspection"] [class*="photo-card"],
+[class*="inspection"] [class*="image-card"],
+[class*="inspection"] [class*="capture-card"],
+[class*="inspection"] [class*="upload-card"]{
+  color:#203640!important;
+}
+
+/* Labels such as "Previous inspection" and "Today's photo" */
+[class*="inspection"] [class*="photo-card"] > label,
+[class*="inspection"] [class*="image-card"] > label,
+[class*="inspection"] [class*="capture-card"] > label,
+[class*="inspection"] [class*="upload-card"] > label,
+[class*="inspection"] [class*="photo-card"] [class*="label"],
+[class*="inspection"] [class*="image-card"] [class*="label"],
+[class*="inspection"] [class*="capture-card"] [class*="label"],
+[class*="inspection"] [class*="upload-card"] [class*="label"]{
+  color:#35535d!important;
+  font-weight:850!important;
+  opacity:1!important;
+}
+
+/* Empty-state text inside photo panels */
+[class*="inspection"] [class*="photo-card"] p,
+[class*="inspection"] [class*="image-card"] p,
+[class*="inspection"] [class*="capture-card"] p,
+[class*="inspection"] [class*="upload-card"] p,
+[class*="inspection"] [class*="photo-card"] span,
+[class*="inspection"] [class*="image-card"] span{
+  color:#6f8289!important;
+  opacity:1!important;
+}
+
+/* File chooser: make the native control clearly readable */
+[class*="inspection"] input[type="file"]{
+  width:100%!important;
+  min-height:44px!important;
+  padding:5px!important;
+  background:#0b2731!important;
+  color:#ffffff!important;
+  border:1px solid #2b5360!important;
+  border-radius:9px!important;
+  font-size:13px!important;
+}
+
+[class*="inspection"] input[type="file"]::file-selector-button{
+  min-height:32px!important;
+  margin-right:10px!important;
+  padding:0 12px!important;
+  border:1px solid #4e6e78!important;
+  border-radius:6px!important;
+  background:#f4f8f7!important;
+  color:#163039!important;
+  font-weight:800!important;
+  cursor:pointer!important;
+}
+
+[class*="inspection"] input[type="file"]::-webkit-file-upload-button{
+  min-height:32px!important;
+  margin-right:10px!important;
+  padding:0 12px!important;
+  border:1px solid #4e6e78!important;
+  border-radius:6px!important;
+  background:#f4f8f7!important;
+  color:#163039!important;
+  font-weight:800!important;
+  cursor:pointer!important;
+}
+
+/* Analyse button */
+[class*="inspection"] button[class*="analyse"],
+[class*="inspection"] button[class*="analyze"],
+[class*="inspection"] .btn[class*="analyse"],
+[class*="inspection"] .btn[class*="analyze"]{
+  background:linear-gradient(135deg,#2cd29c,#17a978)!important;
+  color:#06251b!important;
+  font-weight:900!important;
+}
+
+/* Review button needs stronger border/text */
+[class*="inspection"] button[class*="review"],
+[class*="inspection"] .btn[class*="review"],
+[class*="inspection"] a[class*="review"]{
+  background:#12303a!important;
+  border:1px solid #2f6070!important;
+  color:#ffffff!important;
+  font-weight:850!important;
+}
+
+/* Session summary card top right */
+[class*="inspection"] [class*="progress"] strong,
+[class*="inspection"] [class*="progress"] b{
+  color:#ffffff!important;
+}
+
+[class*="inspection"] [class*="progress"] small,
+[class*="inspection"] [class*="progress"] span{
+  color:#8fa8b0!important;
+}
+
+/* Mojibake separator fallback in headings/text */
+[class*="inspection"] h1,
+[class*="inspection"] h2,
+[class*="inspection"] h3{
+  letter-spacing:normal;
+}
+
+/* Mobile: stack photo cards and keep controls large */
+@media(max-width:850px){
+  [class*="inspection"] [class*="photo-grid"],
+  [class*="inspection"] [class*="comparison-grid"],
+  [class*="inspection"] [class*="capture-grid"]{
+    grid-template-columns:1fr!important;
+  }
+
+  [class*="inspection"] input[type="file"]{
+    min-height:48px!important;
+  }
+
+  [class*="inspection"] button,
+  [class*="inspection"] .btn{
+    min-height:46px!important;
+  }
+}

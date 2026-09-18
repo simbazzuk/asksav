@@ -1,0 +1,66 @@
+/* SiteFace v0.10.3.1 - Inspection Start Guard */
+
+.session-ready.sf1031-not-ready,
+.session-ready:has(+ .sf1031-configure-actions) {
+  background: linear-gradient(90deg, #fff7e8, #fffdf8);
+  border: 1px solid #efcf94;
+}
+
+.sf1031-configure-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 2px;
+  flex-wrap: wrap;
+}
+
+.sf1031-configure-actions .btn {
+  text-decoration: none;
+}
+
+.sf1031-configure-help {
+  color: #6d7478;
+  font-size: 12px;
+}
+
+.session-start-card button.btn:disabled {
+  cursor: not-allowed !important;
+  opacity: .42 !important;
+  box-shadow: none !important;
+  filter: grayscale(.15);
+}
+
+.session-start-card button.btn:not(:disabled) {
+  cursor: pointer;
+}
+
+.sf1031-no-items {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border: 1px solid #efcf94;
+  border-radius: 11px;
+  background: linear-gradient(90deg, #fff7e9, #fffdf8);
+}
+
+.sf1031-no-items strong {
+  display: block;
+  color: #7b5312;
+  font-size: 13px;
+}
+
+.sf1031-no-items p {
+  margin: 5px 0 0;
+  color: #776b58;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.sf1031-error {
+  margin-top: 14px;
+  padding: 11px 13px;
+  border: 1px solid #edc4c4;
+  border-radius: 9px;
+  background: #fff3f3;
+  color: #9b3131;
+  font-size: 12px;
+}

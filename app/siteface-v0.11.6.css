@@ -1,0 +1,203 @@
+/* SiteFace v0.11.6 — Condition Status Badge System
+   Improves contrast/readability of condition badges in History and elsewhere. */
+
+:root{
+  --sf116-good-bg: rgba(34,201,145,.14);
+  --sf116-good-border: rgba(34,201,145,.30);
+  --sf116-good-text: #c9f7e7;
+  --sf116-good-dot: #43e3ad;
+
+  --sf116-attn-bg: rgba(242,189,85,.14);
+  --sf116-attn-border: rgba(242,189,85,.30);
+  --sf116-attn-text: #ffe6a5;
+  --sf116-attn-dot: #f7c45f;
+
+  --sf116-poor-bg: rgba(255,113,106,.14);
+  --sf116-poor-border: rgba(255,113,106,.30);
+  --sf116-poor-text: #ffd0cc;
+  --sf116-poor-dot: #ff8c85;
+
+  --sf116-neutral-bg: rgba(143,168,176,.10);
+  --sf116-neutral-border: rgba(143,168,176,.20);
+  --sf116-neutral-text: #b9c9ce;
+  --sf116-neutral-dot: #789099;
+}
+
+/* Common condition badge hooks */
+[class*="condition-badge"],
+[class*="condition-pill"],
+.badge.good,
+.badge.attention,
+.badge.poor,
+.badge.unknown,
+.pill.good,
+.pill.attention,
+.pill.poor,
+.pill.unknown {
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:6px !important;
+  min-height:28px !important;
+  padding:4px 10px !important;
+  border-radius:999px !important;
+  font-weight:800 !important;
+  line-height:1 !important;
+  box-shadow:none !important;
+}
+
+/* Good */
+[class*="condition"][class*="good"],
+[class*="good"][class*="condition"],
+.badge.good,
+.pill.good {
+  background:var(--sf116-good-bg) !important;
+  border:1px solid var(--sf116-good-border) !important;
+  color:var(--sf116-good-text) !important;
+}
+
+[class*="condition"][class*="good"] *,
+[class*="good"][class*="condition"] *,
+.badge.good *,
+.pill.good * {
+  color:var(--sf116-good-text) !important;
+}
+
+/* Attention */
+[class*="condition"][class*="attention"],
+[class*="attention"][class*="condition"],
+.badge.attention,
+.pill.attention {
+  background:var(--sf116-attn-bg) !important;
+  border:1px solid var(--sf116-attn-border) !important;
+  color:var(--sf116-attn-text) !important;
+}
+
+[class*="condition"][class*="attention"] *,
+[class*="attention"][class*="condition"] *,
+.badge.attention *,
+.pill.attention * {
+  color:var(--sf116-attn-text) !important;
+}
+
+/* Poor */
+[class*="condition"][class*="poor"],
+[class*="poor"][class*="condition"],
+.badge.poor,
+.pill.poor {
+  background:var(--sf116-poor-bg) !important;
+  border:1px solid var(--sf116-poor-border) !important;
+  color:var(--sf116-poor-text) !important;
+}
+
+[class*="condition"][class*="poor"] *,
+[class*="poor"][class*="condition"] *,
+.badge.poor *,
+.pill.poor * {
+  color:var(--sf116-poor-text) !important;
+}
+
+/* Unknown / empty / dash */
+[class*="condition"][class*="unknown"],
+[class*="unknown"][class*="condition"],
+.badge.unknown,
+.pill.unknown,
+[class*="condition"][class*="none"],
+[class*="condition"][class*="empty"] {
+  background:var(--sf116-neutral-bg) !important;
+  border:1px solid var(--sf116-neutral-border) !important;
+  color:var(--sf116-neutral-text) !important;
+}
+
+[class*="condition"][class*="unknown"] *,
+[class*="unknown"][class*="condition"] *,
+.badge.unknown *,
+.pill.unknown *,
+[class*="condition"][class*="none"] *,
+[class*="condition"][class*="empty"] * {
+  color:var(--sf116-neutral-text) !important;
+}
+
+/* History-table defensive selectors:
+   override legacy pale/white badges even where class names are generic. */
+table td [class*="good"],
+table td [class*="condition-good"] {
+  background:var(--sf116-good-bg) !important;
+  border:1px solid var(--sf116-good-border) !important;
+  color:var(--sf116-good-text) !important;
+}
+
+table td [class*="good"] *,
+table td [class*="condition-good"] * {
+  color:var(--sf116-good-text) !important;
+}
+
+table td [class*="attention"],
+table td [class*="condition-attention"] {
+  background:var(--sf116-attn-bg) !important;
+  border:1px solid var(--sf116-attn-border) !important;
+  color:var(--sf116-attn-text) !important;
+}
+
+table td [class*="poor"],
+table td [class*="condition-poor"] {
+  background:var(--sf116-poor-bg) !important;
+  border:1px solid var(--sf116-poor-border) !important;
+  color:var(--sf116-poor-text) !important;
+}
+
+/* Fallback for old inline/pale status styles within the Condition column */
+table td:nth-child(5) > span,
+table td:nth-child(5) > div {
+  background:var(--sf116-neutral-bg) !important;
+  border:1px solid var(--sf116-neutral-border) !important;
+  color:var(--sf116-neutral-text) !important;
+  border-radius:999px !important;
+}
+
+/* Re-apply semantic colour when text/class indicates good */
+table td:nth-child(5) > .good,
+table td:nth-child(5) > [class*="good"] {
+  background:var(--sf116-good-bg) !important;
+  border-color:var(--sf116-good-border) !important;
+  color:var(--sf116-good-text) !important;
+}
+
+/* Tiny dot support */
+[class*="condition-badge"]::before,
+[class*="condition-pill"]::before {
+  content:"";
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--sf116-neutral-dot);
+  flex:0 0 auto;
+}
+
+[class*="condition-badge"][class*="good"]::before,
+[class*="condition-pill"][class*="good"]::before {
+  background:var(--sf116-good-dot);
+}
+
+[class*="condition-badge"][class*="attention"]::before,
+[class*="condition-pill"][class*="attention"]::before {
+  background:var(--sf116-attn-dot);
+}
+
+[class*="condition-badge"][class*="poor"]::before,
+[class*="condition-pill"][class*="poor"]::before {
+  background:var(--sf116-poor-dot);
+}
+
+/* Print remains simple and light */
+@media print {
+  [class*="condition-badge"],
+  [class*="condition-pill"],
+  .badge.good,.badge.attention,.badge.poor,.badge.unknown,
+  .pill.good,.pill.attention,.pill.poor,.pill.unknown,
+  table td:nth-child(5) > span,
+  table td:nth-child(5) > div {
+    background:#fff !important;
+    border-color:#d8e0e3 !important;
+    color:#172126 !important;
+  }
+}

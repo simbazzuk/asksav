@@ -1,0 +1,174 @@
+/* SiteFace v0.17.14.1 - Discover horizontal action layout */
+
+.sf-action-layer{
+  margin-top:20px!important;
+  padding:20px!important;
+  border:1px solid #dce8e4!important;
+  border-radius:20px!important;
+  background:linear-gradient(135deg,#ffffff 0%,#f6fbf9 100%)!important;
+  box-shadow:0 8px 24px rgba(22,55,48,.06)!important;
+  width:100%!important;
+}
+
+.sf-action-layer__eyebrow{
+  margin:0 0 5px!important;
+  font-size:12px!important;
+  line-height:1.3!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
+  color:#168565!important;
+}
+
+.sf-action-layer__title{
+  margin:0!important;
+  font-size:23px!important;
+  line-height:1.2!important;
+  font-weight:800!important;
+  color:#162734!important;
+}
+
+.sf-action-layer__intro{
+  margin:7px 0 16px!important;
+  font-size:14px!important;
+  line-height:1.5!important;
+  color:#526873!important;
+}
+
+.sf-action-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:14px!important;
+  width:100%!important;
+}
+
+.sf-action-card{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:flex-start!important;
+  gap:10px!important;
+  min-width:0!important;
+  min-height:150px!important;
+  padding:18px!important;
+  border:1px solid #dce7e3!important;
+  border-radius:16px!important;
+  background:#fff!important;
+  color:#162734!important;
+  text-decoration:none!important;
+  overflow:hidden!important;
+  position:relative!important;
+  transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease!important;
+}
+
+.sf-action-card:hover{
+  transform:translateY(-2px)!important;
+  box-shadow:0 8px 20px rgba(24,55,49,.09)!important;
+  border-color:#b9d7cc!important;
+}
+
+.sf-action-card__icon{
+  width:42px!important;
+  height:42px!important;
+  min-width:42px!important;
+  border-radius:12px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:20px!important;
+  font-weight:800!important;
+}
+
+.sf-action-card--sell .sf-action-card__icon{
+  color:#0b8060!important;
+  background:#dcf7ed!important;
+}
+
+.sf-action-card--replace .sf-action-card__icon{
+  color:#6750d7!important;
+  background:#eee9ff!important;
+}
+
+.sf-action-card--similar .sf-action-card__icon{
+  color:#b8329d!important;
+  background:#fde6f7!important;
+}
+
+.sf-action-card__copy{
+  min-width:0!important;
+  width:100%!important;
+  display:block!important;
+}
+
+.sf-action-card__title{
+  display:block!important;
+  font-size:17px!important;
+  line-height:1.25!important;
+  font-weight:800!important;
+  color:#162734!important;
+  white-space:normal!important;
+}
+
+.sf-action-card__description{
+  display:block!important;
+  margin-top:5px!important;
+  font-size:13px!important;
+  line-height:1.45!important;
+  color:#60737d!important;
+  white-space:normal!important;
+}
+
+.sf-action-card__arrow{
+  position:absolute!important;
+  right:16px!important;
+  bottom:14px!important;
+  font-size:20px!important;
+  line-height:1!important;
+  color:#73858d!important;
+}
+
+.sf-action-note{
+  margin:13px 0 0!important;
+  font-size:11.5px!important;
+  line-height:1.45!important;
+  color:#74858c!important;
+}
+
+/* Make the marketplace results themselves horizontal */
+.sf178-market-links{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+  width:100%!important;
+}
+
+.sf178-market-links > a{
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+}
+
+/* Ensure the action panel spans the full Discover card */
+.sf178-market-links + .sf-action-layer{
+  grid-column:1 / -1!important;
+}
+
+/* Prevent any old nested action layer from showing if present */
+.sf178-market-links a .sf-action-layer,
+.sf178-market-links > div .sf-action-layer{
+  display:none!important;
+}
+
+@media(max-width:900px){
+  .sf178-market-links{
+    grid-template-columns:1fr!important;
+  }
+
+  .sf-action-grid{
+    grid-template-columns:1fr!important;
+  }
+
+  .sf-action-card{
+    min-height:auto!important;
+  }
+}

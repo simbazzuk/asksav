@@ -1,0 +1,150 @@
+/* SiteFace v0.13.4 - Guided Evidence Capture responsive layout */
+
+.sf13-guided-card {
+  padding: 20px;
+}
+
+.sf13-guided-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 18px;
+}
+
+.sf13-guided-head > div:first-child {
+  min-width: 0;
+}
+
+.sf13-quality-badge {
+  min-width: 118px;
+  padding: 12px 14px;
+}
+
+.sf13-guidance-grid {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+
+.sf13-guide-image,
+.sf13-guide-copy {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sf13-guide-image {
+  padding: 14px;
+}
+
+.sf13-guide-image img {
+  width: 100%;
+  max-height: 460px;
+  min-height: 220px;
+  object-fit: contain;
+}
+
+.sf13-guide-copy {
+  padding: 16px;
+}
+
+.sf13-guide-copy ul {
+  margin-top: 10px;
+  margin-bottom: 12px;
+}
+
+.sf13-low-warning {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.sf13-low-warning .btn {
+  min-width: 132px;
+  white-space: nowrap;
+}
+
+.sf13-overlay {
+  height: 420px;
+}
+
+/* Narrow inspection-column layout */
+@media (max-width: 1050px) {
+  .sf13-guided-card {
+    padding: 18px;
+  }
+
+  .sf13-guided-head {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .sf13-quality-badge {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    padding: 10px 12px;
+  }
+
+  .sf13-quality-badge strong {
+    font-size: 18px;
+  }
+
+  .sf13-quality-badge span {
+    margin-top: 0;
+    text-align: right;
+  }
+
+  .sf13-guide-image img {
+    min-height: 260px;
+    max-height: 520px;
+  }
+
+  .sf13-low-warning {
+    grid-template-columns: 1fr;
+  }
+
+  .sf13-low-warning .btn {
+    width: 100%;
+  }
+
+  .sf13-overlay {
+    height: 340px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .sf13-guided-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .sf13-guided-card h3 {
+    font-size: 17px;
+    line-height: 1.35;
+  }
+
+  .sf13-guided-card p,
+  .sf13-guide-copy li {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .sf13-guide-image,
+  .sf13-guide-copy {
+    padding: 13px;
+  }
+
+  .sf13-guide-image img {
+    min-height: 220px;
+    max-height: 420px;
+  }
+
+  .sf13-overlay {
+    height: 280px;
+  }
+}

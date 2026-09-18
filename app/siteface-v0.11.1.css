@@ -1,0 +1,176 @@
+/* SiteFace v0.11.1 — Dark Theme Contrast Fix
+   Fixes unreadable text/value content inside light metric tiles on dark pages. */
+
+/* Property overview metric tiles */
+.property-card [class*="metric"],
+.property-card [class*="stat"],
+.property-card [class*="summary"],
+.dashboard-card [class*="metric"],
+.dashboard-card [class*="stat"],
+[class*="property"] [class*="metric"],
+[class*="property"] [class*="stat"] {
+  background: linear-gradient(145deg, #102631, #0d2029) !important;
+  border: 1px solid #294752 !important;
+  color: #f4fbf8 !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.02) !important;
+}
+
+/* Explicitly force all nested text within metric/stat tiles readable */
+.property-card [class*="metric"] *,
+.property-card [class*="stat"] *,
+.property-card [class*="summary"] *,
+.dashboard-card [class*="metric"] *,
+.dashboard-card [class*="stat"] *,
+[class*="property"] [class*="metric"] *,
+[class*="property"] [class*="stat"] * {
+  color: inherit !important;
+}
+
+/* Labels */
+.property-card [class*="metric"] label,
+.property-card [class*="metric"] small,
+.property-card [class*="stat"] label,
+.property-card [class*="stat"] small,
+.property-card [class*="summary"] label,
+.property-card [class*="summary"] small,
+[class*="property"] [class*="metric"] label,
+[class*="property"] [class*="metric"] small,
+[class*="property"] [class*="stat"] label,
+[class*="property"] [class*="stat"] small {
+  color: #9fb6bd !important;
+}
+
+/* Values */
+.property-card [class*="metric"] strong,
+.property-card [class*="metric"] b,
+.property-card [class*="stat"] strong,
+.property-card [class*="stat"] b,
+.property-card [class*="summary"] strong,
+.property-card [class*="summary"] b,
+[class*="property"] [class*="metric"] strong,
+[class*="property"] [class*="metric"] b,
+[class*="property"] [class*="stat"] strong,
+[class*="property"] [class*="stat"] b {
+  color: #ffffff !important;
+}
+
+/* Common generic tile/card names that previously retained the light theme */
+.metric-card,
+.stat-card,
+.summary-card,
+.info-card,
+.property-stat,
+.property-metric,
+.property-summary-item,
+.portfolio-stat,
+.portfolio-metric {
+  background: linear-gradient(145deg, #102631, #0d2029) !important;
+  border: 1px solid #294752 !important;
+  color: #f4fbf8 !important;
+}
+
+.metric-card *,
+.stat-card *,
+.summary-card *,
+.info-card *,
+.property-stat *,
+.property-metric *,
+.property-summary-item *,
+.portfolio-stat *,
+.portfolio-metric * {
+  color: inherit !important;
+}
+
+.metric-card small,
+.stat-card small,
+.summary-card small,
+.info-card small,
+.property-stat small,
+.property-metric small,
+.property-summary-item small,
+.portfolio-stat small,
+.portfolio-metric small {
+  color: #9fb6bd !important;
+}
+
+/* If the old light surface utility is being used inside property cards,
+   override it only in the dark application, not reports. */
+.property-card .surface,
+.property-card .surface-light,
+.property-card .light-card,
+.property-card .bg-white,
+.property-card [style*="background: white"],
+.property-card [style*="background:white"],
+.property-card [style*="background-color: white"],
+.property-card [style*="background-color:white"] {
+  background: #102631 !important;
+  color: #f4fbf8 !important;
+  border-color: #294752 !important;
+}
+
+/* Property card heading/subheading */
+.property-card h2,
+.property-card h3,
+.property-card h4 {
+  color: #ffffff !important;
+}
+
+.property-card p,
+.property-card .muted,
+.property-card [class*="subtitle"] {
+  color: #8fa8b0 !important;
+}
+
+/* Better "Good" badge contrast */
+.property-card [class*="good"],
+.property-card [class*="status"] {
+  background: rgba(34,201,145,.13) !important;
+  border-color: rgba(34,201,145,.25) !important;
+}
+
+.property-card [class*="good"] *,
+.property-card [class*="status"] * {
+  color: #52e3af !important;
+}
+
+/* Secondary button readability */
+.property-card .btn.secondary,
+.property-card a.btn.secondary {
+  background: #112b35 !important;
+  border: 1px solid #315662 !important;
+  color: #f4fbf8 !important;
+}
+
+.property-card .btn.secondary:hover,
+.property-card a.btn.secondary:hover {
+  background: #173641 !important;
+}
+
+/* Primary inspect button */
+.property-card .btn:not(.secondary),
+.property-card a.btn:not(.secondary) {
+  color: #042219 !important;
+}
+
+/* Keep print output light */
+@media print {
+  .metric-card,.stat-card,.summary-card,.info-card,
+  .property-stat,.property-metric,.property-summary-item,
+  .portfolio-stat,.portfolio-metric,
+  .property-card [class*="metric"],
+  .property-card [class*="stat"],
+  .property-card [class*="summary"] {
+    background: #fff !important;
+    color: #172126 !important;
+    border-color: #d8e0e3 !important;
+  }
+
+  .metric-card *, .stat-card *, .summary-card *, .info-card *,
+  .property-stat *, .property-metric *, .property-summary-item *,
+  .portfolio-stat *, .portfolio-metric *,
+  .property-card [class*="metric"] *,
+  .property-card [class*="stat"] *,
+  .property-card [class*="summary"] * {
+    color: #172126 !important;
+  }
+}
