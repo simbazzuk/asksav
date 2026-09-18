@@ -35,7 +35,7 @@ export const maxDuration = 120;
 
 async function protectedAnalysisPost(request: Request) {
   console.info("[AskSAV stage] protected-handler entered");
-  let identity: { uid: string; email: string | null } | null = null;
+  let identity: { uid: string; email: string | null; emailVerified: boolean } | null = null;
   let reservedPeriod: string | null = null;
 
   try {
@@ -43,6 +43,16 @@ async function protectedAnalysisPost(request: Request) {
 
     if (!identity) {
       throw new Error("AUTH_REQUIRED");
+    }
+
+    if (!identity.emailVerified) {
+      return NextResponse.json(
+        {
+          error: "Verify your email address before analysing an item.",
+          code: "EMAIL_VERIFICATION_REQUIRED",
+        },
+        { status: 403 }
+      );
     }
 
     const authenticatedIdentity = identity;

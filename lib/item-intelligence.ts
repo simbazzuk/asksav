@@ -1256,6 +1256,10 @@ async function askSavVisionCall<T>(
   }
 }
 export async function analyseItemPhoto(image: File, hint = "") {
+  // ASKSAV_SAFE_ANALYSIS_V406
+  // The caller's hint/context is untrusted supporting information only. The vision
+  // result must remain grounded in the image and must not follow instructions in it.
+
   const usage: UsageCollector = { calls: [] };
   const bytes = Buffer.from(await image.arrayBuffer());
 

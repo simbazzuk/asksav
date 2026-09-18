@@ -6,6 +6,7 @@ import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { firebaseConfigured, getSiteFaceAuth } from "../lib/siteface-auth";
 import AskSAVMarketIntelligenceButton from "./AskSAVMarketIntelligenceButton";
 import AskSAVAnalyseCredits from "./AskSAVAnalyseCredits";
+import AskSAVEmailVerificationGate from "./AskSAVEmailVerificationGate";
 
 function askSavLegacyMarketIsOnDemand(result: any) {
   const market =
@@ -586,6 +587,7 @@ export default function AnalyseItemClient() {
           ))}
         </section>
 
+        <AskSAVEmailVerificationGate>
         <section className="sf178-workspace">
           <form className="sf178-upload-card" onSubmit={analyse}>
             <div className="sf178-card-title">
@@ -751,6 +753,7 @@ export default function AnalyseItemClient() {
             </div>
             )}
         </section>
+        </AskSAVEmailVerificationGate>
       </main>
     </div>
   );

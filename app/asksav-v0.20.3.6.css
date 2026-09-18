@@ -1818,3 +1818,47 @@
 .asksav-market-demand--result .asksav-market-demand__metrics > div:nth-child(3) > strong {
   color: #6734b8 !important;
 }
+
+
+/* AskSAV v0.20.4.0 email verification */
+.asksav-email-verification-v02040 {
+  max-width: 760px;
+  margin: 28px auto;
+  padding: 32px;
+  border: 1px solid #d8dff0;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(35, 54, 90, 0.08);
+  text-align: center;
+}
+.asksav-email-verification-v02040__eyebrow {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  color: #5b4bb7;
+}
+.asksav-email-verification-v02040 h2 { margin: 0 0 10px; color: #24365a; }
+.asksav-email-verification-v02040 p { color: #5b6477; }
+.asksav-email-verification-v02040__actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+.asksav-email-verification-v02040 button {
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-weight: 750;
+  cursor: pointer;
+  background: #263d75;
+  color: #fff;
+}
+.asksav-email-verification-v02040 button.secondary {
+  background: #eef1f8;
+  color: #263d75;
+}
+.asksav-email-verification-v02040__message { margin-top: 16px; font-weight: 650; }
